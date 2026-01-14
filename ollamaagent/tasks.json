@@ -1,0 +1,16 @@
+[
+  {
+    "id": "task_001",
+    "goal": "Find the official documentation for Ollama",
+    "action": "Search",
+    "parameters": "https://duckduckgo.com/?q=ollama+documentation+official+site",
+    "description": "Navigate to search engine and identify the primary URL for Ollama docs."
+  },
+  {
+    "id": "task_002",
+    "goal": "Scrape basic installation steps",
+    "action": "Scrape",
+    "parameters": "https://ollama.com/download",
+    "description": "Extract the curl command or download instructions for Linux from the page."
+  }
+]
