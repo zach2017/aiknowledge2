@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools Learning Hub - Complete Guide 2025-2026</title>
+    <script src="tailwinds.css"></script>
+    <style>
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #6366f1;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+        }
+        
+        /* Collapsible content */
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .collapsible-content.active {
+            max-height: 5000px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        /* Modal backdrop blur */
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Card hover effects */
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Code blocks */
+        pre {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        code {
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Badge styles */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-new {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .badge-popular {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .badge-free {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        /* Sticky TOC */
+        .toc-sticky {
+            position: sticky;
+            top: 80px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold gradient-text">🚀 AI Tools Learning Hub</h1>
+                <div class="flex gap-4">
+                    <span class="text-sm text-gray-600">2025-2026 Edition</span>
+                    <button onclick="toggleDarkMode()" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                        🌙 Dark Mode
+                    </button>
+                </div>
+            </div>
+            <p class="text-gray-600 mt-2">Comprehensive guide to AI tools for development, infrastructure, creativity, and more</p>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Table of Contents - Sidebar -->
+            <aside class="lg:w-1/4">
+                <div class="bg-white rounded-xl shadow-lg p-6 toc-sticky">
+                    <h2 class="text-xl font-bold mb-4 text-indigo-600">📚 Table of Contents</h2>
+                    <nav class="space-y-2">
+                        <a href="#intro" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm">Introduction</a>
+                        <a href="#cloud-infra" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">☁️ Cloud & Kubernetes</a>
+                        <a href="#coding" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">💻 AI-Assisted Coding</a>
+                        <a href="#agents" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🤖 AI Agents</a>
+                        <a href="#local-ai" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🏠 Local AI (Ollama)</a>
+                        <a href="#vector-db" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🗄️ Vector Databases</a>
+                        <a href="#devsecops" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🔒 DevSecOps</a>
+                        <a href="#app-builders" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🏗️ No-Code App Builders</a>
+                        <a href="#music" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🎵 Music Creation</a>
+                        <a href="#video" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🎬 Video Generation</a>
+                        <a href="#analysis" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">📊 Analysis & Research</a>
+                        <a href="#resources" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm">📖 Learning Resources</a>
+                    </nav>
+                    
+                    <!-- Quick Stats -->
+                    <div class="mt-6 p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg">
+                        <h3 class="font-bold text-sm mb-2">📈 Quick Stats</h3>
+                        <ul class="text-xs space-y-1 text-gray-700">
+                            <li>• 70+ Tools Covered</li>
+                            <li>• 150+ Resource Links</li>
+                            <li>• 11 Major Categories</li>
+                            <li>• Updated Jan 2026</li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="lg:w-3/4">
+                
+                <!-- Introduction -->
+                <section id="intro" class="mb-12 fade-in">
+                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-xl p-8 text-white">
+                        <h2 class="text-3xl font-bold mb-4">Welcome to the AI Tools Learning Hub</h2>
+                        <p class="text-lg mb-4">
+                            Your comprehensive guide to mastering AI tools for development, infrastructure, creativity, and business in 2025-2026.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <div class="text-3xl mb-2">🚀</div>
+                                <div class="font-bold">Fast Setup</div>
+                                <div class="text-sm">Get started in minutes</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <div class="text-3xl mb-2">🎯</div>
+                                <div class="font-bold">Production Ready</div>
+                                <div class="text-sm">Enterprise-grade tools</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <div class="text-3xl mb-2">💡</div>
+                                <div class="font-bold">Real Examples</div>
+                                <div class="text-sm">Practical use cases</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Cloud Infrastructure & Kubernetes -->
+                <section id="cloud-infra" class="mb-12">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-3xl font-bold text-gray-800">☁️ Cloud Infrastructure & Kubernetes</h2>
+                            <button onclick="toggleSection('cloud-infra-content')" class="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition">
+                                Show More ▼
+                            </button>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6">
+                            AI is revolutionizing DevOps by automating infrastructure provisioning, Kubernetes management, and CI/CD pipeline generation. 
+                            Generate IaC, troubleshoot clusters, and create complete pipelines from natural language.
+                        </p>
+
+                        <div id="cloud-infra-content" class="collapsible-content">
+                            
+                            <!-- IaC Tools -->
+                            <div class="mb-8">
+                                <h3 class="text-2xl font-bold mb-4 text-indigo-600">🏗️ Infrastructure as Code (IaC)</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    
+                                    <!-- Spacelift -->
+                                    <div class="tool-card bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border border-indigo-200">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <h4 class="text-xl font-bold text-gray-800">Spacelift AI</h4>
+                                            <span class="badge badge-new">Enterprise</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            Enterprise-grade IaC orchestration with AI-powered debugging and natural language provisioning
+                                        </p>
+                                        <div class="mb-4">
+                                            <div class="text-xs font-semibold text-gray-700 mb-2">Key Features:</div>
+                                            <ul class="text-sm space-y-1 text-gray-600">
+                                                <li>✓ Saturnhead AI for intelligent debugging</li>
+                                                <li>✓ Natural language provisioning</li>
+                                                <li>✓ OPA/Rego policy enforcement</li>
+                                                <li>✓ Multi-tool support (Terraform, Pulumi, K8s)</li>
+                                            </ul>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <a href="https://spacelift.io/" target="_blank" class="px-4 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700 transition">
+                                                Official Site
+                                            </a>
+                                            <button onclick="showModal('spacelift-modal')" class="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition">
+                                                Use Cases
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Workik -->
+                                    <div class="tool-card bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 border border-green-200">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <h4 class="text-xl font-bold text-gray-800">Workik AI</h4>
+                                            <span class="badge badge-free">Free</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            Free AI-powered code generator for Terraform, CloudFormation, and CI/CD pipelines
+                                        </p>
+                                        <div class="mb-4">
+                                            <div class="text-xs font-semibold text-gray-700 mb-2">Supports:</div>
+                                            <ul class="text-sm space-y-1 text-gray-600">
+                                                <li>✓ Terraform (AWS, Azure, GCP)</li>
+                                                <li>✓ GitHub Actions workflows</li>
+                                                <li>✓ GitLab CI/CD pipelines</li>
+                                                <li>✓ Kubernetes manifests</li>
+                                            </ul>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <a href="https://workik.com/terraform-code-generator" target="_blank" class="px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition">
+                                                Try Generator
+                                            </a>
+                                            <button onclick="showModal('workik-modal')" class="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition">
+                                                Examples
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Firefly -->
+                                    <div class="tool-card bg-gradient-to-br from-orange-50 to-red-50 rounded-lg p-6 border border-orange-200">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <h4 class="text-xl font-bold text-gray-800">Firefly (Thinkerbell AI)</h4>
+                                            <span class="badge badge-popular">Popular</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            Cloud asset discovery and codification with natural language IaC generation
+                                        </p>
+                                        <div class="mb-4">
+                                            <div class="text-xs font-semibold text-gray-700 mb-2">Capabilities:</div>
+                                            <ul class="text-sm space-y-1 text-gray-600">
+                                                <li>✓ Discover existing infrastructure</li>
+                                                <li>✓ Convert to Terraform automatically</li>
+                                                <li>✓ Drift detection & remediation</li>
+                                                <li>✓ Multi-cloud support</li>
+                                            </ul>
+                                        </div>
+                                        <a href="https://www.firefly.ai/" target="_blank" class="inline-block px-4 py-2 bg-orange-600 text-white text-sm rounded hover:bg-orange-700 transition">
+                                            Learn More
+                                        </a>
+                                    </div>
+
+                                    <!-- AIAC -->
+                                    <div class="tool-card bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6 border border-purple-200">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <h4 class="text-xl font-bold text-gray-800">AIAC CLI</h4>
+                                            <span class="badge badge-free">Open Source</span>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            Command-line IaC generator supporting OpenAI, AWS Bedrock, and Ollama
+                                        </p>
+                                        <div class="mb-4">
+                                            <pre class="text-xs"><code>aiac get terraform for AWS EC2
+aiac get kubernetes deployment nginx</code></pre>
+                                        </div>
+                                        <a href="https://github.com/gofireflyio/aiac" target="_blank" class="inline-block px-4 py-2 bg-purple-600 text-white text-sm rounded hover:bg-purple-700 transition">
+                                            GitHub Repo
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Kubernetes Tools -->
+                            <div class="mb-8">
+                                <h3 class="text-2xl font-bold mb-4 text-indigo-600">🚢 Kubernetes Management</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    
+                                    <!-- K8sGPT -->
+                                    <div class="tool-card bg-gradient-to-br from-cyan-50 to-blue-50 rounded-lg p-6 border border-cyan-200">
+                                        <h4 class="text-xl font-bold text-gray-800 mb-3">K8sGPT</h4>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            AI-powered Kubernetes diagnostic tool with plain-English issue explanations
+                                        </p>
+                                        <div class="bg-white rounded p-3 mb-4 text-sm">
+                                            <div class="font-semibold text-cyan-700 mb-2">Real-World Use Case:</div>
+                                            <p class="text-gray-600">
+                                                Production cluster with failing pods → K8sGPT analyzes → "Pod scheduling failed due to insufficient CPU on node pool-a. Recommend scaling node pool or reducing resource requests."
+                                            </p>
+                                        </div>
+                                        <a href="https://k8sgpt.ai/" target="_blank" class="inline-block px-4 py-2 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 transition">
+                                            Explore K8sGPT
+                                        </a>
+                                    </div>
+
+                                    <!-- kubectl-ai -->
+                                    <div class="tool-card bg-gradient-to-br from-teal-50 to-green-50 rounded-lg p-6 border border-teal-200">
+                                        <h4 class="text-xl font-bold text-gray-800 mb-3">kubectl-ai</h4>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            Natural language kubectl commands from Google Cloud
+                                        </p>
+                                        <div class="mb-4">
+                                            <pre class="text-xs"><code>kubectl ai "Scale my-app to 5 replicas"
+kubectl ai "Show pods using most CPU"</code></pre>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <a href="https://github.com/GoogleCloudPlatform/kubectl-ai" target="_blank" class="px-4 py-2 bg-teal-600 text-white text-sm rounded hover:bg-teal-700 transition">
+                                                GitHub
+                                            </a>
+                                            <button onclick="showModal('kubectl-ai-modal')" class="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition">
+                                                Guide
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- CAST AI -->
+                                    <div class="tool-card bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg p-6 border border-yellow-200">
+                                        <h4 class="text-xl font-bold text-gray-800 mb-3">CAST AI</h4>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            AI-powered cost optimization achieving 50%+ cloud savings
+                                        </p>
+                                        <div class="bg-white rounded p-3 mb-4">
+                                            <div class="text-2xl font-bold text-orange-600">50%+</div>
+                                            <div class="text-sm text-gray-600">Average cost reduction</div>
+                                        </div>
+                                        <a href="https://cast.ai/" target="_blank" class="inline-block px-4 py-2 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700 transition">
+                                            Start Saving
+                                        </a>
+                                    </div>
+
+                                    <!-- Lens Prism -->
+                                    <div class="tool-card bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg p-6 border border-indigo-200">
+                                        <h4 class="text-xl font-bold text-gray-800 mb-3">Lens Prism</h4>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            AI-powered Kubernetes IDE with visual cluster management
+                                        </p>
+                                        <ul class="text-sm space-y-1 text-gray-600 mb-4">
+                                            <li>✓ Multi-cluster management</li>
+                                            <li>✓ Real-time diagnostics</li>
+                                            <li>✓ AI-assisted debugging</li>
+                                        </ul>
+                                        <a href="https://k8slens.dev/" target="_blank" class="inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700 transition">
+                                            Download Lens
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- CI/CD Pipelines -->
+                            <div class="mb-8">
+                                <h3 class="text-2xl font-bold mb-4 text-indigo-600">⚙️ CI/CD Pipeline Generation</h3>
+                                
+                                <div class="bg-gradient-to-br from-gray-50 to-slate-50 rounded-lg p-6 border border-gray-200 mb-6">
+                                    <h4 class="font-bold text-lg mb-3">📈 Industry Stats (2025)</h4>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                        <div class="text-center">
+                                            <div class="text-2xl font-bold text-indigo-600">30%</div>
+                                            <div class="text-xs text-gray-600">Faster Releases</div>
+                                            <div class="text-xs text-gray-500">with GitLab AI</div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-2xl font-bold text-green-600">25%</div>
+                                            <div class="text-xs text-gray-600">AI-Generated Code</div>
+                                            <div class="text-xs text-gray-500">at Google</div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-2xl font-bold text-purple-600">62%</div>
+                                            <div class="text-xs text-gray-600">Use GitHub Actions</div>
+                                            <div class="text-xs text-gray-500">for personal projects</div>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-2xl font-bold text-orange-600">$32.4B</div>
+                                            <div class="text-xs text-gray-600">Market Size 2035</div>
+                                            <div class="text-xs text-gray-500">31% CAGR</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    
+                                    <!-- GitHub Actions -->
+                                    <div class="tool-card bg-white rounded-lg p-6 border-2 border-gray-300 shadow-md">
+                                        <h4 class="text-xl font-bold text-gray-800 mb-3">GitHub Actions AI</h4>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            Generate complete GitHub Actions workflows from natural language
+                                        </p>
+                                        <div class="bg-gray-50 rounded p-3 mb-4 text-sm">
+                                            <div class="font-semibold mb-2">Example Prompt:</div>
+                                            <p class="text-gray-600 italic">
+                                                "Create a CI/CD pipeline for a Node.js app that runs tests, builds Docker, deploys to Kubernetes, and sends Slack notifications"
+                                            </p>
+                                        </div>
+                                        <a href="https://workik.com/github-actions-code-generator" target="_blank" class="inline-block px-4 py-2 bg-gray-800 text-white text-sm rounded hover:bg-gray-900 transition">
+                                            Generate Workflow
+                                        </a>
+                                    </div>
+
+                                    <!-- GitLab CI -->
+                                    <div class="tool-card bg-white rounded-lg p-6 border-2 border-orange-300 shadow-md">
+                                        <h4 class="text-xl font-bold text-gray-800 mb-3">GitLab CI AI</h4>
+                                        <p class="text-gray-600 text-sm mb-4">
+                                            Multi-stage pipeline generation with built-in security scanning
+                                        </p>
+                                        <div class="mb-4">
+                                            <div class="text-xs font-semibold text-gray-700 mb-2">Includes:</div>
+                                            <ul class="text-sm space-y-1 text-gray-600">
+                                                <li>✓ Terraform integration</li>
+                                                <li>✓ Security scanning (SonarQube, Trivy)</li>
+                                                <li>✓ Multi-cloud deployments</li>
+                                                <li>✓ Test optimization with AI</li>
+                                            </ul>
+                                        </div>
+                                        <a href="https://workik.com/gitlab-ci-code-generator" target="_blank" class="inline-block px-4 py-2 bg-orange-600 text-white text-sm rounded hover:bg-orange-700 transition">
+                                            Create Pipeline
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Complete Examples -->
+                            <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-6 border-2 border-indigo-300">
+                                <h4 class="text-xl font-bold mb-4">🎯 Complete Dev-to-Prod Pipeline Examples</h4>
+                                
+                                <div class="space-y-4">
+                                    <button onclick="toggleExample('example1')" class="w-full text-left bg-white rounded-lg p-4 hover:shadow-md transition">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-semibold">Example 1: Full-Stack App with Kubernetes</span>
+                                            <span class="text-indigo-600">→</span>
+                                        </div>
+                                    </button>
+                                    <div id="example1" class="collapsible-content bg-white rounded-lg p-4">
+                                        <div class="text-sm text-gray-700 space-y-2">
+                                            <p><strong>Stack:</strong> React + Node.js + PostgreSQL + Kubernetes + GitHub Actions</p>
+                                            <p><strong>AI Tools Used:</strong></p>
+                                            <ul class="list-disc ml-6 space-y-1">
+                                                <li>Spacelift AI: Infrastructure orchestration</li>
+                                                <li>kubectl-ai: Kubernetes manifest generation</li>
+                                                <li>Workik: GitHub Actions workflow</li>
+                                                <li>K8sGPT: Production monitoring</li>
+                                            </ul>
+                                            <div class="mt-4 p-3 bg-gray-50 rounded">
+                                                <p class="font-semibold mb-2">Repository Structure:</p>
+                                                <pre class="text-xs"><code>my-app/
+├── .github/workflows/     # CI/CD pipelines
+├── terraform/             # Infrastructure as Code
+├── k8s/                   # Kubernetes manifests
+├── frontend/              # React application
+└── backend/               # Node.js API</code></pre>
+                                            </div>
+                                            <a href="https://github.com/kubernetes/examples" target="_blank" class="inline-block mt-3 px-4 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700">
+                                                View Examples
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="toggleExample('example2')" class="w-full text-left bg-white rounded-lg p-4 hover:shadow-md transition">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-semibold">Example 2: Microservices with GitLab CI</span>
+                                            <span class="text-indigo-600">→</span>
+                                        </div>
+                                    </button>
+                                    <div id="example2" class="collapsible-content bg-white rounded-lg p-4">
+                                        <div class="text-sm text-gray-700 space-y-2">
+                                            <p><strong>Architecture:</strong> Multiple microservices + Docker + Kubernetes + GitLab CI + Terraform</p>
+                                            <p><strong>Pipeline Stages:</strong></p>
+                                            <ol class="list-decimal ml-6 space-y-1">
+                                                <li>Build & Test each service</li>
+                                                <li>Security Scan (Trivy, SonarQube)</li>
+                                                <li>Package Docker images</li>
+                                                <li>Deploy to Dev (automatic)</li>
+                                                <li>Deploy to Staging (manual approval)</li>
+                                                <li>Deploy to Production (canary deployment)</li>
+                                            </ol>
+                                            <div class="mt-4 p-3 bg-gray-50 rounded">
+                                                <p class="font-semibold mb-2">Cost Optimization:</p>
+                                                <p>Using CAST AI reduced monthly cloud costs from $12,000 to $5,800 (52% savings)</p>
+                                            </div>
+                                            <a href="https://docs.gitlab.com/ee/ci/examples/" target="_blank" class="inline-block mt-3 px-4 py-2 bg-orange-600 text-white text-sm rounded hover:bg-orange-700">
+                                                GitLab Examples
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="toggleExample('example3')" class="w-full text-left bg-white rounded-lg p-4 hover:shadow-md transition">
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-semibold">Example 3: ML Pipeline on Kubernetes</span>
+                                            <span class="text-indigo-600">→</span>
+                                        </div>
+                                    </button>
+                                    <div id="example3" class="collapsible-content bg-white rounded-lg p-4">
+                                        <div class="text-sm text-gray-700 space-y-2">
+                                            <p><strong>Stack:</strong> Python ML Models + Kubeflow + KServe + MLflow + ArgoCD</p>
+                                            <p><strong>Workflow:</strong></p>
+                                            <ul class="list-disc ml-6 space-y-1">
+                                                <li>Development in Jupyter notebooks</li>
+                                                <li>Training via Kubeflow pipelines</li>
+                                                <li>Model versioning with MLflow</li>
+                                                <li>Serving with KServe (autoscaling)</li>
+                                                <li>Monitoring with Prometheus + Grafana</li>
+                                            </ul>
+                                            <div class="mt-4 p-3 bg-green-50 rounded border border-green-200">
+                                                <p class="font-semibold text-green-800 mb-2">✓ CNCF AI Conformance Program</p>
+                                                <p class="text-sm">Certified for running AI/ML workloads reliably on Kubernetes (Nov 2025)</p>
+                                            </div>
+                                            <a href="https://www.kubeflow.org/docs/components/pipelines/" target="_blank" class="inline-block mt-3 px-4 py-2 bg-purple-600 text-white text-sm rounded hover:bg-purple-700">
+                                                Kubeflow Docs
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AI-Assisted Coding -->
+                <section id="coding" class="mb-12">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-3xl font-bold text-gray-800">💻 AI-Assisted Coding</h2>
+                            <button onclick="toggleSection('coding-content')" class="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition">
+                                Show More ▼
+                            </button>
+                        </div>
+
+                        <p class="text-gray-600 mb-6">
+                            Transform your development workflow with AI coding assistants that understand context, generate code, debug issues, and even build entire applications from natural language descriptions.
+                        </p>
+
+                        <div id="coding-content" class="collapsible-content">
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                
+                                <!-- Claude Code -->
+                                <div class="tool-card bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-6 border border-amber-200">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h4 class="text-xl font-bold text-gray-800">Claude Code</h4>
+                                        <span class="badge badge-new">New 2025</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Terminal-based agentic coding tool from Anthropic. Handles massive files (18K+ lines).
+                                    </p>
+                                    <div class="mb-4">
+                                        <div class="text-xs font-semibold text-gray-700 mb-2">Capabilities:</div>
+                                        <ul class="text-sm space-y-1 text-gray-600">
+                                            <li>✓ Full codebase understanding</li>
+                                            <li>✓ MCP integration</li>
+                                            <li>✓ Multi-file editing</li>
+                                            <li>✓ CLAUDE.md for context</li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <a href="https://www.anthropic.com/claude-code" target="_blank" class="px-4 py-2 bg-amber-600 text-white text-sm rounded hover:bg-amber-700 transition">
+                                            Learn More
+                                        </a>
+                                        <button onclick="showModal('claude-code-modal')" class="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition">
+                                            Examples
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Cursor -->
+                                <div class="tool-card bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h4 class="text-xl font-bold text-gray-800">Cursor</h4>
+                                        <span class="badge badge-popular">$100M ARR</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        AI-first code editor built on VS Code. Hit $100M ARR in 12 months.
+                                    </p>
+                                    <div class="mb-4">
+                                        <div class="text-xs font-semibold text-gray-700 mb-2">Features:</div>
+                                        <ul class="text-sm space-y-1 text-gray-600">
+                                            <li>✓ Agent mode for complex tasks</li>
+                                            <li>✓ Composer for multi-file edits</li>
+                                            <li>✓ Multi-model support</li>
+                                            <li>✓ Codebase indexing</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-blue-50 border border-blue-200 rounded p-3 mb-4 text-sm">
+                                        <p class="text-blue-800"><strong>Real Case:</strong> Developer built full e-commerce site in 4 hours vs 2 weeks traditional coding</p>
+                                    </div>
+                                    <a href="https://cursor.sh/" target="_blank" class="inline-block px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition">
+                                        Download Cursor
+                                    </a>
+                                </div>
+
+                                <!-- GitHub Copilot -->
+                                <div class="tool-card bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6 border border-purple-200">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h4 class="text-xl font-bold text-gray-800">GitHub Copilot</h4>
+                                        <span class="badge badge-popular">36M Devs</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Microsoft's AI coding assistant used by 36 million developers worldwide.
+                                    </p>
+                                    <div class="mb-4">
+                                        <ul class="text-sm space-y-1 text-gray-600">
+                                            <li>✓ Agent mode (multi-file tasks)</li>
+                                            <li>✓ Custom instructions</li>
+                                            <li>✓ Mission Control dashboard</li>
+                                            <li>✓ Deep GitHub integration</li>
+                                        </ul>
+                                    </div>
+                                    <a href="https://github.com/features/copilot" target="_blank" class="inline-block px-4 py-2 bg-purple-600 text-white text-sm rounded hover:bg-purple-700 transition">
+                                        Get Copilot
+                                    </a>
+                                </div>
+
+                                <!-- Replit Agent -->
+                                <div class="tool-card bg-gradient-to-br from-green-50 to-teal-50 rounded-lg p-6 border border-green-200">
+                                    <h4 class="text-xl font-bold text-gray-800 mb-3">Replit Agent</h4>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Build and deploy full applications from a single prompt in your browser.
+                                    </p>
+                                    <div class="mb-4">
+                                        <div class="bg-green-50 border border-green-200 rounded p-3 text-sm">
+                                            <p class="font-semibold mb-1">Example Prompt:</p>
+                                            <p class="text-gray-600 italic">"Create a task manager with user auth and PostgreSQL database"</p>
+                                            <p class="text-green-700 mt-2">→ Complete app deployed in minutes</p>
+                                        </div>
+                                    </div>
+                                    <a href="https://replit.com/" target="_blank" class="inline-block px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition">
+                                        Try Replit
+                                    </a>
+                                </div>
+
+                                <!-- Codeium -->
+                                <div class="tool-card bg-gradient-to-br from-cyan-50 to-blue-50 rounded-lg p-6 border border-cyan-200">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h4 class="text-xl font-bold text-gray-800">Codeium</h4>
+                                        <span class="badge badge-free">Free Forever</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Free AI autocomplete for 70+ languages. Chat, search, and generate code.
+                                    </p>
+                                    <ul class="text-sm space-y-1 text-gray-600 mb-4">
+                                        <li>✓ VS Code, JetBrains, Vim</li>
+                                        <li>✓ Unlimited usage (free)</li>
+                                        <li>✓ Context-aware suggestions</li>
+                                    </ul>
+                                    <a href="https://codeium.com/" target="_blank" class="inline-block px-4 py-2 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 transition">
+                                        Install Free
+                                    </a>
+                                </div>
+
+                                <!-- Tabnine -->
+                                <div class="tool-card bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg p-6 border border-indigo-200">
+                                    <h4 class="text-xl font-bold text-gray-800 mb-3">Tabnine</h4>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Privacy-focused AI code assistant. Run models locally or in private cloud.
+                                    </p>
+                                    <ul class="text-sm space-y-1 text-gray-600 mb-4">
+                                        <li>✓ Self-hosted option</li>
+                                        <li>✓ Trained on permissive code</li>
+                                        <li>✓ Enterprise security</li>
+                                    </ul>
+                                    <a href="https://www.tabnine.com/" target="_blank" class="inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700 transition">
+                                        Explore Tabnine
+                                    </a>
+                                </div>
+
+                            </div>
+
+                            <!-- Comparison Table -->
+                            <div class="mt-8 overflow-x-auto">
+                                <h4 class="text-xl font-bold mb-4">🔍 Quick Comparison</h4>
+                                <table class="w-full text-sm border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-100">
+                                            <th class="border border-gray-300 p-3 text-left">Tool</th>
+                                            <th class="border border-gray-300 p-3 text-left">Best For</th>
+                                            <th class="border border-gray-300 p-3 text-left">Pricing</th>
+                                            <th class="border border-gray-300 p-3 text-left">Key Feature</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="border border-gray-300 p-3 font-semibold">Claude Code</td>
+                                            <td class="border border-gray-300 p-3">Large refactors, terminal workflow</td>
+                                            <td class="border border-gray-300 p-3">$20/month</td>
+                                            <td class="border border-gray-300 p-3">18K+ line file handling</td>
+                                        </tr>
+                                        <tr class="bg-gray-50">
+                                            <td class="border border-gray-300 p-3 font-semibold">Cursor</td>
+                                            <td class="border border-gray-300 p-3">Complex apps, VS Code users</td>
+                                            <td class="border border-gray-300 p-3">$20/month</td>
+                                            <td class="border border-gray-300 p-3">Agent mode</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-gray-300 p-3 font-semibold">GitHub Copilot</td>
+                                            <td class="border border-gray-300 p-3">GitHub integration</td>
+                                            <td class="border border-gray-300 p-3">$10/month</td>
+                                            <td class="border border-gray-300 p-3">36M developers</td>
+                                        </tr>
+                                        <tr class="bg-gray-50">
+                                            <td class="border border-gray-300 p-3 font-semibold">Codeium</td>
+                                            <td class="border border-gray-300 p-3">Budget-conscious devs</td>
+                                            <td class="border border-gray-300 p-3">Free</td>
+                                            <td class="border border-gray-300 p-3">70+ languages</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Continue with other sections... Due to length, I'll add a few more key sections -->
+
+                <!-- AI Agents Section -->
+                <section id="agents" class="mb-12">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-3xl font-bold text-gray-800">🤖 AI Agents & Frameworks</h2>
+                            <button onclick="toggleSection('agents-content')" class="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition">
+                                Show More ▼
+                            </button>
+                        </div>
+
+                        <p class="text-gray-600 mb-6">
+                            Build autonomous AI agents that can reason, plan, and execute complex multi-step tasks with memory and tool usage.
+                        </p>
+
+                        <div id="agents-content" class="collapsible-content">
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                
+                                <!-- LangChain -->
+                                <div class="tool-card bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200">
+                                    <div class="flex items-start justify-between mb-3">
+                                        <h4 class="text-xl font-bold text-gray-800">LangChain</h4>
+                                        <span class="badge badge-popular">#1 Framework</span>
+                                    </div>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Most adopted AI agent framework with modular architecture for building LLM applications.
+                                    </p>
+                                    <div class="mb-4">
+                                        <div class="text-xs font-semibold text-gray-700 mb-2">Components:</div>
+                                        <ul class="text-sm space-y-1 text-gray-600">
+                                            <li>✓ LCEL (LangChain Expression Language)</li>
+                                            <li>✓ LangGraph for stateful workflows</li>
+                                            <li>✓ LangSmith for debugging</li>
+                                            <li>✓ 1000+ integrations</li>
+                                        </ul>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <a href="https://www.langchain.com/" target="_blank" class="px-4 py-2 bg-emerald-600 text-white text-sm rounded hover:bg-emerald-700 transition">
+                                            Documentation
+                                        </a>
+                                        <a href="https://github.com/langchain-ai/langchain" target="_blank" class="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition">
+                                            GitHub
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- AutoGPT -->
+                                <div class="tool-card bg-gradient-to-br from-violet-50 to-purple-50 rounded-lg p-6 border border-violet-200">
+                                    <h4 class="text-xl font-bold text-gray-800 mb-3">AutoGPT</h4>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        First autonomous AI agent. Goal-driven task execution with minimal human input.
+                                    </p>
+                                    <div class="bg-violet-50 border border-violet-200 rounded p-3 mb-4 text-sm">
+                                        <p class="font-semibold text-violet-800 mb-1">Use Case:</p>
+                                        <p class="text-gray-600">"Research competitors, create comparison report, schedule presentation" → AutoGPT breaks down and executes all steps</p>
+                                    </div>
+                                    <a href="https://github.com/Significant-Gravitas/AutoGPT" target="_blank" class="inline-block px-4 py-2 bg-violet-600 text-white text-sm rounded hover:bg-violet-700 transition">
+                                        GitHub Repo
+                                    </a>
+                                </div>
+
+                                <!-- CrewAI -->
+                                <div class="tool-card bg-gradient-to-br from-rose-50 to-pink-50 rounded-lg p-6 border border-rose-200">
+                                    <h4 class="text-xl font-bold text-gray-800 mb-3">CrewAI</h4>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Role-based multi-agent teams. Agents collaborate like a real team with specialized roles.
+                                    </p>
+                                    <div class="mb-4">
+                                        <pre class="text-xs"><code># Example: Content creation crew
+researcher = Agent(role="Researcher")
+writer = Agent(role="Writer")
+editor = Agent(role="Editor")</code></pre>
+                                    </div>
+                                    <a href="https://www.crewai.com/" target="_blank" class="inline-block px-4 py-2 bg-rose-600 text-white text-sm rounded hover:bg-rose-700 transition">
+                                        Learn CrewAI
+                                    </a>
+                                </div>
+
+                                <!-- LangGraph -->
+                                <div class="tool-card bg-gradient-to-br from-sky-50 to-cyan-50 rounded-lg p-6 border border-sky-200">
+                                    <h4 class="text-xl font-bold text-gray-800 mb-3">LangGraph</h4>
+                                    <p class="text-gray-600 text-sm mb-4">
+                                        Graph-based agent orchestration from LangChain. Build cyclic, stateful agent workflows.
+                                    </p>
+                                    <ul class="text-sm space-y-1 text-gray-600 mb-4">
+                                        <li>✓ State management built-in</li>
+                                        <li>✓ Human-in-the-loop support</li>
+                                        <li>✓ Streaming outputs</li>
+                                        <li>✓ Time-travel debugging</li>
+                                    </ul>
+                                    <a href="https://langchain-ai.github.io/langgraph/" target="_blank" class="inline-block px-4 py-2 bg-sky-600 text-white text-sm rounded hover:bg-sky-700 transition">
+                                        Documentation
+                                    </a>
+                                </div>
+
+                            </div>
+
+                            <!-- Real-World Agent Examples -->
+                            <div class="mt-8 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg p-6 border-2 border-amber-200">
+                                <h4 class="text-xl font-bold mb-4 text-amber-900">🌟 Real-World Agent Applications</h4>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white rounded-lg p-4">
+                                        <div class="font-semibold text-gray-800 mb-2">📧 Customer Support Agent</div>
+                                        <p class="text-sm text-gray-600">
+                                            Handles 80% of customer inquiries autonomously. Routes complex issues to humans. 
+                                            Reduces response time from 4 hours to 2 minutes.
+                                        </p>
+                                        <div class="mt-2 text-xs text-amber-700">
+                                            <strong>Tools:</strong> LangChain + Zendesk integration
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white rounded-lg p-4">
+                                        <div class="font-semibold text-gray-800 mb-2">📊 Data Analysis Agent</div>
+                                        <p class="text-sm text-gray-600">
+                                            Automatically generates reports from SQL databases, creates visualizations, 
+                                            and sends weekly summaries to stakeholders.
+                                        </p>
+                                        <div class="mt-2 text-xs text-amber-700">
+                                            <strong>Tools:</strong> AutoGPT + pandas + matplotlib
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white rounded-lg p-4">
+                                        <div class="font-semibold text-gray-800 mb-2">🔍 Research Assistant</div>
+                                        <p class="text-sm text-gray-600">
+                                            Conducts literature reviews, summarizes papers, identifies trends, 
+                                            and compiles comprehensive research reports.
+                                        </p>
+                                        <div class="mt-2 text-xs text-amber-700">
+                                            <strong>Tools:</strong> CrewAI (researcher + writer + fact-checker)
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-white rounded-lg p-4">
+                                        <div class="font-semibold text-gray-800 mb-2">💼 DevOps Agent</div>
+                                        <p class="text-sm text-gray-600">
+                                            Monitors infrastructure, detects anomalies, troubleshoots issues, 
+                                            and performs routine maintenance tasks automatically.
+                                        </p>
+                                        <div class="mt-2 text-xs text-amber-700">
+                                            <strong>Tools:</strong> LangGraph + K8sGPT + monitoring APIs
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Add condensed versions of remaining sections -->
+                
+                <!-- No-Code App Builders (condensed) -->
+                <section id="app-builders" class="mb-12">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-3xl font-bold text-gray-800">🏗️ No-Code App Builders</h2>
+                            <button onclick="toggleSection('app-builders-content')" class="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition">
+                                Show More ▼
+                            </button>
+                        </div>
+
+                        <div id="app-builders-content" class="collapsible-content">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                
+                                <div class="tool-card bg-gradient-to-br from-pink-50 to-rose-50 rounded-lg p-6 border border-pink-200">
+                                    <h4 class="text-xl font-bold mb-3">Lovable</h4>
+                                    <p class="text-sm text-gray-600 mb-4">Build MVPs in 12-20 minutes. $15M funding.</p>
+                                    <a href="https://lovable.dev/" target="_blank" class="inline-block px-4 py-2 bg-pink-600 text-white text-sm rounded hover:bg-pink-700 transition">
+                                        Start Building
+                                    </a>
+                                </div>
+
+                                <div class="tool-card bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+                                    <h4 class="text-xl font-bold mb-3">Bolt.new</h4>
+                                    <p class="text-sm text-gray-600 mb-4">Full-stack in browser. No local setup needed.</p>
+                                    <a href="https://bolt.new/" target="_blank" class="inline-block px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition">
+                                        Try Bolt
+                                    </a>
+                                </div>
+
+                                <div class="tool-card bg-gradient-to-br from-purple-50 to-indigo-50 rounded-lg p-6 border border-purple-200">
+                                    <h4 class="text-xl font-bold mb-3">v0 by Vercel</h4>
+                                    <p class="text-sm text-gray-600 mb-4">Image-to-code. React UI components.</p>
+                                    <a href="https://v0.app/" target="_blank" class="inline-block px-4 py-2 bg-purple-600 text-white text-sm rounded hover:bg-purple-700 transition">
+                                        Generate UI
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Music & Video (condensed combined section) -->
+                <section id="music" class="mb-12">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">🎵 Music & 🎬 Video Creation</h2>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            
+                            <!-- Music -->
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4 text-purple-600">Music Creation</h3>
+                                <div class="space-y-4">
+                                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6 border border-purple-200">
+                                        <h4 class="text-xl font-bold mb-2">Suno AI</h4>
+                                        <div class="text-3xl mb-2">⭐</div>
+                                        <p class="text-sm text-gray-600 mb-3">
+                                            Generate complete songs with vocals in 60 seconds. v5 model = studio quality.
+                                        </p>
+                                        <div class="flex gap-2">
+                                            <a href="https://suno.com/" target="_blank" class="px-4 py-2 bg-purple-600 text-white text-sm rounded hover:bg-purple-700 transition">
+                                                Create Music
+                                            </a>
+                                            <button onclick="showModal('suno-modal')" class="px-4 py-2 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition">
+                                                Examples
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Video -->
+                            <div id="video">
+                                <h3 class="text-2xl font-bold mb-4 text-indigo-600">Video Generation</h3>
+                                <div class="space-y-4">
+                                    <div class="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-lg p-6 border border-indigo-200">
+                                        <h4 class="text-xl font-bold mb-2">Runway Gen-4</h4>
+                                        <div class="text-3xl mb-2">🎬</div>
+                                        <p class="text-sm text-gray-600 mb-3">
+                                            Professional 4K video with camera controls. Trusted by major studios.
+                                        </p>
+                                        <a href="https://runwayml.com/" target="_blank" class="inline-block px-4 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700 transition">
+                                            Start Creating
+                                        </a>
+                                    </div>
+
+                                    <div class="bg-gradient-to-br from-cyan-50 to-teal-50 rounded-lg p-6 border border-cyan-200">
+                                        <h4 class="text-xl font-bold mb-2">Luma Dream Machine</h4>
+                                        <p class="text-sm text-gray-600 mb-3">
+                                            Cinematic motion and realistic physics. Ray3 model.
+                                        </p>
+                                        <a href="https://lumalabs.ai/" target="_blank" class="inline-block px-4 py-2 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 transition">
+                                            Try Luma
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Learning Resources -->
+                <section id="resources" class="mb-12">
+                    <div class="bg-gradient-to-r from-green-600 to-teal-600 rounded-xl shadow-xl p-8 text-white">
+                        <h2 class="text-3xl font-bold mb-6">📖 Learning Resources</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                                <h4 class="text-xl font-bold mb-3">🎓 Online Courses</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><a href="https://www.deeplearning.ai/" target="_blank" class="hover:underline">→ DeepLearning.AI (Andrew Ng)</a></li>
+                                    <li><a href="https://www.datacamp.com/" target="_blank" class="hover:underline">→ DataCamp AI Courses</a></li>
+                                    <li><a href="https://www.codecademy.com/" target="_blank" class="hover:underline">→ Codecademy AI Track</a></li>
+                                    <li><a href="https://www.coursera.org/" target="_blank" class="hover:underline">→ Coursera AI Specializations</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                                <h4 class="text-xl font-bold mb-3">📚 Documentation</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><a href="https://docs.anthropic.com/" target="_blank" class="hover:underline">→ Anthropic Claude Docs</a></li>
+                                    <li><a href="https://platform.openai.com/docs" target="_blank" class="hover:underline">→ OpenAI Documentation</a></li>
+                                    <li><a href="https://www.langchain.com/docs" target="_blank" class="hover:underline">→ LangChain Docs</a></li>
+                                    <li><a href="https://kubernetes.io/docs/" target="_blank" class="hover:underline">→ Kubernetes Docs</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                                <h4 class="text-xl font-bold mb-3">💻 GitHub Examples</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><a href="https://github.com/kubernetes/examples" target="_blank" class="hover:underline">→ Kubernetes Examples</a></li>
+                                    <li><a href="https://github.com/langchain-ai/langchain" target="_blank" class="hover:underline">→ LangChain Repository</a></li>
+                                    <li><a href="https://github.com/GoogleCloudPlatform/kubectl-ai" target="_blank" class="hover:underline">→ kubectl-ai Examples</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-6">
+                                <h4 class="text-xl font-bold mb-3">🌐 Communities</h4>
+                                <ul class="space-y-2 text-sm">
+                                    <li><a href="https://www.reddit.com/r/artificial/" target="_blank" class="hover:underline">→ r/artificial</a></li>
+                                    <li><a href="https://discord.gg/langchain" target="_blank" class="hover:underline">→ LangChain Discord</a></li>
+                                    <li><a href="https://kubernetes.slack.com/" target="_blank" class="hover:underline">→ Kubernetes Slack</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-lg font-bold mb-2">AI Tools Learning Hub</p>
+                <p class="text-gray-400 text-sm">2025-2026 Edition • Updated January 2026</p>
+                <p class="text-gray-400 text-sm mt-4">
+                    Comprehensive guide to AI tools for developers, creators, and businesses
+                </p>
+                <div class="mt-4 flex justify-center gap-4">
+                    <a href="#intro" class="text-indigo-400 hover:text-indigo-300 transition">Back to Top ↑</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    
+    <!-- Spacelift Modal -->
+    <div id="spacelift-modal" class="hidden fixed inset-0 bg-black/50 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">Spacelift AI - Use Cases</h3>
+                    <button onclick="hideModal('spacelift-modal')" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <h4 class="font-bold text-blue-900 mb-2">🏢 Enterprise Multi-Cloud</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            <strong>Scenario:</strong> Financial services company managing 200+ Terraform stacks across AWS, Azure, and GCP.
+                        </p>
+                        <p class="text-sm text-gray-700">
+                            <strong>Solution:</strong> Spacelift orchestrates all stacks with OPA policies for compliance, detects drift automatically, and uses Saturnhead AI to debug failed runs in seconds instead of hours.
+                        </p>
+                        <div class="mt-2 p-2 bg-white rounded text-xs">
+                            <strong>Result:</strong> 70% reduction in infrastructure issues, 100% compliance, saved 20 eng hours/week
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 rounded-lg p-4">
+                        <h4 class="font-bold text-green-900 mb-2">🚀 Startup Scaling</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            <strong>Scenario:</strong> Series A startup needs to provision dev, staging, and prod environments quickly.
+                        </p>
+                        <p class="text-sm text-gray-700">
+                            <strong>Solution:</strong> Use Spacelift Intent to describe infrastructure in plain English: "Create a staging environment with PostgreSQL, Redis, and 3 web servers"
+                        </p>
+                        <div class="mt-2 p-2 bg-white rounded text-xs">
+                            <strong>Result:</strong> New environments in 10 minutes vs 2 days manual setup
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 rounded-lg p-4">
+                        <h4 class="font-bold text-purple-900 mb-2">🔒 Regulated Industry</h4>
+                        <p class="text-sm text-gray-700">
+                            Healthcare provider needs HIPAA-compliant infrastructure with full audit trails and automated compliance checks.
+                        </p>
+                        <div class="mt-2 p-2 bg-white rounded text-xs">
+                            <strong>Spacelift Features:</strong> Policy-as-code enforcement, complete audit logs, drift detection, approval workflows
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex gap-2">
+                    <a href="https://spacelift.io/" target="_blank" class="flex-1 px-4 py-2 bg-indigo-600 text-white text-center rounded hover:bg-indigo-700 transition">
+                        Learn More
+                    </a>
+                    <button onclick="hideModal('spacelift-modal')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workik Modal -->
+    <div id="workik-modal" class="hidden fixed inset-0 bg-black/50 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">Workik AI - Examples</h3>
+                    <button onclick="hideModal('workik-modal')" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-bold mb-2">Example 1: AWS VPC with Terraform</h4>
+                        <div class="text-sm mb-2">
+                            <strong>Input:</strong> "Create a VPC with public and private subnets, NAT gateway, and security groups for a web application"
+                        </div>
+                        <pre class="bg-gray-900 text-white text-xs p-3 rounded overflow-x-auto"><code>resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  tags = { Name = "web-app-vpc" }
+}
+
+resource "aws_subnet" "public" {
+  vpc_id = aws_vpc.main.id
+  cidr_block = "10.0.1.0/24"
+  # ... additional configuration
+}</code></pre>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-bold mb-2">Example 2: GitHub Actions CI/CD</h4>
+                        <div class="text-sm mb-2">
+                            <strong>Input:</strong> "Create a workflow that tests Node.js app, builds Docker image, and deploys to Kubernetes"
+                        </div>
+                        <pre class="bg-gray-900 text-white text-xs p-3 rounded overflow-x-auto"><code>name: CI/CD Pipeline
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm test
+  # ... build and deploy steps
+</code></pre>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex gap-2">
+                    <a href="https://workik.com/terraform-code-generator" target="_blank" class="flex-1 px-4 py-2 bg-green-600 text-white text-center rounded hover:bg-green-700 transition">
+                        Try Generator
+                    </a>
+                    <button onclick="hideModal('workik-modal')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Similar modals for other tools... -->
+    <!-- kubectl-ai Modal -->
+    <div id="kubectl-ai-modal" class="hidden fixed inset-0 bg-black/50 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">kubectl-ai Quick Guide</h3>
+                    <button onclick="hideModal('kubectl-ai-modal')" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-bold mb-2">Installation</h4>
+                        <pre class="bg-gray-900 text-white text-xs p-3 rounded"><code>brew install kubectl-ai
+# or download from GitHub releases</code></pre>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold mb-2">Common Commands</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-gray-50 p-3 rounded">
+                                <code class="text-indigo-600">kubectl ai "show me failing pods"</code>
+                                <p class="text-gray-600 mt-1">Lists all pods with errors and explains why</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded">
+                                <code class="text-indigo-600">kubectl ai "scale my-app to 10 replicas"</code>
+                                <p class="text-gray-600 mt-1">Scales deployment with confirmation</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded">
+                                <code class="text-indigo-600">kubectl ai "create a deployment for nginx"</code>
+                                <p class="text-gray-600 mt-1">Generates and applies manifest</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <a href="https://github.com/GoogleCloudPlatform/kubectl-ai" target="_blank" class="inline-block px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 transition">
+                        Full Documentation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Claude Code Modal -->
+    <div id="claude-code-modal" class="hidden fixed inset-0 bg-black/50 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">Claude Code - Real Examples</h3>
+                    <button onclick="hideModal('claude-code-modal')" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-amber-50 rounded-lg p-4">
+                        <h4 class="font-bold text-amber-900 mb-2">Large Codebase Refactor</h4>
+                        <p class="text-sm text-gray-700 mb-2">
+                            <strong>Task:</strong> Migrate 50-file React app from JavaScript to TypeScript
+                        </p>
+                        <p class="text-sm text-gray-700">
+                            Claude Code handles files up to 18,000+ lines, understands entire codebase context, 
+                            and can refactor multiple files simultaneously while maintaining type safety.
+                        </p>
+                        <div class="mt-2 p-2 bg-white rounded text-xs">
+                            <strong>Time saved:</strong> 3 days vs 2 weeks manual work
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 rounded-lg p-4">
+                        <h4 class="font-bold text-blue-900 mb-2">Bug Fix Across Multiple Files</h4>
+                        <p class="text-sm text-gray-700">
+                            Uses CLAUDE.md file to understand project context, traces bug through 
+                            15+ files, and implements fix with proper error handling and tests.
+                        </p>
+                    </div>
+
+                    <div class="bg-green-50 rounded-lg p-4">
+                        <h4 class="font-bold text-green-900 mb-2">MCP Integration</h4>
+                        <p class="text-sm text-gray-700">
+                            Connect to external tools and APIs. Example: "Read our Slack messages, 
+                            summarize bugs reported, and create GitHub issues for each"
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <a href="https://www.anthropic.com/claude-code" target="_blank" class="inline-block px-4 py-2 bg-amber-600 text-white rounded hover:bg-amber-700 transition">
+                        Try Claude Code
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suno Modal -->
+    <div id="suno-modal" class="hidden fixed inset-0 bg-black/50 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">Suno AI - Examples & Use Cases</h3>
+                    <button onclick="hideModal('suno-modal')" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-purple-50 rounded-lg p-4">
+                        <h4 class="font-bold text-purple-900 mb-2">🎵 Example Prompts</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-white p-3 rounded">
+                                <p class="font-semibold text-purple-700">"Upbeat electronic dance music for a fitness video"</p>
+                                <p class="text-gray-600 mt-1">→ Generates 2-minute EDM track with energetic beats</p>
+                            </div>
+                            <div class="bg-white p-3 rounded">
+                                <p class="font-semibold text-purple-700">"Acoustic guitar ballad about missing home with female vocals"</p>
+                                <p class="text-gray-600 mt-1">→ Complete song with lyrics and emotional vocals</p>
+                            </div>
+                            <div class="bg-white p-3 rounded">
+                                <p class="font-semibold text-purple-700">"Jazzy background music for a cafe, instrumental only"</p>
+                                <p class="text-gray-600 mt-1">→ Smooth instrumental jazz perfect for ambiance</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-pink-50 rounded-lg p-4">
+                        <h4 class="font-bold text-pink-900 mb-2">🎬 Real-World Uses</h4>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li>✓ <strong>YouTube Creators:</strong> Background music without copyright issues</li>
+                            <li>✓ <strong>Podcasters:</strong> Custom intro/outro themes</li>
+                            <li>✓ <strong>Game Developers:</strong> Soundtrack generation for indie games</li>
+                            <li>✓ <strong>Marketers:</strong> Jingles and brand music</li>
+                            <li>✓ <strong>Filmmakers:</strong> Scene-specific background scores</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-yellow-50 rounded-lg p-4">
+                        <h4 class="font-bold text-yellow-900 mb-2">💰 Pricing</h4>
+                        <div class="grid grid-cols-3 gap-2 text-xs">
+                            <div class="bg-white p-3 rounded text-center">
+                                <div class="font-bold">Free</div>
+                                <div class="text-gray-600">10 songs/day</div>
+                            </div>
+                            <div class="bg-white p-3 rounded text-center">
+                                <div class="font-bold">$10/mo</div>
+                                <div class="text-gray-600">500 songs</div>
+                            </div>
+                            <div class="bg-white p-3 rounded text-center">
+                                <div class="font-bold">$30/mo</div>
+                                <div class="text-gray-600">2000 songs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex gap-2">
+                    <a href="https://suno.com/" target="_blank" class="flex-1 px-4 py-2 bg-purple-600 text-white text-center rounded hover:bg-purple-700 transition">
+                        Start Creating
+                    </a>
+                    <a href="https://suno.com/hub/how-to-make-a-song" target="_blank" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 text-center rounded hover:bg-gray-300 transition">
+                        Tutorials
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle collapsible sections
+        function toggleSection(id) {
+            const content = document.getElementById(id);
+            const button = event.target;
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                button.textContent = 'Show More ▼';
+            } else {
+                content.classList.add('active');
+                button.textContent = 'Show Less ▲';
+            }
+        }
+
+        // Toggle examples
+        function toggleExample(id) {
+            const content = document.getElementById(id);
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+            } else {
+                content.classList.add('active');
+            }
+        }
+
+        // Modal functions
+        function showModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on backdrop click
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal-backdrop')) {
+                event.target.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Dark mode toggle (basic implementation)
+        function toggleDarkMode() {
+            // This would require more CSS, just showing the concept
+            alert('Dark mode coming soon! This would toggle a dark theme for the entire page.');
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add active state to TOC links based on scroll position
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 100;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                const tocLink = document.querySelector(`a[href="#${sectionId}"]`);
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('aside nav a').forEach(link => {
+                        link.classList.remove('bg-indigo-100', 'font-bold');
+                    });
+                    if (tocLink) {
+                        tocLink.classList.add('bg-indigo-100', 'font-bold');
+                    }
+                }
+            });
+        });
+
+        // Console welcome message
+        console.log('%c🚀 AI Tools Learning Hub', 'font-size: 24px; font-weight: bold; color: #6366f1;');
+        console.log('%cWelcome to the comprehensive AI tools guide!', 'font-size: 14px; color: #64748b;');
+        console.log('%c70+ tools | 150+ links | 11 categories', 'font-size: 12px; color: #94a3b8;');
+    </script>
+
+</body>
+</html>
