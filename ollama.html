@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Stack Tutorial | Complete Guide with Detailed Explanations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'display': ['Outfit', 'sans-serif'],
+                        'body': ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        'cyber': {
+                            'dark': '#0a0a0f',
+                            'darker': '#050508',
+                            'purple': '#8b5cf6',
+                            'pink': '#ec4899',
+                            'cyan': '#06b6d4',
+                            'green': '#10b981',
+                            'orange': '#f97316',
+                            'yellow': '#eab308',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { scroll-behavior: smooth; }
+        body { background: linear-gradient(135deg, #0a0a0f 0%, #0f0a1a 50%, #0a0f0f 100%); }
+        .gradient-text { background: linear-gradient(135deg, #8b5cf6, #ec4899, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .code-block { background: linear-gradient(145deg, #0f0f1a 0%, #1a1a2e 100%); border: 1px solid rgba(139, 92, 246, 0.2); position: relative; overflow: hidden; }
+        .code-block::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #8b5cf6, #ec4899, #06b6d4); }
+        .glow-card { background: rgba(15, 15, 25, 0.8); border: 1px solid rgba(139, 92, 246, 0.15); backdrop-filter: blur(10px); transition: all 0.3s ease; }
+        .glow-card:hover { border-color: rgba(139, 92, 246, 0.4); box-shadow: 0 0 30px rgba(139, 92, 246, 0.1); }
+        .step-number { background: linear-gradient(135deg, #8b5cf6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .terminal-header { background: linear-gradient(90deg, #2d2d3a, #1a1a2e); }
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .btn-primary { background: linear-gradient(135deg, #8b5cf6, #7c3aed); transition: all 0.3s ease; }
+        .btn-primary:hover { background: linear-gradient(135deg, #9f7aea, #8b5cf6); box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); transform: translateY(-2px); }
+        .btn-secondary { background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); transition: all 0.3s ease; }
+        .btn-secondary:hover { background: rgba(139, 92, 246, 0.2); border-color: rgba(139, 92, 246, 0.5); }
+        .explanation-box { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05)); border-left: 3px solid #8b5cf6; }
+        .line-explanation { background: rgba(6, 182, 212, 0.05); border-left: 2px solid #06b6d4; }
+        .why-box { background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(6, 182, 212, 0.05)); border-left: 3px solid #10b981; }
+        .warning-box { background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(234, 179, 8, 0.05)); border-left: 3px solid #f97316; }
+        .tip-box { background: linear-gradient(135deg, rgba(6, 182, 212, 0.05), rgba(139, 92, 246, 0.05)); border-left: 3px solid #06b6d4; }
+        .analogy-box { background: linear-gradient(135deg, rgba(236, 72, 153, 0.05), rgba(139, 92, 246, 0.05)); border: 1px dashed rgba(236, 72, 153, 0.3); }
+        .toc-item { border-left: 2px solid rgba(139, 92, 246, 0.2); transition: all 0.2s ease; }
+        .toc-item:hover { border-left-color: #8b5cf6; background: rgba(139, 92, 246, 0.05); }
+        .json-output { background: #0a0a0f; border: 1px solid rgba(6, 182, 212, 0.3); }
+        .json-input { background: #0a0a0f; border: 1px solid rgba(139, 92, 246, 0.3); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #8b5cf6, #ec4899); border-radius: 4px; }
+        .pulse-dot { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body class="font-body text-gray-200 min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-cyber-darker/90 backdrop-blur-lg border-b border-purple-900/20">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyber-purple to-cyber-pink flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <span class="font-display font-bold text-xl gradient-text">RAG Stack Tutorial</span>
+                </div>
+                <div class="hidden md:flex items-center gap-6 text-sm">
+                    <a href="#concepts" class="text-gray-400 hover:text-white transition">Concepts</a>
+                    <a href="#docker" class="text-gray-400 hover:text-white transition">Docker</a>
+                    <a href="#fastapi" class="text-gray-400 hover:text-white transition">FastAPI</a>
+                    <a href="#chromadb" class="text-gray-400 hover:text-white transition">ChromaDB</a>
+                    <a href="#langchain" class="text-gray-400 hover:text-white transition">LangChain</a>
+                    <a href="#playground" class="text-gray-400 hover:text-white transition">Playground</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="pt-32 pb-20 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-cyber-purple/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-cyber-pink/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyber-purple/10 border border-cyber-purple/30 mb-8">
+                <span class="w-2 h-2 rounded-full bg-cyber-green pulse-dot"></span>
+                <span class="text-sm text-gray-400">Complete Beginner-Friendly Tutorial with Line-by-Line Explanations</span>
+            </div>
+            <h1 class="font-display text-5xl md:text-7xl font-bold mb-6">Build <span class="gradient-text">AI-Powered</span> Apps</h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-10">Master <span class="text-cyber-purple">Ollama</span>, <span class="text-cyber-pink">ChromaDB</span>, <span class="text-cyber-cyan">LangChain</span>, and <span class="text-cyber-green">FastAPI</span> with detailed explanations for every line of code!</p>
+            <a href="#concepts" class="btn-primary px-8 py-3 rounded-lg font-medium text-white inline-block">Start Learning →</a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pb-20">
+        <!-- Table of Contents -->
+        <section class="mb-16">
+            <div class="glow-card rounded-2xl p-8">
+                <h2 class="font-display text-2xl font-bold mb-6 flex items-center gap-3">📚 Table of Contents</h2>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <a href="#concepts" class="toc-item p-4 rounded-lg"><span class="step-number font-mono font-bold">01</span><h3 class="font-medium mt-1">Core Concepts</h3><p class="text-sm text-gray-500">Ollama, ChromaDB, LangChain, RAG explained simply</p></a>
+                    <a href="#docker" class="toc-item p-4 rounded-lg"><span class="step-number font-mono font-bold">02</span><h3 class="font-medium mt-1">Docker Setup</h3><p class="text-sm text-gray-500">Complete docker-compose with explanations</p></a>
+                    <a href="#fastapi" class="toc-item p-4 rounded-lg"><span class="step-number font-mono font-bold">03</span><h3 class="font-medium mt-1">FastAPI CRUD</h3><p class="text-sm text-gray-500">Models, schemas, and endpoints explained</p></a>
+                    <a href="#chromadb" class="toc-item p-4 rounded-lg"><span class="step-number font-mono font-bold">04</span><h3 class="font-medium mt-1">ChromaDB</h3><p class="text-sm text-gray-500">Vector storage and similarity search</p></a>
+                    <a href="#langchain" class="toc-item p-4 rounded-lg"><span class="step-number font-mono font-bold">05</span><h3 class="font-medium mt-1">LangChain RAG</h3><p class="text-sm text-gray-500">Building the AI pipeline</p></a>
+                    <a href="#playground" class="toc-item p-4 rounded-lg"><span class="step-number font-mono font-bold">06</span><h3 class="font-medium mt-1">Playground</h3><p class="text-sm text-gray-500">Test JSON inputs/outputs interactively</p></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Concepts -->
+        <section id="concepts" class="mb-20 scroll-mt-24">
+            <h2 class="font-display text-3xl font-bold mb-8 flex items-center gap-3"><span class="step-number font-mono">01</span> Core Concepts</h2>
+            
+            <div class="explanation-box rounded-xl p-6 mb-8">
+                <h3 class="font-display font-bold text-lg mb-4">📖 Before We Start: The Big Picture</h3>
+                <p class="text-gray-300 mb-4">Imagine building a <strong>smart assistant</strong> that answers questions about YOUR documents, code, or data. That's what a <strong>RAG (Retrieval-Augmented Generation)</strong> system does!</p>
+                <div class="analogy-box rounded-lg p-4">
+                    <p class="text-sm text-gray-300"><span class="text-cyber-pink font-medium">🎭 Think of it like a librarian:</span> When you ask a question, the librarian doesn't guess - they find relevant books, read the sections, then answer based on actual information!</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Ollama -->
+                <div class="glow-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyber-purple/20 to-cyber-purple/5 flex items-center justify-center border border-cyber-purple/30"><span class="text-2xl">🦙</span></div>
+                        <div><h3 class="font-display font-bold text-xl text-cyber-purple">Ollama</h3><span class="text-xs bg-cyber-purple/10 text-cyber-purple px-2 py-1 rounded-full">Local LLM Runner</span></div>
+                    </div>
+                    <div class="why-box rounded-lg p-4 mb-4">
+                        <p class="text-sm text-gray-300"><span class="text-cyber-green font-medium">🤔 Why?</span> Run AI models on YOUR computer - free, private, no API costs!</p>
+                    </div>
+                    <h4 class="font-medium text-sm text-gray-300 mb-2">🔑 Key Points:</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>▸ <strong>Local models:</strong> Llama 2, Mistral, CodeLlama run on your machine</li>
+                        <li>▸ <strong>Free:</strong> No API keys, no usage limits, no data leaving your computer</li>
+                        <li>▸ <strong>Simple:</strong> One command: <code class="font-mono bg-cyber-dark px-2 py-0.5 rounded">ollama run llama2</code></li>
+                        <li>▸ <strong>Compatible:</strong> Same API format as OpenAI - easy to switch</li>
+                    </ul>
+                </div>
+
+                <!-- ChromaDB -->
+                <div class="glow-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyber-pink/20 to-cyber-pink/5 flex items-center justify-center border border-cyber-pink/30"><span class="text-2xl">🔮</span></div>
+                        <div><h3 class="font-display font-bold text-xl text-cyber-pink">ChromaDB</h3><span class="text-xs bg-cyber-pink/10 text-cyber-pink px-2 py-1 rounded-full">Vector Database</span></div>
+                    </div>
+                    <div class="why-box rounded-lg p-4 mb-4">
+                        <p class="text-sm text-gray-300"><span class="text-cyber-green font-medium">🤔 Why?</span> Find similar content by meaning, not just matching words!</p>
+                    </div>
+                    <h4 class="font-medium text-sm text-gray-300 mb-2">🔑 Key Points:</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>▸ <strong>Embeddings:</strong> Converts text → numbers that capture meaning</li>
+                        <li>▸ <strong>Similarity search:</strong> "API endpoint" finds "REST route" too!</li>
+                        <li>▸ <strong>Metadata:</strong> Store tags, dates, sources with each document</li>
+                        <li>▸ <strong>Fast:</strong> Quickly find relevant docs from thousands</li>
+                    </ul>
+                </div>
+
+                <!-- LangChain -->
+                <div class="glow-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyber-cyan/20 to-cyber-cyan/5 flex items-center justify-center border border-cyber-cyan/30"><span class="text-2xl">🔗</span></div>
+                        <div><h3 class="font-display font-bold text-xl text-cyber-cyan">LangChain</h3><span class="text-xs bg-cyber-cyan/10 text-cyber-cyan px-2 py-1 rounded-full">AI Framework</span></div>
+                    </div>
+                    <div class="why-box rounded-lg p-4 mb-4">
+                        <p class="text-sm text-gray-300"><span class="text-cyber-green font-medium">🤔 Why?</span> Connect all the pieces (search → format → AI) without writing everything from scratch!</p>
+                    </div>
+                    <h4 class="font-medium text-sm text-gray-300 mb-2">🔑 Key Points:</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>▸ <strong>Chains:</strong> Link steps together (search → prompt → generate)</li>
+                        <li>▸ <strong>Agents:</strong> Let AI decide which tools to use</li>
+                        <li>▸ <strong>Retrievers:</strong> Built-in ChromaDB support</li>
+                        <li>▸ <strong>Integrations:</strong> Works with Ollama, OpenAI, 100+ tools</li>
+                    </ul>
+                </div>
+
+                <!-- RAG -->
+                <div class="glow-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyber-green/20 to-cyber-green/5 flex items-center justify-center border border-cyber-green/30"><span class="text-2xl">🧠</span></div>
+                        <div><h3 class="font-display font-bold text-xl text-cyber-green">RAG</h3><span class="text-xs bg-cyber-green/10 text-cyber-green px-2 py-1 rounded-full">Design Pattern</span></div>
+                    </div>
+                    <div class="why-box rounded-lg p-4 mb-4">
+                        <p class="text-sm text-gray-300"><span class="text-cyber-green font-medium">🤔 Why?</span> AI can "hallucinate" (make stuff up). RAG gives it REAL facts first!</p>
+                    </div>
+                    <h4 class="font-medium text-sm text-gray-300 mb-2">🔑 The RAG Process:</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><span class="inline-block w-6 h-6 rounded-full bg-cyber-green/20 text-cyber-green text-xs text-center leading-6 font-bold mr-2">R</span><strong>Retrieve:</strong> Search ChromaDB for related docs</li>
+                        <li><span class="inline-block w-6 h-6 rounded-full bg-cyber-green/20 text-cyber-green text-xs text-center leading-6 font-bold mr-2">A</span><strong>Augment:</strong> Add docs to the AI prompt as context</li>
+                        <li><span class="inline-block w-6 h-6 rounded-full bg-cyber-green/20 text-cyber-green text-xs text-center leading-6 font-bold mr-2">G</span><strong>Generate:</strong> AI answers using the real data!</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Docker Setup -->
+        <section id="docker" class="mb-20 scroll-mt-24">
+            <h2 class="font-display text-3xl font-bold mb-8 flex items-center gap-3"><span class="step-number font-mono">02</span> Docker Setup</h2>
+            
+            <div class="explanation-box rounded-xl p-6 mb-8">
+                <h3 class="font-display font-bold text-lg mb-4">🐳 Why Docker? What is Docker Compose?</h3>
+                <p class="text-gray-300 mb-4">Our app needs 4 services: PostgreSQL, Ollama, ChromaDB, and FastAPI. Installing each manually = nightmare! Docker packages everything into containers.</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-cyber-dark/50 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-cyan mb-2">🐳 Docker</h4>
+                        <p class="text-sm text-gray-400">Packages apps into "containers" - self-contained boxes with everything needed to run.</p>
+                    </div>
+                    <div class="bg-cyber-dark/50 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-pink mb-2">📦 Docker Compose</h4>
+                        <p class="text-sm text-gray-400">Define multiple containers in one file. One command starts everything!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Docker Compose Code -->
+            <div class="glow-card rounded-2xl overflow-hidden mb-6">
+                <div class="terminal-header px-4 py-3 flex items-center gap-2">
+                    <div class="terminal-dot bg-red-500"></div>
+                    <div class="terminal-dot bg-yellow-500"></div>
+                    <div class="terminal-dot bg-green-500"></div>
+                    <span class="ml-3 text-sm text-gray-400 font-mono">docker-compose.yml</span>
+                </div>
+                <div class="code-block p-6 overflow-x-auto">
+                    <pre class="font-mono text-sm text-gray-300"><code><span class="text-cyber-purple">version</span>: <span class="text-cyber-green">'3.8'</span>
+
+<span class="text-cyber-purple">services</span>:
+  <span class="text-cyber-pink">postgres</span>:
+    <span class="text-cyber-purple">image</span>: postgres:15-alpine
+    <span class="text-cyber-purple">environment</span>:
+      POSTGRES_USER: raguser
+      POSTGRES_PASSWORD: ragpass123
+      POSTGRES_DB: ragdb
+    <span class="text-cyber-purple">ports</span>:
+      - <span class="text-cyber-green">"5432:5432"</span>
+    <span class="text-cyber-purple">volumes</span>:
+      - postgres_data:/var/lib/postgresql/data
+
+  <span class="text-cyber-pink">ollama</span>:
+    <span class="text-cyber-purple">image</span>: ollama/ollama:latest
+    <span class="text-cyber-purple">ports</span>:
+      - <span class="text-cyber-green">"11434:11434"</span>
+    <span class="text-cyber-purple">volumes</span>:
+      - ollama_data:/root/.ollama
+
+  <span class="text-cyber-pink">chromadb</span>:
+    <span class="text-cyber-purple">image</span>: chromadb/chroma:latest
+    <span class="text-cyber-purple">ports</span>:
+      - <span class="text-cyber-green">"8000:8000"</span>
+    <span class="text-cyber-purple">volumes</span>:
+      - chroma_data:/chroma/chroma
+    <span class="text-cyber-purple">environment</span>:
+      - IS_PERSISTENT=TRUE
+
+  <span class="text-cyber-pink">api</span>:
+    <span class="text-cyber-purple">build</span>: ./app
+    <span class="text-cyber-purple">ports</span>:
+      - <span class="text-cyber-green">"8080:8080"</span>
+    <span class="text-cyber-purple">depends_on</span>:
+      - postgres
+      - chromadb
+      - ollama
+    <span class="text-cyber-purple">environment</span>:
+      - DATABASE_URL=postgresql://raguser:ragpass123@postgres:5432/ragdb
+      - CHROMA_HOST=chromadb
+      - OLLAMA_HOST=ollama
+
+<span class="text-cyber-purple">volumes</span>:
+  postgres_data:
+  ollama_data:
+  chroma_data:</code></pre>
+                </div>
+            </div>
+
+            <!-- Line-by-Line Explanation -->
+            <div class="glow-card rounded-2xl p-6">
+                <h3 class="font-display font-bold text-lg mb-4">📝 Line-by-Line Explanation</h3>
+                <div class="space-y-4">
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm text-cyber-purple">version: '3.8'</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>What:</strong> Docker Compose file format version. 3.8 is modern and stable.</p>
+                    </div>
+                    
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-green mb-3">🐘 PostgreSQL Service</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">image: postgres:15-alpine</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>image:</strong> Pre-built container to use | <strong>postgres:</strong> Official PostgreSQL | <strong>15:</strong> Version 15 | <strong>alpine:</strong> Lightweight Linux (smaller download)</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">environment: POSTGRES_USER, PASSWORD, DB</code>
+                                <p class="text-xs text-gray-400 mt-1">Environment variables that configure the database. PostgreSQL reads these on startup to create the user and database automatically!</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">ports: - "5432:5432"</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>Format:</strong> "YOUR_COMPUTER:CONTAINER" - Maps port 5432 on your machine to 5432 inside Docker. Now you can connect from outside!</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">volumes: - postgres_data:/var/lib/postgresql/data</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>Critical!</strong> Volumes persist data when containers stop. Without this, your database would be EMPTY on every restart!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-purple mb-3">🦙 Ollama Service</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">image: ollama/ollama:latest</code>
+                                <p class="text-xs text-gray-400 mt-1">Official Ollama image. <strong>:latest</strong> = always get newest version.</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">ports: - "11434:11434"</code>
+                                <p class="text-xs text-gray-400 mt-1">Ollama's API port. Our FastAPI app will call this to generate AI responses.</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">volumes: - ollama_data:/root/.ollama</code>
+                                <p class="text-xs text-gray-400 mt-1">Stores downloaded AI models (~4GB each). Without this, you'd re-download every restart!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-pink mb-3">🔮 ChromaDB Service</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">environment: - IS_PERSISTENT=TRUE</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>Super important!</strong> Without this, ChromaDB runs in memory only = all embeddings lost on restart!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-green mb-3">⚡ FastAPI Service</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">build: ./app</code>
+                                <p class="text-xs text-gray-400 mt-1">Instead of using a pre-built image, <strong>build</strong> our own from a Dockerfile in the ./app folder. This is YOUR code!</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">depends_on: - postgres - chromadb - ollama</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>Start order:</strong> Docker starts these services BEFORE our API. Ensures databases are ready!</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">environment: DATABASE_URL=postgresql://...@postgres:5432/ragdb</code>
+                                <p class="text-xs text-gray-400 mt-1">Connection strings use <strong>service names</strong> as hostnames! Inside Docker, "postgres" resolves to the PostgreSQL container's IP.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Commands -->
+            <div class="glow-card rounded-2xl p-6 mt-6">
+                <h3 class="font-display font-bold text-lg mb-4">⚡ Quick Start Commands</h3>
+                <div class="space-y-3">
+                    <div class="code-block rounded-lg p-4">
+                        <p class="text-xs text-gray-500 mb-2"># Start everything (first run downloads images ~5-10 min)</p>
+                        <code class="font-mono text-cyber-green">docker-compose up -d</code>
+                    </div>
+                    <div class="code-block rounded-lg p-4">
+                        <p class="text-xs text-gray-500 mb-2"># Download AI model into Ollama</p>
+                        <code class="font-mono text-cyber-green">docker exec -it ollama ollama pull llama2</code>
+                    </div>
+                    <div class="code-block rounded-lg p-4">
+                        <p class="text-xs text-gray-500 mb-2"># Check if everything is running</p>
+                        <code class="font-mono text-cyber-green">docker-compose ps</code>
+                    </div>
+                    <div class="code-block rounded-lg p-4">
+                        <p class="text-xs text-gray-500 mb-2"># View API logs</p>
+                        <code class="font-mono text-cyber-green">docker-compose logs -f api</code>
+                    </div>
+                    <div class="code-block rounded-lg p-4">
+                        <p class="text-xs text-gray-500 mb-2"># Stop everything</p>
+                        <code class="font-mono text-cyber-green">docker-compose down</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: FastAPI CRUD -->
+        <section id="fastapi" class="mb-20 scroll-mt-24">
+            <h2 class="font-display text-3xl font-bold mb-8 flex items-center gap-3"><span class="step-number font-mono">03</span> FastAPI CRUD Operations</h2>
+            
+            <div class="explanation-box rounded-xl p-6 mb-8">
+                <h3 class="font-display font-bold text-lg mb-4">🎯 What is CRUD?</h3>
+                <p class="text-gray-300 mb-4">Almost every app needs these 4 operations to manage data:</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center p-3 bg-cyber-green/10 rounded-lg border border-cyber-green/30">
+                        <span class="text-2xl font-bold text-cyber-green">C</span>
+                        <p class="text-sm text-gray-400 mt-1">Create<br><span class="text-xs">(POST)</span></p>
+                    </div>
+                    <div class="text-center p-3 bg-cyber-cyan/10 rounded-lg border border-cyber-cyan/30">
+                        <span class="text-2xl font-bold text-cyber-cyan">R</span>
+                        <p class="text-sm text-gray-400 mt-1">Read<br><span class="text-xs">(GET)</span></p>
+                    </div>
+                    <div class="text-center p-3 bg-cyber-yellow/10 rounded-lg border border-cyber-yellow/30">
+                        <span class="text-2xl font-bold text-cyber-yellow">U</span>
+                        <p class="text-sm text-gray-400 mt-1">Update<br><span class="text-xs">(PUT)</span></p>
+                    </div>
+                    <div class="text-center p-3 bg-cyber-pink/10 rounded-lg border border-cyber-pink/30">
+                        <span class="text-2xl font-bold text-cyber-pink">D</span>
+                        <p class="text-sm text-gray-400 mt-1">Delete<br><span class="text-xs">(DELETE)</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Models Code -->
+            <div class="glow-card rounded-2xl overflow-hidden mb-6">
+                <div class="terminal-header px-4 py-3 flex items-center gap-2">
+                    <div class="terminal-dot bg-red-500"></div>
+                    <div class="terminal-dot bg-yellow-500"></div>
+                    <div class="terminal-dot bg-green-500"></div>
+                    <span class="ml-3 text-sm text-gray-400 font-mono">models.py - Database Models</span>
+                </div>
+                <div class="code-block p-6 overflow-x-auto">
+                    <pre class="font-mono text-sm text-gray-300"><code><span class="text-cyber-pink">from</span> sqlalchemy <span class="text-cyber-pink">import</span> Column, Integer, String, Text, DateTime
+<span class="text-cyber-pink">from</span> sqlalchemy.ext.declarative <span class="text-cyber-pink">import</span> declarative_base
+<span class="text-cyber-pink">from</span> pydantic <span class="text-cyber-pink">import</span> BaseModel
+<span class="text-cyber-pink">from</span> typing <span class="text-cyber-pink">import</span> Optional
+<span class="text-cyber-pink">from</span> datetime <span class="text-cyber-pink">import</span> datetime
+
+Base = declarative_base()
+
+<span class="text-cyber-cyan"># Database Table Definition</span>
+<span class="text-cyber-purple">class</span> <span class="text-cyber-green">CodeSnippet</span>(Base):
+    __tablename__ = <span class="text-cyber-yellow">"code_snippets"</span>
+    
+    id = Column(Integer, primary_key=<span class="text-cyber-orange">True</span>, index=<span class="text-cyber-orange">True</span>)
+    title = Column(String(<span class="text-cyber-orange">255</span>), nullable=<span class="text-cyber-orange">False</span>)
+    description = Column(Text)
+    code = Column(Text, nullable=<span class="text-cyber-orange">False</span>)
+    language = Column(String(<span class="text-cyber-orange">50</span>), default=<span class="text-cyber-yellow">"python"</span>)
+    tags = Column(String(<span class="text-cyber-orange">255</span>))
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+<span class="text-cyber-cyan"># API Input Schema (what users send)</span>
+<span class="text-cyber-purple">class</span> <span class="text-cyber-green">SnippetCreate</span>(BaseModel):
+    title: str
+    description: Optional[str] = <span class="text-cyber-orange">None</span>
+    code: str
+    language: str = <span class="text-cyber-yellow">"python"</span>
+    tags: Optional[str] = <span class="text-cyber-orange">None</span>
+
+<span class="text-cyber-cyan"># API Output Schema (what API returns)</span>
+<span class="text-cyber-purple">class</span> <span class="text-cyber-green">SnippetResponse</span>(BaseModel):
+    id: int
+    title: str
+    description: Optional[str]
+    code: str
+    language: str
+    tags: Optional[str]
+    created_at: datetime
+    
+    <span class="text-cyber-purple">class</span> <span class="text-cyber-green">Config</span>:
+        from_attributes = <span class="text-cyber-orange">True</span></code></pre>
+                </div>
+            </div>
+
+            <!-- Models Explanation -->
+            <div class="glow-card rounded-2xl p-6 mb-6">
+                <h3 class="font-display font-bold text-lg mb-4">📝 models.py Explained</h3>
+                <div class="space-y-4">
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-green mb-3">🗄️ SQLAlchemy Model (Database Table)</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">class CodeSnippet(Base):</code>
+                                <p class="text-xs text-gray-400 mt-1">This Python class = a database table. Each instance = one row.</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">__tablename__ = "code_snippets"</code>
+                                <p class="text-xs text-gray-400 mt-1">Actual table name in PostgreSQL. Convention: lowercase_with_underscores</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">id = Column(Integer, primary_key=True, index=True)</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>primary_key:</strong> Unique ID, auto-increments (1,2,3...) | <strong>index:</strong> Faster lookups</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">title = Column(String(255), nullable=False)</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>String(255):</strong> Up to 255 chars | <strong>nullable=False:</strong> REQUIRED field</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">created_at = Column(DateTime, default=datetime.utcnow)</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>default:</strong> Auto-fills with current time when row is created!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-pink mb-3">✅ Pydantic Schemas (API Validation)</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">class SnippetCreate(BaseModel):</code>
+                                <p class="text-xs text-gray-400 mt-1">Validates data when <strong>creating</strong>. User doesn't provide id (auto-generated).</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">title: str</code>
+                                <p class="text-xs text-gray-400 mt-1">Required string field. No default = must provide!</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">description: Optional[str] = None</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>Optional:</strong> Can be string OR None | <strong>= None:</strong> Default if not provided</p>
+                            </div>
+                            <div class="line-explanation rounded p-3">
+                                <code class="font-mono text-xs">class Config: from_attributes = True</code>
+                                <p class="text-xs text-gray-400 mt-1"><strong>Magic!</strong> Lets Pydantic read directly from SQLAlchemy objects.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FastAPI Routes Code -->
+            <div class="glow-card rounded-2xl overflow-hidden mb-6">
+                <div class="terminal-header px-4 py-3 flex items-center gap-2">
+                    <div class="terminal-dot bg-red-500"></div>
+                    <div class="terminal-dot bg-yellow-500"></div>
+                    <div class="terminal-dot bg-green-500"></div>
+                    <span class="ml-3 text-sm text-gray-400 font-mono">main.py - FastAPI Endpoints</span>
+                </div>
+                <div class="code-block p-6 overflow-x-auto">
+                    <pre class="font-mono text-sm text-gray-300"><code><span class="text-cyber-pink">from</span> fastapi <span class="text-cyber-pink">import</span> FastAPI, Depends, HTTPException
+<span class="text-cyber-pink">from</span> sqlalchemy.orm <span class="text-cyber-pink">import</span> Session
+<span class="text-cyber-pink">from</span> database <span class="text-cyber-pink">import</span> get_db, engine
+<span class="text-cyber-pink">from</span> models <span class="text-cyber-pink">import</span> Base, SnippetCreate, SnippetResponse, CodeSnippet
+
+Base.metadata.create_all(bind=engine)  <span class="text-cyber-cyan"># Create tables!</span>
+
+app = FastAPI(title=<span class="text-cyber-yellow">"RAG Snippets API"</span>)
+
+<span class="text-cyber-cyan"># CREATE - Add new snippet</span>
+<span class="text-cyber-orange">@app.post</span>(<span class="text-cyber-yellow">"/snippets/"</span>, response_model=SnippetResponse)
+<span class="text-cyber-purple">def</span> <span class="text-cyber-green">create_snippet</span>(snippet: SnippetCreate, db: Session = Depends(get_db)):
+    db_snippet = CodeSnippet(**snippet.model_dump())
+    db.add(db_snippet)
+    db.commit()
+    db.refresh(db_snippet)
+    <span class="text-cyber-pink">return</span> db_snippet
+
+<span class="text-cyber-cyan"># READ - Get all snippets</span>
+<span class="text-cyber-orange">@app.get</span>(<span class="text-cyber-yellow">"/snippets/"</span>, response_model=list[SnippetResponse])
+<span class="text-cyber-purple">def</span> <span class="text-cyber-green">read_snippets</span>(skip: int = <span class="text-cyber-orange">0</span>, limit: int = <span class="text-cyber-orange">100</span>, db: Session = Depends(get_db)):
+    <span class="text-cyber-pink">return</span> db.query(CodeSnippet).offset(skip).limit(limit).all()
+
+<span class="text-cyber-cyan"># READ - Get one snippet</span>
+<span class="text-cyber-orange">@app.get</span>(<span class="text-cyber-yellow">"/snippets/{snippet_id}"</span>, response_model=SnippetResponse)
+<span class="text-cyber-purple">def</span> <span class="text-cyber-green">read_snippet</span>(snippet_id: int, db: Session = Depends(get_db)):
+    snippet = db.query(CodeSnippet).filter(CodeSnippet.id == snippet_id).first()
+    <span class="text-cyber-pink">if not</span> snippet:
+        <span class="text-cyber-pink">raise</span> HTTPException(status_code=<span class="text-cyber-orange">404</span>, detail=<span class="text-cyber-yellow">"Not found"</span>)
+    <span class="text-cyber-pink">return</span> snippet
+
+<span class="text-cyber-cyan"># DELETE - Remove snippet</span>
+<span class="text-cyber-orange">@app.delete</span>(<span class="text-cyber-yellow">"/snippets/{snippet_id}"</span>)
+<span class="text-cyber-purple">def</span> <span class="text-cyber-green">delete_snippet</span>(snippet_id: int, db: Session = Depends(get_db)):
+    snippet = db.query(CodeSnippet).filter(CodeSnippet.id == snippet_id).first()
+    <span class="text-cyber-pink">if not</span> snippet:
+        <span class="text-cyber-pink">raise</span> HTTPException(status_code=<span class="text-cyber-orange">404</span>, detail=<span class="text-cyber-yellow">"Not found"</span>)
+    db.delete(snippet)
+    db.commit()
+    <span class="text-cyber-pink">return</span> {<span class="text-cyber-yellow">"message"</span>: <span class="text-cyber-yellow">"Deleted!"</span>}</code></pre>
+                </div>
+            </div>
+
+            <!-- main.py Explanation -->
+            <div class="glow-card rounded-2xl p-6">
+                <h3 class="font-display font-bold text-lg mb-4">📝 main.py Explained</h3>
+                <div class="space-y-4">
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">Base.metadata.create_all(bind=engine)</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>Magic line!</strong> Looks at all your models and creates actual database tables. Run once on startup.</p>
+                    </div>
+                    
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">@app.post("/snippets/", response_model=SnippetResponse)</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>@app.post:</strong> Handles POST requests | <strong>response_model:</strong> Auto-formats output to match SnippetResponse</p>
+                    </div>
+                    
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">snippet: SnippetCreate</code>
+                        <p class="text-sm text-gray-400 mt-2">FastAPI auto: 1) Reads JSON body 2) Validates against schema 3) Returns 422 if invalid 4) Passes to your function</p>
+                    </div>
+                    
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">db: Session = Depends(get_db)</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>Dependency Injection!</strong> Automatically creates fresh DB connection per request, cleans up after.</p>
+                    </div>
+                    
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">db.add() → db.commit() → db.refresh()</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>add:</strong> Stage for saving | <strong>commit:</strong> Actually save | <strong>refresh:</strong> Get auto-generated values (id, created_at)</p>
+                    </div>
+                    
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">raise HTTPException(status_code=404, detail="Not found")</code>
+                        <p class="text-sm text-gray-400 mt-2">Return error response. Common codes: 400 (bad request), 404 (not found), 500 (server error)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: ChromaDB -->
+        <section id="chromadb" class="mb-20 scroll-mt-24">
+            <h2 class="font-display text-3xl font-bold mb-8 flex items-center gap-3"><span class="step-number font-mono">04</span> ChromaDB Integration</h2>
+            
+            <div class="explanation-box rounded-xl p-6 mb-8">
+                <h3 class="font-display font-bold text-lg mb-4">🔮 How Embeddings Work</h3>
+                <p class="text-gray-300 mb-4">ChromaDB stores text as <strong>embeddings</strong> - lists of numbers that represent meaning. Similar meanings = similar numbers!</p>
+                <div class="analogy-box rounded-lg p-4">
+                    <p class="text-sm text-gray-300"><span class="text-cyber-pink font-medium">🎭 Analogy:</span> Organizing books not by title, but by <strong>what they're about</strong>. "Cooking pasta" is near "Italian recipes" even though words differ - same meaning!</p>
+                </div>
+            </div>
+
+            <div class="glow-card rounded-2xl overflow-hidden mb-6">
+                <div class="terminal-header px-4 py-3 flex items-center gap-2">
+                    <div class="terminal-dot bg-red-500"></div>
+                    <div class="terminal-dot bg-yellow-500"></div>
+                    <div class="terminal-dot bg-green-500"></div>
+                    <span class="ml-3 text-sm text-gray-400 font-mono">chroma_service.py</span>
+                </div>
+                <div class="code-block p-6 overflow-x-auto">
+                    <pre class="font-mono text-sm text-gray-300"><code><span class="text-cyber-pink">import</span> chromadb
+<span class="text-cyber-pink">import</span> os
+
+<span class="text-cyber-purple">class</span> <span class="text-cyber-green">ChromaService</span>:
+    <span class="text-cyber-purple">def</span> <span class="text-cyber-green">__init__</span>(self):
+        <span class="text-cyber-cyan"># Connect to ChromaDB server</span>
+        self.client = chromadb.HttpClient(
+            host=os.getenv(<span class="text-cyber-yellow">"CHROMA_HOST"</span>, <span class="text-cyber-yellow">"localhost"</span>),
+            port=<span class="text-cyber-orange">8000</span>
+        )
+        <span class="text-cyber-cyan"># Get or create collection</span>
+        self.collection = self.client.get_or_create_collection(
+            name=<span class="text-cyber-yellow">"code_snippets"</span>
+        )
+    
+    <span class="text-cyber-purple">def</span> <span class="text-cyber-green">add_snippet</span>(self, snippet_id: int, title: str, code: str, 
+                      description: str = <span class="text-cyber-yellow">""</span>, tags: str = <span class="text-cyber-yellow">""</span>):
+        <span class="text-cyber-cyan"># Combine all text for embedding</span>
+        document = f<span class="text-cyber-yellow">"{title}\n{description}\n{code}"</span>
+        
+        self.collection.add(
+            documents=[document],           <span class="text-cyber-cyan"># Text to embed</span>
+            metadatas=[{<span class="text-cyber-yellow">"title"</span>: title, <span class="text-cyber-yellow">"tags"</span>: tags}],  <span class="text-cyber-cyan"># Extra info</span>
+            ids=[f<span class="text-cyber-yellow">"snippet_{snippet_id}"</span>]   <span class="text-cyber-cyan"># Unique ID</span>
+        )
+    
+    <span class="text-cyber-purple">def</span> <span class="text-cyber-green">search_snippets</span>(self, query: str, n_results: int = <span class="text-cyber-orange">5</span>):
+        <span class="text-cyber-cyan"># Find similar documents</span>
+        results = self.collection.query(
+            query_texts=[query],    <span class="text-cyber-cyan"># Your question</span>
+            n_results=n_results     <span class="text-cyber-cyan"># Top N matches</span>
+        )
+        <span class="text-cyber-pink">return</span> results
+    
+    <span class="text-cyber-purple">def</span> <span class="text-cyber-green">delete_snippet</span>(self, snippet_id: int):
+        self.collection.delete(ids=[f<span class="text-cyber-yellow">"snippet_{snippet_id}"</span>])</code></pre>
+                </div>
+            </div>
+
+            <div class="glow-card rounded-2xl p-6">
+                <h3 class="font-display font-bold text-lg mb-4">📝 ChromaDB Explained</h3>
+                <div class="space-y-4">
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">self.client = chromadb.HttpClient(host=..., port=8000)</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>HttpClient:</strong> Connects to ChromaDB running in Docker. Uses service name from docker-compose!</p>
+                    </div>
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">self.collection = self.client.get_or_create_collection(name="code_snippets")</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>Collection:</strong> Like a database table. <strong>get_or_create:</strong> Gets existing or creates new. Safe to call multiple times!</p>
+                    </div>
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">self.collection.add(documents=[...], metadatas=[...], ids=[...])</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>documents:</strong> Text to embed | <strong>metadatas:</strong> Extra info (not embedded) | <strong>ids:</strong> Unique identifiers for updates/deletes</p>
+                    </div>
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">self.collection.query(query_texts=[query], n_results=5)</code>
+                        <p class="text-sm text-gray-400 mt-2">Query → Embedding → Find nearest vectors → Return top 5 most similar documents!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: LangChain -->
+        <section id="langchain" class="mb-20 scroll-mt-24">
+            <h2 class="font-display text-3xl font-bold mb-8 flex items-center gap-3"><span class="step-number font-mono">05</span> LangChain RAG Chain</h2>
+            
+            <div class="explanation-box rounded-xl p-6 mb-8">
+                <h3 class="font-display font-bold text-lg mb-4">🔗 The RAG Pipeline</h3>
+                <p class="text-gray-300 mb-4">LangChain ties everything together: takes question → retrieves docs → formats prompt → calls AI → returns answer.</p>
+                <div class="flex flex-wrap items-center gap-2 text-sm mt-4">
+                    <span class="bg-cyber-purple/20 text-cyber-purple px-3 py-1 rounded">Question</span>
+                    <span class="text-gray-500">→</span>
+                    <span class="bg-cyber-pink/20 text-cyber-pink px-3 py-1 rounded">Retriever</span>
+                    <span class="text-gray-500">→</span>
+                    <span class="bg-cyber-cyan/20 text-cyber-cyan px-3 py-1 rounded">Prompt</span>
+                    <span class="text-gray-500">→</span>
+                    <span class="bg-cyber-green/20 text-cyber-green px-3 py-1 rounded">LLM</span>
+                    <span class="text-gray-500">→</span>
+                    <span class="bg-cyber-yellow/20 text-cyber-yellow px-3 py-1 rounded">Answer!</span>
+                </div>
+            </div>
+
+            <div class="glow-card rounded-2xl overflow-hidden mb-6">
+                <div class="terminal-header px-4 py-3 flex items-center gap-2">
+                    <div class="terminal-dot bg-red-500"></div>
+                    <div class="terminal-dot bg-yellow-500"></div>
+                    <div class="terminal-dot bg-green-500"></div>
+                    <span class="ml-3 text-sm text-gray-400 font-mono">langchain_service.py</span>
+                </div>
+                <div class="code-block p-6 overflow-x-auto">
+                    <pre class="font-mono text-sm text-gray-300"><code><span class="text-cyber-pink">from</span> langchain_community.llms <span class="text-cyber-pink">import</span> Ollama
+<span class="text-cyber-pink">from</span> langchain_community.vectorstores <span class="text-cyber-pink">import</span> Chroma
+<span class="text-cyber-pink">from</span> langchain_community.embeddings <span class="text-cyber-pink">import</span> OllamaEmbeddings
+<span class="text-cyber-pink">from</span> langchain.chains <span class="text-cyber-pink">import</span> RetrievalQA
+<span class="text-cyber-pink">from</span> langchain.prompts <span class="text-cyber-pink">import</span> PromptTemplate
+<span class="text-cyber-pink">import</span> chromadb, os
+
+<span class="text-cyber-purple">class</span> <span class="text-cyber-green">RAGService</span>:
+    <span class="text-cyber-purple">def</span> <span class="text-cyber-green">__init__</span>(self):
+        <span class="text-cyber-cyan"># 1. Initialize Ollama LLM</span>
+        self.llm = Ollama(
+            model=<span class="text-cyber-yellow">"llama2"</span>,
+            base_url=f<span class="text-cyber-yellow">"http://{os.getenv('OLLAMA_HOST', 'localhost')}:11434"</span>
+        )
+        
+        <span class="text-cyber-cyan"># 2. Initialize embeddings</span>
+        self.embeddings = OllamaEmbeddings(
+            model=<span class="text-cyber-yellow">"llama2"</span>,
+            base_url=f<span class="text-cyber-yellow">"http://{os.getenv('OLLAMA_HOST', 'localhost')}:11434"</span>
+        )
+        
+        <span class="text-cyber-cyan"># 3. Connect to ChromaDB</span>
+        self.vectorstore = Chroma(
+            collection_name=<span class="text-cyber-yellow">"code_snippets"</span>,
+            embedding_function=self.embeddings,
+            client=chromadb.HttpClient(
+                host=os.getenv(<span class="text-cyber-yellow">"CHROMA_HOST"</span>, <span class="text-cyber-yellow">"localhost"</span>), port=<span class="text-cyber-orange">8000</span>
+            )
+        )
+        
+        <span class="text-cyber-cyan"># 4. Create retriever</span>
+        self.retriever = self.vectorstore.as_retriever(search_kwargs={<span class="text-cyber-yellow">"k"</span>: <span class="text-cyber-orange">3</span>})
+        
+        <span class="text-cyber-cyan"># 5. Custom prompt template</span>
+        self.prompt = PromptTemplate(
+            input_variables=[<span class="text-cyber-yellow">"context"</span>, <span class="text-cyber-yellow">"question"</span>],
+            template=<span class="text-cyber-yellow">"""Use these code snippets to answer:
+
+Context: {context}
+
+Question: {question}
+
+Answer: """</span>
+        )
+        
+        <span class="text-cyber-cyan"># 6. Build the RAG chain</span>
+        self.chain = RetrievalQA.from_chain_type(
+            llm=self.llm,
+            chain_type=<span class="text-cyber-yellow">"stuff"</span>,
+            retriever=self.retriever,
+            chain_type_kwargs={<span class="text-cyber-yellow">"prompt"</span>: self.prompt},
+            return_source_documents=<span class="text-cyber-orange">True</span>
+        )
+    
+    <span class="text-cyber-purple">def</span> <span class="text-cyber-green">query</span>(self, question: str):
+        result = self.chain.invoke({<span class="text-cyber-yellow">"query"</span>: question})
+        <span class="text-cyber-pink">return</span> {
+            <span class="text-cyber-yellow">"answer"</span>: result[<span class="text-cyber-yellow">"result"</span>],
+            <span class="text-cyber-yellow">"sources"</span>: [doc.metadata <span class="text-cyber-pink">for</span> doc <span class="text-cyber-pink">in</span> result[<span class="text-cyber-yellow">"source_documents"</span>]]
+        }</code></pre>
+                </div>
+            </div>
+
+            <div class="glow-card rounded-2xl p-6">
+                <h3 class="font-display font-bold text-lg mb-4">📝 LangChain Explained</h3>
+                <div class="space-y-4">
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">self.llm = Ollama(model="llama2", base_url="...")</code>
+                        <p class="text-sm text-gray-400 mt-2">LangChain wrapper for Ollama. Specify model and server URL.</p>
+                    </div>
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">self.embeddings = OllamaEmbeddings(model="llama2")</code>
+                        <p class="text-sm text-gray-400 mt-2">Creates embeddings using Ollama. Same model = consistent results.</p>
+                    </div>
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">self.retriever = self.vectorstore.as_retriever(search_kwargs={"k": 3})</code>
+                        <p class="text-sm text-gray-400 mt-2">Converts vector store to "retriever". <strong>k=3:</strong> Return top 3 similar docs.</p>
+                    </div>
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">PromptTemplate(input_variables=["context", "question"], template="...")</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>{context}:</strong> Replaced with retrieved docs | <strong>{question}:</strong> User's question</p>
+                    </div>
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">RetrievalQA.from_chain_type(chain_type="stuff", return_source_documents=True)</code>
+                        <p class="text-sm text-gray-400 mt-2"><strong>stuff:</strong> Put all docs in prompt | <strong>return_source_documents:</strong> Include which docs were used (for citations!)</p>
+                    </div>
+                    <div class="line-explanation rounded-lg p-4">
+                        <code class="font-mono text-sm">self.chain.invoke({"query": question})</code>
+                        <p class="text-sm text-gray-400 mt-2">Runs entire chain: Question → Retrieve → Format → Generate → Return answer + sources!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Playground -->
+        <section id="playground" class="mb-20 scroll-mt-24">
+            <h2 class="font-display text-3xl font-bold mb-8 flex items-center gap-3"><span class="step-number font-mono">06</span> JSON Playground</h2>
+            
+            <div class="explanation-box rounded-xl p-6 mb-8">
+                <h3 class="font-display font-bold text-lg mb-4">🎮 Test API Requests</h3>
+                <p class="text-gray-300">See what JSON the API expects and returns! Click an operation to see example inputs/outputs.</p>
+            </div>
+
+            <div class="glow-card rounded-2xl p-6">
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <button onclick="setPlayground('create')" class="btn-secondary px-4 py-2 rounded-lg text-sm font-medium playground-btn">POST /snippets/</button>
+                    <button onclick="setPlayground('read')" class="btn-secondary px-4 py-2 rounded-lg text-sm font-medium playground-btn">GET /snippets/</button>
+                    <button onclick="setPlayground('readOne')" class="btn-secondary px-4 py-2 rounded-lg text-sm font-medium playground-btn">GET /snippets/{id}</button>
+                    <button onclick="setPlayground('delete')" class="btn-secondary px-4 py-2 rounded-lg text-sm font-medium playground-btn">DELETE /snippets/{id}</button>
+                    <button onclick="setPlayground('query')" class="btn-secondary px-4 py-2 rounded-lg text-sm font-medium playground-btn">POST /query/</button>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-medium mb-3 flex items-center gap-2"><span class="text-cyber-purple">→</span> Request <span id="request-method" class="text-cyber-green font-mono text-sm"></span></h3>
+                        <textarea id="json-input" class="json-input w-full h-64 rounded-lg p-4 font-mono text-sm text-gray-300 focus:outline-none resize-none" placeholder="Select an operation above..."></textarea>
+                    </div>
+                    <div>
+                        <h3 class="font-medium mb-3 flex items-center gap-2"><span class="text-cyber-cyan">←</span> Response <span class="text-cyber-green font-mono text-sm">200 OK</span></h3>
+                        <textarea id="json-output" class="json-output w-full h-64 rounded-lg p-4 font-mono text-sm text-gray-300 focus:outline-none resize-none" readonly></textarea>
+                    </div>
+                </div>
+
+                <button onclick="simulateRequest()" class="btn-primary px-6 py-2 rounded-lg text-sm font-medium text-white mt-4">Simulate Request</button>
+            </div>
+        </section>
+
+        <!-- Snippets Upload Section -->
+        <section id="snippets" class="mb-20 scroll-mt-24">
+            <h2 class="font-display text-3xl font-bold mb-8 flex items-center gap-3"><span class="step-number font-mono">07</span> Upload Training Snippets</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="glow-card rounded-2xl p-6">
+                    <h3 class="font-display font-bold text-lg mb-4">📤 Add Snippet to ChromaDB</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Title</label>
+                            <input type="text" id="snippet-title" class="w-full bg-cyber-dark border border-cyber-purple/30 rounded-lg px-4 py-2 text-gray-200 focus:outline-none" placeholder="e.g., FastAPI GET endpoint">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Description</label>
+                            <input type="text" id="snippet-description" class="w-full bg-cyber-dark border border-cyber-purple/30 rounded-lg px-4 py-2 text-gray-200 focus:outline-none" placeholder="What this code does">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Tags (comma-separated)</label>
+                            <input type="text" id="snippet-tags" class="w-full bg-cyber-dark border border-cyber-purple/30 rounded-lg px-4 py-2 text-gray-200 focus:outline-none" placeholder="fastapi, crud, get">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Code</label>
+                            <textarea id="snippet-code" class="w-full h-32 bg-cyber-dark border border-cyber-purple/30 rounded-lg px-4 py-2 font-mono text-sm text-gray-200 focus:outline-none resize-none" placeholder="Paste code here..."></textarea>
+                        </div>
+                        <button onclick="addSnippet()" class="btn-primary w-full py-3 rounded-lg font-medium text-white">Add to Training Data</button>
+                    </div>
+                </div>
+
+                <div class="glow-card rounded-2xl p-6">
+                    <h3 class="font-display font-bold text-lg mb-4 flex items-center gap-2">📚 Stored Snippets <span id="snippet-count" class="ml-auto text-sm font-mono text-cyber-purple bg-cyber-purple/10 px-2 py-1 rounded">0</span></h3>
+                    <div id="snippets-list" class="space-y-3 max-h-80 overflow-y-auto">
+                        <div class="text-gray-500 text-sm text-center py-8">No snippets yet. Add your first!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Query Interface -->
+            <div class="glow-card rounded-2xl p-6 mt-6">
+                <h3 class="font-display font-bold text-lg mb-4">🔍 Query Knowledge Base</h3>
+                <div class="flex gap-4">
+                    <input type="text" id="query-input" class="flex-1 bg-cyber-dark border border-cyber-purple/30 rounded-lg px-4 py-3 text-gray-200 focus:outline-none" placeholder="Ask about your code snippets...">
+                    <button onclick="querySnippets()" class="btn-primary px-8 py-3 rounded-lg font-medium text-white">Search</button>
+                </div>
+                <div id="query-results" class="mt-4 hidden">
+                    <h4 class="text-sm text-gray-400 mb-2">Results:</h4>
+                    <div id="results-container" class="space-y-2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Glossary -->
+        <section class="mb-20">
+            <div class="glow-card rounded-2xl p-8">
+                <h2 class="font-display text-2xl font-bold mb-6">📖 Quick Glossary</h2>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-purple mb-1">API</h4>
+                        <p class="text-gray-400">Way for programs to talk. Our FastAPI server is an API.</p>
+                    </div>
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-pink mb-1">Embedding</h4>
+                        <p class="text-gray-400">Numbers representing text meaning. Similar = similar numbers.</p>
+                    </div>
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-cyan mb-1">Vector Database</h4>
+                        <p class="text-gray-400">DB for storing/searching embeddings. ChromaDB is one.</p>
+                    </div>
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-green mb-1">LLM</h4>
+                        <p class="text-gray-400">Large Language Model - AI that understands/generates text.</p>
+                    </div>
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-yellow mb-1">Container</h4>
+                        <p class="text-gray-400">Packaged app with everything needed to run. Docker creates these.</p>
+                    </div>
+                    <div class="bg-cyber-dark/30 rounded-lg p-4">
+                        <h4 class="font-medium text-cyber-orange mb-1">ORM</h4>
+                        <p class="text-gray-400">Object-Relational Mapping - use Python objects instead of SQL.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-cyber-purple/10 py-12 px-6 text-center">
+        <p class="text-gray-500 text-sm">Built with 💜 for learning RAG applications</p>
+    </footer>
+
+    <script>
+        // Playground data
+        const playgroundData = {
+            create: {
+                method: 'POST /snippets/',
+                input: JSON.stringify({ title: "FastAPI Hello", description: "Basic endpoint", code: "@app.get('/')\ndef root():\n    return {'msg': 'Hello'}", language: "python", tags: "fastapi, beginner" }, null, 2),
+                output: JSON.stringify({ id: 1, title: "FastAPI Hello", description: "Basic endpoint", code: "@app.get('/')\ndef root():\n    return {'msg': 'Hello'}", language: "python", tags: "fastapi, beginner", created_at: "2024-01-15T10:30:00Z" }, null, 2)
+            },
+            read: {
+                method: 'GET /snippets/?skip=0&limit=10',
+                input: '// No body needed\n// Query params: skip=0, limit=10',
+                output: JSON.stringify([{ id: 1, title: "FastAPI Hello", language: "python" }, { id: 2, title: "SQLAlchemy Model", language: "python" }], null, 2)
+            },
+            readOne: {
+                method: 'GET /snippets/1',
+                input: '// No body needed\n// Path param: snippet_id = 1',
+                output: JSON.stringify({ id: 1, title: "FastAPI Hello", description: "Basic endpoint", code: "@app.get('/')\ndef root():\n    return {'msg': 'Hello'}", language: "python", tags: "fastapi, beginner", created_at: "2024-01-15T10:30:00Z" }, null, 2)
+            },
+            delete: {
+                method: 'DELETE /snippets/1',
+                input: '// No body needed\n// Path param: snippet_id = 1',
+                output: JSON.stringify({ message: "Deleted!" }, null, 2)
+            },
+            query: {
+                method: 'POST /query/',
+                input: JSON.stringify({ question: "How do I create a GET endpoint?" }, null, 2),
+                output: JSON.stringify({ answer: "Use @app.get() decorator:\n\n@app.get('/items/{id}')\ndef get_item(id: int):\n    return {'id': id}", sources: [{ title: "FastAPI Hello", tags: "fastapi" }] }, null, 2)
+            }
+        };
+
+        function setPlayground(op) {
+            const d = playgroundData[op];
+            document.getElementById('request-method').textContent = d.method;
+            document.getElementById('json-input').value = d.input;
+            document.getElementById('json-output').value = '';
+        }
+
+        function simulateRequest() {
+            const method = document.getElementById('request-method').textContent;
+            for (const [k, d] of Object.entries(playgroundData)) {
+                if (d.method === method) { document.getElementById('json-output').value = d.output; return; }
+            }
+        }
+
+        // Snippets
+        let snippets = [
+            { id: 1, title: "FastAPI GET", description: "GET endpoint with path param", tags: "fastapi, get", code: "@app.get('/items/{id}')\ndef get_item(id: int):\n    return {'id': id}" },
+            { id: 2, title: "ChromaDB Add", description: "Add document to collection", tags: "chromadb, vector", code: "collection.add(\n    documents=['text'],\n    ids=['id1']\n)" },
+            { id: 3, title: "LangChain RAG", description: "Create retrieval chain", tags: "langchain, rag", code: "chain = RetrievalQA.from_chain_type(\n    llm=llm,\n    retriever=retriever\n)" }
+        ];
+        let nextId = 4;
+
+        function updateList() {
+            const c = document.getElementById('snippets-list');
+            document.getElementById('snippet-count').textContent = snippets.length;
+            if (!snippets.length) { c.innerHTML = '<div class="text-gray-500 text-sm text-center py-8">No snippets yet.</div>'; return; }
+            c.innerHTML = snippets.map(s => `
+                <div class="bg-cyber-dark/50 border border-cyber-purple/20 rounded-lg p-3">
+                    <div class="flex justify-between mb-1"><span class="font-medium text-sm">${s.title}</span></div>
+                    <p class="text-xs text-gray-500 mb-2">${s.description || ''}</p>
+                    <div class="flex gap-1 mb-2">${s.tags.split(',').map(t => `<span class="text-xs bg-cyber-pink/10 text-cyber-pink px-2 py-0.5 rounded">${t.trim()}</span>`).join('')}</div>
+                    <pre class="text-xs font-mono text-gray-400 bg-cyber-darker rounded p-2 overflow-x-auto max-h-16">${s.code.substring(0,150)}${s.code.length > 150 ? '...' : ''}</pre>
+                    <button onclick="deleteSnippet(${s.id})" class="text-xs text-red-400 mt-2">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function addSnippet() {
+            const t = document.getElementById('snippet-title').value;
+            const d = document.getElementById('snippet-description').value;
+            const tags = document.getElementById('snippet-tags').value;
+            const code = document.getElementById('snippet-code').value;
+            if (!t || !code) { alert('Title and code required!'); return; }
+            snippets.push({ id: nextId++, title: t, description: d, tags: tags || 'general', code });
+            updateList();
+            ['snippet-title','snippet-description','snippet-tags','snippet-code'].forEach(id => document.getElementById(id).value = '');
+            alert('Added!');
+        }
+
+        function deleteSnippet(id) { snippets = snippets.filter(s => s.id !== id); updateList(); }
+
+        function querySnippets() {
+            const q = document.getElementById('query-input').value.toLowerCase();
+            if (!q) { alert('Enter a query!'); return; }
+            const results = snippets.filter(s => s.title.toLowerCase().includes(q) || s.description.toLowerCase().includes(q) || s.tags.toLowerCase().includes(q) || s.code.toLowerCase().includes(q));
+            const rc = document.getElementById('results-container');
+            document.getElementById('query-results').classList.remove('hidden');
+            if (!results.length) { rc.innerHTML = '<div class="text-gray-500 text-sm">No matches found.</div>'; return; }
+            rc.innerHTML = results.map(s => `<div class="bg-cyber-dark/50 border border-cyber-green/20 rounded-lg p-3"><span class="text-cyber-green mr-2">✓</span><span class="font-medium text-sm">${s.title}</span><p class="text-xs text-gray-400 mt-1">${s.description}</p></div>`).join('');
+        }
+
+        updateList();
+    </script>
+</body>
+</html>
