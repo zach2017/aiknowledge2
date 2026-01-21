@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarity AI Meetup - Jan 21, 2026 Meeting Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #6366f1;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Card hover effects */
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Code blocks */
+        pre {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        
+        code {
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Badge styles */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-new {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .badge-popular {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .badge-free {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        /* Sticky TOC */
+        .toc-sticky {
+            position: sticky;
+            top: 80px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold gradient-text">📝 Clarity AI  Jan 21, 2026 Meetup Notes</h1>
+                    <p class="text-sm text-gray-600 mt-1">Comprehensive guide to AI coding tools and local AI</p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="index.html" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                        ← Back to Hub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Table of Contents - Sidebar -->
+            <aside class="lg:w-1/4">
+                <div class="bg-white rounded-xl shadow-lg p-6 toc-sticky">
+                    <h2 class="text-xl font-bold mb-4 text-indigo-600">📚 Table of Contents</h2>
+                    <nav class="space-y-2">
+                        <a href="#intro" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm">Introduction</a>
+                        <a href="#coding-assistants" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">💻 Coding Assistants</a>
+                        <a href="#vscode-plugins" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🔌 VS Code Plugins</a>
+                        <a href="#local-llm" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🏠 Local LLM Setup</a>
+                        <a href="#frameworks" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🏗️ Frameworks & Infra</a>
+                        <a href="#vibe-coding" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">📚 Vibe Coding</a>
+                        <a href="#quick-start" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🚀 Quick Start Guide</a>
+                    </nav>
+                    
+                    <!-- Quick Stats -->
+                    <div class="mt-6 p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg">
+                        <h3 class="font-bold text-sm mb-2">📈 Coverage</h3>
+                        <ul class="text-xs space-y-1 text-gray-700">
+                            <li>• 6 Coding Assistants</li>
+                            <li>• 8+ VS Code Plugins</li>
+                            <li>• Local AI Setup</li>
+                            <li>• 5 Key Frameworks</li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="lg:w-3/4 space-y-8">
+
+                <!-- Introduction -->
+                <section id="intro" class="fade-in">
+                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-xl p-8 text-white">
+                        <h2 class="text-3xl font-bold mb-4">🎯 Jan 21st Biweekly Clarity AI Meetup</h2>
+                        <p class="text-lg mb-4">
+                            Welcome to our comprehensive guide on AI-powered coding tools, local LLM management, 
+                            and the latest frameworks for modern development. This page contains key insights 
+                            from our meetup discussions.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <div class="text-3xl mb-2">🤖</div>
+                                <div class="font-bold">AI Assistants</div>
+                                <div class="text-sm">Next-gen coding tools</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <div class="text-3xl mb-2">🏠</div>
+                                <div class="font-bold">Local AI</div>
+                                <div class="text-sm">Run LLMs on your machine</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur rounded-lg p-4">
+                                <div class="text-3xl mb-2">⚡</div>
+                                <div class="font-bold">Modern Stack</div>
+                                <div class="text-sm">Cutting-edge frameworks</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Coding Assistants & IDEs -->
+                <section id="coding-assistants" class="fade-in">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h2 class="text-3xl font-bold mb-6 text-indigo-600">💻 Coding Assistants & IDEs</h2>
+                        
+                        <div class="space-y-6">
+                            <!-- Cursor -->
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 border-l-4 border-purple-500 tool-card">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-2xl font-bold text-purple-900">Cursor</h3>
+                                    <span class="badge badge-popular">Popular</span>
+                                </div>
+                                <p class="text-gray-700 mb-4">
+                                    A powerful AI-driven IDE that is a fork of VS Code. Cursor integrates AI deeply into the 
+                                    workflow for building features and managing tickets with advanced context awareness.
+                                </p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                                    <div class="bg-white rounded p-3">
+                                        <div class="font-semibold text-purple-700 text-sm">✨ Key Features</div>
+                                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                                            <li>• AI-powered code generation</li>
+                                            <li>• Natural language commands</li>
+                                            <li>• Context-aware suggestions</li>
+                                            <li>• Integrated terminal & git</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white rounded p-3">
+                                        <div class="font-semibold text-purple-700 text-sm">🎯 Best For</div>
+                                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                                            <li>• Full-stack development</li>
+                                            <li>• Feature building</li>
+                                            <li>• Rapid prototyping</li>
+                                            <li>• Ticket management</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <a href="https://cursor.sh/" target="_blank" class="inline-block px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition text-sm font-medium">
+                                    Try Cursor →
+                                </a>
+                            </div>
+
+                            <!-- Claude Code -->
+                            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6 border-l-4 border-blue-500 tool-card">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-2xl font-bold text-blue-900">Claude Code</h3>
+                                    <span class="badge badge-new">New</span>
+                                </div>
+                                <p class="text-gray-700 mb-4">
+                                    A command-line tool and agentic coding assistant from Anthropic that can write code, 
+                                    run tests, and manage git workflows autonomously.
+                                </p>
+                                <div class="bg-white rounded p-4 mb-4">
+                                    <div class="font-semibold text-blue-700 text-sm mb-2">🔧 Capabilities</div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
+                                        <div class="bg-blue-50 p-2 rounded">Code Generation</div>
+                                        <div class="bg-blue-50 p-2 rounded">Test Execution</div>
+                                        <div class="bg-blue-50 p-2 rounded">Git Management</div>
+                                    </div>
+                                </div>
+                                <pre class="mb-4"><code># Install Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# Start coding with Claude
+claude-code init my-project</code></pre>
+                                <a href="https://docs.anthropic.com/" target="_blank" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium">
+                                    Learn More →
+                                </a>
+                            </div>
+
+                            <!-- Continue -->
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6 border-l-4 border-green-500 tool-card">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-2xl font-bold text-green-900">Continue</h3>
+                                    <span class="badge badge-free">Open Source</span>
+                                </div>
+                                <p class="text-gray-700 mb-4">
+                                    An open-source library/plugin for VS Code and JetBrains that allows users to connect 
+                                    to local LLMs (like Ollama) or remote APIs for AI-assisted coding.
+                                </p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                                    <div class="bg-white rounded p-3">
+                                        <div class="font-semibold text-green-700 text-sm">🔌 Integrations</div>
+                                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                                            <li>• VS Code extension</li>
+                                            <li>• JetBrains plugin</li>
+                                            <li>• Ollama support</li>
+                                            <li>• Custom API endpoints</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white rounded p-3">
+                                        <div class="font-semibold text-green-700 text-sm">💡 Use Cases</div>
+                                        <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                                            <li>• Code completion</li>
+                                            <li>• Refactoring assistance</li>
+                                            <li>• Bug fixing</li>
+                                            <li>• Documentation generation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <a href="https://continue.dev/" target="_blank" class="inline-block px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-medium">
+                                    Get Continue →
+                                </a>
+                            </div>
+
+                            <!-- Gemini Code Assist -->
+                            <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-6 border-l-4 border-orange-500 tool-card">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-2xl font-bold text-orange-900">Gemini Code Assist</h3>
+                                    <span class="badge" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white;">Enterprise</span>
+                                </div>
+                                <p class="text-gray-700 mb-4">
+                                    Google's enterprise-grade AI assistance tool integrated into VS Code and other IDEs, 
+                                    designed for professional development teams.
+                                </p>
+                                <div class="bg-white rounded p-4 mb-4">
+                                    <div class="font-semibold text-orange-700 text-sm mb-2">🎯 Enterprise Features</div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-700">
+                                        <div>✓ Advanced code suggestions</div>
+                                        <div>✓ Security scanning</div>
+                                        <div>✓ Team collaboration</div>
+                                        <div>✓ Custom model training</div>
+                                    </div>
+                                </div>
+                                <a href="https://cloud.google.com/products/gemini/code-assist" target="_blank" class="inline-block px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition text-sm font-medium">
+                                    Explore Gemini →
+                                </a>
+                            </div>
+
+                            <!-- Cloud Code -->
+                            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 border-l-4 border-indigo-500 tool-card">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-2xl font-bold text-indigo-900">Cloud Code</h3>
+                                    <span class="badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">Evolving</span>
+                                </div>
+                                <p class="text-gray-700 mb-4">
+                                    Google's suite of IDE extensions evolving quickly to support cloud-based development 
+                                    with Kubernetes, Cloud Run, and more.
+                                </p>
+                                <div class="bg-white rounded p-4 mb-4">
+                                    <div class="font-semibold text-indigo-700 text-sm mb-2">☁️ Cloud Features</div>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Kubernetes support</li>
+                                        <li>• Cloud Run integration</li>
+                                        <li>• GCP services access</li>
+                                        <li>• Debug in cloud</li>
+                                    </ul>
+                                </div>
+                                <a href="https://cloud.google.com/code" target="_blank" class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-sm font-medium">
+                                    Learn Cloud Code →
+                                </a>
+                            </div>
+
+                            <!-- Code Companion -->
+                            <div class="bg-gradient-to-r from-slate-50 to-gray-100 rounded-lg p-6 border-l-4 border-slate-500 tool-card">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-2xl font-bold text-slate-900">Code Companion</h3>
+                                    <span class="badge badge-free">Neovim</span>
+                                </div>
+                                <p class="text-gray-700 mb-4">
+                                    A Neovim plugin that allows users to interact with AI models directly within the 
+                                    terminal-based editor, perfect for vim enthusiasts.
+                                </p>
+                                <div class="bg-white rounded p-4 mb-4">
+                                    <pre class="text-xs"><code>-- Install with lazy.nvim
+{
+  "olimorris/codecompanion.nvim",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-treesitter/nvim-treesitter",
+  },
+}</code></pre>
+                                </div>
+                                <a href="https://github.com/olimorris/codecompanion.nvim" target="_blank" class="inline-block px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition text-sm font-medium">
+                                    View on GitHub →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VS Code Plugins -->
+                <section id="vscode-plugins" class="fade-in">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h2 class="text-3xl font-bold mb-6 text-indigo-600">🔌 Essential VS Code Plugins for AI Development</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Continue Extension -->
+                            <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 border border-blue-200">
+                                <h3 class="text-xl font-bold text-blue-900 mb-3">Continue (AI Code Assistant)</h3>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    Open-source AI code assistant that works with local LLMs and cloud APIs.
+                                </p>
+                                <div class="bg-white rounded p-3 mb-3">
+                                    <div class="font-semibold text-xs text-blue-700 mb-1">Installation</div>
+                                    <code class="text-xs text-gray-600">ext install continue.continue</code>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="badge badge-free">Free</span>
+                                    <span class="badge" style="background: #4facfe; color: white;">Open Source</span>
+                                </div>
+                            </div>
+
+                            <!-- GitHub Copilot -->
+                            <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-6 border border-purple-200">
+                                <h3 class="text-xl font-bold text-purple-900 mb-3">GitHub Copilot</h3>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    AI pair programmer that suggests code and entire functions in real-time.
+                                </p>
+                                <div class="bg-white rounded p-3 mb-3">
+                                    <div class="font-semibold text-xs text-purple-700 mb-1">Installation</div>
+                                    <code class="text-xs text-gray-600">ext install GitHub.copilot</code>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="badge badge-popular">Popular</span>
+                                    <span class="badge" style="background: #f093fb; color: white;">$10/mo</span>
+                                </div>
+                            </div>
+
+                            <!-- Tabnine -->
+                            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6 border border-green-200">
+                                <h3 class="text-xl font-bold text-green-900 mb-3">Tabnine</h3>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    AI code completion tool with privacy-focused local model options.
+                                </p>
+                                <div class="bg-white rounded p-3 mb-3">
+                                    <div class="font-semibold text-xs text-green-700 mb-1">Installation</div>
+                                    <code class="text-xs text-gray-600">ext install TabNine.tabnine-vscode</code>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="badge badge-free">Free Tier</span>
+                                    <span class="badge" style="background: #43e97b; color: white;">Privacy</span>
+                                </div>
+                            </div>
+
+                            <!-- Codeium -->
+                            <div class="bg-gradient-to-br from-orange-50 to-red-50 rounded-lg p-6 border border-orange-200">
+                                <h3 class="text-xl font-bold text-orange-900 mb-3">Codeium</h3>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    Free AI-powered code acceleration toolkit with autocomplete and chat.
+                                </p>
+                                <div class="bg-white rounded p-3 mb-3">
+                                    <div class="font-semibold text-xs text-orange-700 mb-1">Installation</div>
+                                    <code class="text-xs text-gray-600">ext install Codeium.codeium</code>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="badge badge-free">Free</span>
+                                    <span class="badge badge-new">Fast</span>
+                                </div>
+                            </div>
+
+                            <!-- Gemini Code Assist Extension -->
+                            <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg p-6 border border-indigo-200">
+                                <h3 class="text-xl font-bold text-indigo-900 mb-3">Gemini Code Assist</h3>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    Google's enterprise AI coding assistant with advanced features.
+                                </p>
+                                <div class="bg-white rounded p-3 mb-3">
+                                    <div class="font-semibold text-xs text-indigo-700 mb-1">Installation</div>
+                                    <code class="text-xs text-gray-600">ext install GoogleCloudTools.cloudcode</code>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="badge" style="background: #667eea; color: white;">Enterprise</span>
+                                    <span class="badge badge-new">GCP</span>
+                                </div>
+                            </div>
+
+                            <!-- Code GPT -->
+                            <div class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-lg p-6 border border-yellow-200">
+                                <h3 class="text-xl font-bold text-yellow-900 mb-3">CodeGPT</h3>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    Connect to multiple AI models including GPT-4, Claude, and local LLMs.
+                                </p>
+                                <div class="bg-white rounded p-3 mb-3">
+                                    <div class="font-semibold text-xs text-yellow-700 mb-1">Installation</div>
+                                    <code class="text-xs text-gray-600">ext install DanielSanMedium.dscodegpt</code>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="badge badge-free">Multi-Model</span>
+                                    <span class="badge" style="background: #ffd700; color: #333;">Flexible</span>
+                                </div>
+                            </div>
+
+                            <!-- Ollama Extension -->
+                            <div class="bg-gradient-to-br from-slate-50 to-gray-100 rounded-lg p-6 border border-slate-200">
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">Ollama</h3>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    Run local LLMs directly in VS Code with Ollama integration.
+                                </p>
+                                <div class="bg-white rounded p-3 mb-3">
+                                    <div class="font-semibold text-xs text-slate-700 mb-1">Installation</div>
+                                    <code class="text-xs text-gray-600">ext install ollama.ollama-vscode</code>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="badge badge-free">Local</span>
+                                    <span class="badge" style="background: #64748b; color: white;">Privacy</span>
+                                </div>
+                            </div>
+
+                            <!-- AI Commit -->
+                            <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-lg p-6 border border-pink-200">
+                                <h3 class="text-xl font-bold text-pink-900 mb-3">AI Commit</h3>
+                                <p class="text-sm text-gray-700 mb-3">
+                                    Generate meaningful commit messages automatically using AI.
+                                </p>
+                                <div class="bg-white rounded p-3 mb-3">
+                                    <div class="font-semibold text-xs text-pink-700 mb-1">Installation</div>
+                                    <code class="text-xs text-gray-600">ext install MattIPv4.vscode-ai-commit</code>
+                                </div>
+                                <div class="flex gap-2">
+                                    <span class="badge badge-free">Git</span>
+                                    <span class="badge" style="background: #ec4899; color: white;">Automation</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Install Command -->
+                        <div class="mt-8 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg p-6 border-l-4 border-indigo-600">
+                            <h3 class="font-bold text-indigo-900 mb-3">⚡ Quick Install Multiple Extensions</h3>
+                            <pre class="text-xs overflow-x-auto"><code>code --install-extension continue.continue \
+--install-extension GitHub.copilot \
+--install-extension TabNine.tabnine-vscode \
+--install-extension Codeium.codeium \
+--install-extension ollama.ollama-vscode</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Local LLM Management -->
+                <section id="local-llm" class="fade-in">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h2 class="text-3xl font-bold mb-6 text-indigo-600">🏠 Running AI Locally - Complete Guide</h2>
+                        
+                        <!-- Ollama -->
+                        <div class="mb-8">
+                            <div class="bg-gradient-to-r from-slate-700 to-slate-900 rounded-lg p-6 text-white mb-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-2xl font-bold">Ollama</h3>
+                                    <span class="badge badge-free">Free</span>
+                                </div>
+                                <p class="mb-4">
+                                    A tool for running large language models (like Llama 3 or DeepSeek) locally on your own machine. 
+                                    Perfect for privacy-conscious development and offline work.
+                                </p>
+                            </div>
+
+                            <!-- Installation Steps -->
+                            <div class="space-y-4">
+                                <div class="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-500">
+                                    <h4 class="font-bold text-blue-900 mb-3">📥 Installation</h4>
+                                    
+                                    <div class="space-y-4">
+                                        <!-- macOS -->
+                                        <div class="bg-white rounded p-4">
+                                            <div class="font-semibold text-sm text-blue-700 mb-2">🍎 macOS</div>
+                                            <pre class="text-xs"><code>brew install ollama</code></pre>
+                                        </div>
+
+                                        <!-- Linux -->
+                                        <div class="bg-white rounded p-4">
+                                            <div class="font-semibold text-sm text-blue-700 mb-2">🐧 Linux</div>
+                                            <pre class="text-xs"><code>curl -fsSL https://ollama.com/install.sh | sh</code></pre>
+                                        </div>
+
+                                        <!-- Windows -->
+                                        <div class="bg-white rounded p-4">
+                                            <div class="font-semibold text-sm text-blue-700 mb-2">🪟 Windows</div>
+                                            <p class="text-sm text-gray-700">Download from: <a href="https://ollama.com/download/windows" class="text-blue-600 hover:underline">ollama.com/download/windows</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Quick Start -->
+                                <div class="bg-green-50 rounded-lg p-6 border-l-4 border-green-500">
+                                    <h4 class="font-bold text-green-900 mb-3">🚀 Quick Start</h4>
+                                    <div class="space-y-3">
+                                        <div class="bg-white rounded p-4">
+                                            <div class="font-semibold text-sm text-green-700 mb-2">1. Start Ollama</div>
+                                            <pre class="text-xs"><code>ollama serve</code></pre>
+                                        </div>
+
+                                        <div class="bg-white rounded p-4">
+                                            <div class="font-semibold text-sm text-green-700 mb-2">2. Pull a Model (e.g., Llama 3)</div>
+                                            <pre class="text-xs"><code>ollama pull llama3</code></pre>
+                                        </div>
+
+                                        <div class="bg-white rounded p-4">
+                                            <div class="font-semibold text-sm text-green-700 mb-2">3. Run the Model</div>
+                                            <pre class="text-xs"><code>ollama run llama3</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Popular Models -->
+                                <div class="bg-purple-50 rounded-lg p-6 border-l-4 border-purple-500">
+                                    <h4 class="font-bold text-purple-900 mb-3">🌟 Popular Models</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        <div class="bg-white rounded p-3">
+                                            <div class="font-semibold text-sm text-purple-700">Llama 3</div>
+                                            <code class="text-xs text-gray-600">ollama pull llama3</code>
+                                            <p class="text-xs text-gray-500 mt-1">Meta's latest, 8B params</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3">
+                                            <div class="font-semibold text-sm text-purple-700">DeepSeek Coder</div>
+                                            <code class="text-xs text-gray-600">ollama pull deepseek-coder</code>
+                                            <p class="text-xs text-gray-500 mt-1">Specialized for coding</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3">
+                                            <div class="font-semibold text-sm text-purple-700">Mistral</div>
+                                            <code class="text-xs text-gray-600">ollama pull mistral</code>
+                                            <p class="text-xs text-gray-500 mt-1">Fast & efficient, 7B params</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3">
+                                            <div class="font-semibold text-sm text-purple-700">CodeLlama</div>
+                                            <code class="text-xs text-gray-600">ollama pull codellama</code>
+                                            <p class="text-xs text-gray-500 mt-1">Code-focused Llama variant</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Use with Continue -->
+                                <div class="bg-orange-50 rounded-lg p-6 border-l-4 border-orange-500">
+                                    <h4 class="font-bold text-orange-900 mb-3">🔗 Connect to VS Code (via Continue)</h4>
+                                    <div class="bg-white rounded p-4">
+                                        <p class="text-sm text-gray-700 mb-3">
+                                            Configure Continue extension to use Ollama:
+                                        </p>
+                                        <pre class="text-xs"><code>{
+  "models": [{
+    "title": "Llama 3",
+    "provider": "ollama",
+    "model": "llama3"
+  }],
+  "tabAutocompleteModel": {
+    "title": "DeepSeek Coder",
+    "provider": "ollama",
+    "model": "deepseek-coder"
+  }
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LM Studio -->
+                        <div class="mb-8">
+                            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white mb-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-2xl font-bold">LM Studio</h3>
+                                    <span class="badge" style="background: white; color: #6366f1;">GUI</span>
+                                </div>
+                                <p class="mb-4">
+                                    A desktop application (primarily Mac, but supports others) that provides a GUI for 
+                                    discovering and running local LLMs without needing the command line.
+                                </p>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6">
+                                    <h4 class="font-bold text-blue-900 mb-3">✨ Key Features</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-white rounded p-4">
+                                            <div class="text-2xl mb-2">🖥️</div>
+                                            <div class="font-semibold text-sm">User-Friendly Interface</div>
+                                            <p class="text-xs text-gray-600 mt-1">No command line needed</p>
+                                        </div>
+                                        <div class="bg-white rounded p-4">
+                                            <div class="text-2xl mb-2">📚</div>
+                                            <div class="font-semibold text-sm">Model Discovery</div>
+                                            <p class="text-xs text-gray-600 mt-1">Browse & download models easily</p>
+                                        </div>
+                                        <div class="bg-white rounded p-4">
+                                            <div class="text-2xl mb-2">⚙️</div>
+                                            <div class="font-semibold text-sm">Easy Configuration</div>
+                                            <p class="text-xs text-gray-600 mt-1">Adjust parameters with sliders</p>
+                                        </div>
+                                        <div class="bg-white rounded p-4">
+                                            <div class="text-2xl mb-2">🔌</div>
+                                            <div class="font-semibold text-sm">Local API Server</div>
+                                            <p class="text-xs text-gray-600 mt-1">OpenAI-compatible endpoint</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-green-50 rounded-lg p-6 border-l-4 border-green-500">
+                                    <h4 class="font-bold text-green-900 mb-3">📥 Getting Started</h4>
+                                    <ol class="space-y-2 text-sm text-gray-700">
+                                        <li class="flex items-start">
+                                            <span class="font-bold mr-2">1.</span>
+                                            <span>Download from <a href="https://lmstudio.ai/" class="text-green-600 hover:underline font-semibold">lmstudio.ai</a></span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="font-bold mr-2">2.</span>
+                                            <span>Install and launch the application</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="font-bold mr-2">3.</span>
+                                            <span>Browse models in the "Discover" tab</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="font-bold mr-2">4.</span>
+                                            <span>Download your preferred model (Llama, Mistral, etc.)</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="font-bold mr-2">5.</span>
+                                            <span>Start chatting or run as a local server</span>
+                                        </li>
+                                    </ol>
+                                </div>
+
+                                <a href="https://lmstudio.ai/" target="_blank" class="inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium">
+                                    Download LM Studio →
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Comparison -->
+                        <div class="bg-gradient-to-br from-slate-50 to-gray-100 rounded-lg p-6">
+                            <h4 class="font-bold text-slate-900 mb-4">⚖️ Ollama vs LM Studio</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b-2 border-slate-300">
+                                            <th class="text-left p-3">Feature</th>
+                                            <th class="text-left p-3">Ollama</th>
+                                            <th class="text-left p-3">LM Studio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-200">
+                                        <tr>
+                                            <td class="p-3 font-semibold">Interface</td>
+                                            <td class="p-3">Command Line</td>
+                                            <td class="p-3">GUI</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-semibold">Platform</td>
+                                            <td class="p-3">Mac, Linux, Windows</td>
+                                            <td class="p-3">Mac, Windows</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-semibold">Ease of Use</td>
+                                            <td class="p-3">Requires CLI knowledge</td>
+                                            <td class="p-3">Very beginner-friendly</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-semibold">Automation</td>
+                                            <td class="p-3">Excellent for scripts</td>
+                                            <td class="p-3">Limited</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-3 font-semibold">Best For</td>
+                                            <td class="p-3">Developers, automation</td>
+                                            <td class="p-3">Beginners, experimentation</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Frameworks & Infrastructure -->
+                <section id="frameworks" class="fade-in">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h2 class="text-3xl font-bold mb-6 text-indigo-600">🏗️ Frameworks & Infrastructure</h2>
+                        
+                        <div class="space-y-6">
+                            <!-- Chroma DB -->
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 border-l-4 border-purple-500">
+                                <h3 class="text-2xl font-bold text-purple-900 mb-3">Chroma DB</h3>
+                                <p class="text-gray-700 mb-4">
+                                    An open-source AI expression database (vector database) used for building RAG 
+                                    (Retrieval-Augmented Generation) systems locally.
+                                </p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-white rounded p-4">
+                                        <div class="font-semibold text-purple-700 text-sm mb-2">🎯 Use Cases</div>
+                                        <ul class="text-sm text-gray-600 space-y-1">
+                                            <li>• Document Q&A systems</li>
+                                            <li>• Semantic search</li>
+                                            <li>• Knowledge bases</li>
+                                            <li>• Context-aware AI apps</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white rounded p-4">
+                                        <div class="font-semibold text-purple-700 text-sm mb-2">⚡ Quick Setup</div>
+                                        <pre class="text-xs"><code>pip install chromadb
+
+import chromadb
+client = chromadb.Client()</code></pre>
+                                    </div>
+                                </div>
+                                <a href="https://www.trychroma.com/" target="_blank" class="inline-block px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition text-sm font-medium">
+                                    Learn More →
+                                </a>
+                            </div>
+
+                            <!-- Linear -->
+                            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6 border-l-4 border-blue-500">
+                                <h3 class="text-2xl font-bold text-blue-900 mb-3">Linear</h3>
+                                <p class="text-gray-700 mb-4">
+                                    A project management tool used to pull in tickets so that AI agents can analyze 
+                                    and build features based on them.
+                                </p>
+                                <div class="bg-white rounded p-4 mb-4">
+                                    <div class="font-semibold text-blue-700 text-sm mb-2">🔗 AI Integration</div>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• API access for agents</li>
+                                        <li>• Ticket analysis</li>
+                                        <li>• Automated feature building</li>
+                                        <li>• Progress tracking</li>
+                                    </ul>
+                                </div>
+                                <a href="https://linear.app/" target="_blank" class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm font-medium">
+                                    Explore Linear →
+                                </a>
+                            </div>
+
+                            <!-- NATS -->
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6 border-l-4 border-green-500">
+                                <h3 class="text-2xl font-bold text-green-900 mb-3">NATS</h3>
+                                <p class="text-gray-700 mb-4">
+                                    A connective technology for adaptive edge and cloud-native applications, 
+                                    mentioned for its latest SDK documentation.
+                                </p>
+                                <div class="bg-white rounded p-4 mb-4">
+                                    <div class="font-semibold text-green-700 text-sm mb-2">🌐 Features</div>
+                                    <div class="grid grid-cols-2 gap-2 text-xs">
+                                        <div class="bg-green-50 p-2 rounded">Message Streaming</div>
+                                        <div class="bg-green-50 p-2 rounded">Pub/Sub</div>
+                                        <div class="bg-green-50 p-2 rounded">Request/Reply</div>
+                                        <div class="bg-green-50 p-2 rounded">Key-Value Store</div>
+                                    </div>
+                                </div>
+                                <a href="https://nats.io/" target="_blank" class="inline-block px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-medium">
+                                    Visit NATS →
+                                </a>
+                            </div>
+
+                            <!-- Gas Town -->
+                            <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-6 border-l-4 border-orange-500">
+                                <div class="flex items-start justify-between mb-3">
+                                    <h3 class="text-2xl font-bold text-orange-900">Gas Town</h3>
+                                    <span class="badge" style="background: #ff6b6b; color: white;">Beta</span>
+                                </div>
+                                <p class="text-gray-700 mb-4">
+                                    A very early-stage/beta project by Steve Yegge focused on Agent Orchestration—having 
+                                    agents manage and verify other agents.
+                                </p>
+                                <div class="bg-white rounded p-4 mb-4">
+                                    <div class="font-semibold text-orange-700 text-sm mb-2">🤖 Concept</div>
+                                    <p class="text-sm text-gray-600">
+                                        Multi-agent systems where AI agents coordinate, verify each other's work, 
+                                        and manage complex workflows autonomously.
+                                    </p>
+                                </div>
+                                <p class="text-xs text-gray-500 italic">
+                                    Note: Still in early development stage. Follow Steve Yegge's updates for more information.
+                                </p>
+                            </div>
+
+                            <!-- Aurora -->
+                            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-6 border-l-4 border-indigo-500">
+                                <h3 class="text-2xl font-bold text-indigo-900 mb-3">Aurora</h3>
+                                <p class="text-gray-700 mb-4">
+                                    Mentioned in the context of backend infrastructure and Neovim integration for 
+                                    modern development workflows.
+                                </p>
+                                <div class="bg-white rounded p-4">
+                                    <div class="font-semibold text-indigo-700 text-sm mb-2">💡 Context</div>
+                                    <p class="text-sm text-gray-600">
+                                        Used for backend infrastructure with Neovim integration, enabling terminal-based 
+                                        development with modern AI capabilities.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Vibe Coding Book -->
+                <section id="vibe-coding" class="fade-in">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h2 class="text-3xl font-bold mb-6 text-indigo-600">📚 Recommended Reading: Vibe Coding</h2>
+                        
+                        <div class="bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl p-8 text-white mb-6">
+                            <div class="flex flex-col md:flex-row gap-6 items-start">
+                                <div class="flex-shrink-0">
+                                    <div class="w-32 h-48 bg-white/20 backdrop-blur rounded-lg flex items-center justify-center text-6xl">
+                                        📖
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-3xl font-bold mb-3">Vibe Coding</h3>
+                                    <p class="text-lg mb-4 text-purple-100">
+                                        By Steve Yegge (with contributions from Gene Kim)
+                                    </p>
+                                    <div class="bg-white/10 backdrop-blur rounded-lg p-4 mb-4">
+                                        <p class="text-sm">
+                                            A revolutionary approach to software development where AI handles the syntax 
+                                            and implementation details, while humans focus on the "vibe" or architectural 
+                                            intent of the code. This paradigm shift represents a new way of thinking about 
+                                            coding in the AI era.
+                                        </p>
+                                    </div>
+                                    <a href="https://a.co/d/cnoP8jn" target="_blank" class="inline-block px-6 py-3 bg-white text-purple-600 rounded-lg hover:bg-purple-50 transition font-bold">
+                                        📚 Get the Book on Amazon →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Key Concepts -->
+                            <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6">
+                                <h4 class="font-bold text-blue-900 mb-4 text-xl">🎯 Key Concepts</h4>
+                                <ul class="space-y-3 text-sm text-gray-700">
+                                    <li class="flex items-start">
+                                        <span class="text-blue-600 font-bold mr-2">•</span>
+                                        <span><strong>High-Level Thinking:</strong> Focus on architecture and design rather than syntax</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-blue-600 font-bold mr-2">•</span>
+                                        <span><strong>AI as Co-Pilot:</strong> Let AI handle implementation details and boilerplate</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-blue-600 font-bold mr-2">•</span>
+                                        <span><strong>Intent-Driven Development:</strong> Communicate what you want, not how to build it</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-blue-600 font-bold mr-2">•</span>
+                                        <span><strong>Rapid Iteration:</strong> Prototype and refine ideas at unprecedented speed</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- What You'll Learn -->
+                            <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-6">
+                                <h4 class="font-bold text-green-900 mb-4 text-xl">💡 What You'll Learn</h4>
+                                <ul class="space-y-3 text-sm text-gray-700">
+                                    <li class="flex items-start">
+                                        <span class="text-green-600 font-bold mr-2">✓</span>
+                                        <span>How to communicate effectively with AI coding assistants</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-green-600 font-bold mr-2">✓</span>
+                                        <span>Strategies for maintaining code quality with AI assistance</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-green-600 font-bold mr-2">✓</span>
+                                        <span>When to trust AI vs when to review carefully</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-green-600 font-bold mr-2">✓</span>
+                                        <span>Building complex systems with AI collaboration</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Quote -->
+                        <div class="mt-6 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg p-6 border-l-4 border-indigo-600">
+                            <p class="text-gray-700 italic text-lg mb-2">
+                                "In vibe coding, you're the architect and the AI is your construction crew. 
+                                You set the vision, the AI makes it real."
+                            </p>
+                            <p class="text-sm text-gray-600 font-semibold">— Steve Yegge</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Start Guide -->
+                <section id="quick-start" class="fade-in">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h2 class="text-3xl font-bold mb-6 text-indigo-600">🚀 Quick Start Guide</h2>
+                        
+                        <div class="space-y-6">
+                            <!-- Beginner Path -->
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6 border-l-4 border-green-500">
+                                <h3 class="text-xl font-bold text-green-900 mb-4">🌱 Beginner Path (GUI-Focused)</h3>
+                                <div class="space-y-3">
+                                    <div class="bg-white rounded p-4">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="bg-green-600 text-white font-bold px-3 py-1 rounded-full text-sm">1</span>
+                                            <span class="font-bold text-gray-800">Install LM Studio</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 ml-11">Download from lmstudio.ai and install</p>
+                                    </div>
+                                    <div class="bg-white rounded p-4">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="bg-green-600 text-white font-bold px-3 py-1 rounded-full text-sm">2</span>
+                                            <span class="font-bold text-gray-800">Download a Model</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 ml-11">Try Llama 3 or Mistral from the Discover tab</p>
+                                    </div>
+                                    <div class="bg-white rounded p-4">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="bg-green-600 text-white font-bold px-3 py-1 rounded-full text-sm">3</span>
+                                            <span class="font-bold text-gray-800">Install VS Code + Continue</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 ml-11">Get the Continue extension for VS Code</p>
+                                    </div>
+                                    <div class="bg-white rounded p-4">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="bg-green-600 text-white font-bold px-3 py-1 rounded-full text-sm">4</span>
+                                            <span class="font-bold text-gray-800">Start Coding!</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 ml-11">Use Ctrl+I to ask AI questions in VS Code</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Advanced Path -->
+                            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg p-6 border-l-4 border-blue-500">
+                                <h3 class="text-xl font-bold text-blue-900 mb-4">⚡ Advanced Path (CLI-Focused)</h3>
+                                <div class="space-y-3">
+                                    <div class="bg-white rounded p-4">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="bg-blue-600 text-white font-bold px-3 py-1 rounded-full text-sm">1</span>
+                                            <span class="font-bold text-gray-800">Install Ollama</span>
+                                        </div>
+                                        <pre class="text-xs ml-11 mt-2"><code>brew install ollama  # or curl method for Linux</code></pre>
+                                    </div>
+                                    <div class="bg-white rounded p-4">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="bg-blue-600 text-white font-bold px-3 py-1 rounded-full text-sm">2</span>
+                                            <span class="font-bold text-gray-800">Pull Models</span>
+                                        </div>
+                                        <pre class="text-xs ml-11 mt-2"><code>ollama pull llama3
+ollama pull deepseek-coder</code></pre>
+                                    </div>
+                                    <div class="bg-white rounded p-4">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="bg-blue-600 text-white font-bold px-3 py-1 rounded-full text-sm">3</span>
+                                            <span class="font-bold text-gray-800">Setup Continue + Cursor</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 ml-11">Install both and configure to use Ollama</p>
+                                    </div>
+                                    <div class="bg-white rounded p-4">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="bg-blue-600 text-white font-bold px-3 py-1 rounded-full text-sm">4</span>
+                                            <span class="font-bold text-gray-800">Explore RAG with ChromaDB</span>
+                                        </div>
+                                        <pre class="text-xs ml-11 mt-2"><code>pip install chromadb
+# Build your first knowledge base</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pro Tips -->
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 border-l-4 border-purple-500">
+                                <h3 class="text-xl font-bold text-purple-900 mb-4">💎 Pro Tips</h3>
+                                <ul class="space-y-2 text-sm text-gray-700">
+                                    <li class="flex items-start">
+                                        <span class="text-purple-600 font-bold mr-2">💡</span>
+                                        <span>Start with GUI tools (LM Studio) to understand the concepts, then move to CLI (Ollama) for automation</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-purple-600 font-bold mr-2">💡</span>
+                                        <span>Use Continue for VS Code integration - it works with both local and cloud models</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-purple-600 font-bold mr-2">💡</span>
+                                        <span>Keep smaller models (7B-13B) for fast iterations, use larger ones for complex tasks</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-purple-600 font-bold mr-2">💡</span>
+                                        <span>Read "Vibe Coding" to learn the philosophy behind AI-assisted development</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white shadow-lg mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <h3 class="text-xl font-bold mb-2 gradient-text">Clarity AI Meetup Group</h3>
+                <p class="text-gray-600 mb-4">
+                    Join us biweekly to explore the latest in AI tools and technologies
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="index.html" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                        Back to Main Hub
+                    </a>
+                    <a href="#intro" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                        Back to Top ↑
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add active state to TOC links based on scroll position
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPosition = window.scrollY + 100;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                const tocLink = document.querySelector(`a[href="#${sectionId}"]`);
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('aside nav a').forEach(link => {
+                        link.classList.remove('bg-indigo-100', 'font-bold');
+                    });
+                    if (tocLink) {
+                        tocLink.classList.add('bg-indigo-100', 'font-bold');
+                    }
+                }
+            });
+        });
+
+        // Console welcome message
+        console.log('%c📝 Clarity AI Meetup Notes', 'font-size: 24px; font-weight: bold; color: #6366f1;');
+        console.log('%cYour guide to AI coding tools and local LLMs', 'font-size: 14px; color: #64748b;');
+    </script>
+
+</body>
+</html>
