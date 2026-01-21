@@ -27,7 +27,23 @@
         <!-- Intro -->
         <div class="mb-12">
             <h1 class="text-3xl font-semibold text-stone-900 mb-3">Build a RAG Code Assistant</h1>
-            <p class="text-lg text-stone-600">A simple guide to combining Ollama, ChromaDB, and Docker for intelligent code search.</p>
+            <p class="text-lg text-stone-600 mb-6">A simple guide to combining Ollama, ChromaDB, and Docker for intelligent code search.</p>
+            
+            <!-- What This App Does -->
+            <div class="bg-white border border-stone-200 rounded-lg p-6">
+                <h2 class="font-semibold text-stone-900 mb-3">What Does This Application Do?</h2>
+                <p class="text-stone-600 mb-4">This demo application creates an <strong>AI-powered code search assistant</strong> that can understand and answer questions about your codebase. Instead of searching for exact text matches, it understands the <em>meaning</em> of your questions.</p>
+                
+                <div class="bg-stone-50 rounded-lg p-4 mb-4">
+                    <div class="text-sm font-medium text-stone-800 mb-2">Example Interaction:</div>
+                    <div class="text-sm text-stone-600 space-y-2">
+                        <p><strong>You ask:</strong> "What S3 bucket is defined in this project?"</p>
+                        <p><strong>The app:</strong> Searches through all your Terraform, Python, YAML files → Finds relevant code snippets → Uses an LLM to generate a human-readable answer</p>
+                    </div>
+                </div>
+
+                <p class="text-stone-600 text-sm">The application has two modes: <strong>Indexing</strong> (process and store your code) and <strong>Querying</strong> (ask questions and get answers).</p>
+            </div>
         </div>
 
         <!-- TOC -->
@@ -35,15 +51,16 @@
             <h2 class="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-3">Contents</h2>
             <ol class="space-y-1 text-sm">
                 <li><a href="#rag" class="text-stone-600 hover:text-stone-900">1. What is RAG?</a></li>
-                <li><a href="#components" class="text-stone-600 hover:text-stone-900">2. Core Components</a></li>
-                <li><a href="#docker" class="text-stone-600 hover:text-stone-900">3. Docker Setup</a></li>
-                <li><a href="#code" class="text-stone-600 hover:text-stone-900">4. Application Code</a></li>
-                <li><a href="#deps" class="text-stone-600 hover:text-stone-900">5. Dependencies</a></li>
-                <li><a href="#run" class="text-stone-600 hover:text-stone-900">6. Running It</a></li>
+                <li><a href="#ollama" class="text-stone-600 hover:text-stone-900">2. Understanding Ollama</a></li>
+                <li><a href="#chromadb" class="text-stone-600 hover:text-stone-900">3. Understanding ChromaDB</a></li>
+                <li><a href="#python-libs" class="text-stone-600 hover:text-stone-900">4. Python Libraries Explained</a></li>
+                <li><a href="#docker" class="text-stone-600 hover:text-stone-900">5. Docker Setup</a></li>
+                <li><a href="#code" class="text-stone-600 hover:text-stone-900">6. Application Code</a></li>
+                <li><a href="#run" class="text-stone-600 hover:text-stone-900">7. Running It</a></li>
             </ol>
         </nav>
 
-        <!-- Section 1 -->
+        <!-- Section 1: What is RAG -->
         <section id="rag" class="mb-12">
             <h2 class="text-xl font-semibold text-stone-900 mb-4">1. What is RAG?</h2>
             <p class="mb-4"><strong>RAG (Retrieval-Augmented Generation)</strong> enhances LLMs by giving them access to your data. The process:</p>
@@ -52,49 +69,333 @@
                 <li><strong class="text-stone-800">Augment</strong> — Add that context to your question</li>
                 <li><strong class="text-stone-800">Generate</strong> — LLM answers using the context</li>
             </ol>
-            <div class="bg-blue-50 border-l-4 border-blue-400 p-4 text-sm text-blue-800">
-                <strong>Why?</strong> LLMs don't know your codebase. RAG lets you ask "What S3 bucket is defined?" and get answers from YOUR code.
-            </div>
-        </section>
-
-        <!-- Section 2 -->
-        <section id="components" class="mb-12">
-            <h2 class="text-xl font-semibold text-stone-900 mb-4">2. Core Components</h2>
             
-            <div class="space-y-4">
-                <div class="bg-white border border-stone-200 rounded-lg p-4">
-                    <h3 class="font-medium text-stone-900">🦙 Ollama</h3>
-                    <p class="text-sm text-stone-600 mt-1">Runs LLMs locally. Provides embeddings (<code class="bg-stone-100 px-1 rounded">nomic-embed-text</code>) and generation (<code class="bg-stone-100 px-1 rounded">mistral</code>).</p>
-                </div>
-                
-                <div class="bg-white border border-stone-200 rounded-lg p-4">
-                    <h3 class="font-medium text-stone-900">🗄️ ChromaDB</h3>
-                    <p class="text-sm text-stone-600 mt-1">Vector database that stores embeddings and enables similarity search. The "memory" of the system.</p>
-                </div>
-                
-                <div class="bg-white border border-stone-200 rounded-lg p-4">
-                    <h3 class="font-medium text-stone-900">🐳 Docker Compose</h3>
-                    <p class="text-sm text-stone-600 mt-1">Orchestrates all services so they can communicate and persist data.</p>
-                </div>
+            <div class="bg-blue-50 border-l-4 border-blue-400 p-4 text-sm text-blue-800 mb-4">
+                <strong>Why RAG?</strong> LLMs like GPT or Mistral are trained on public data — they don't know about YOUR specific codebase, internal APIs, or project structure. RAG bridges this gap.
             </div>
 
-            <!-- Simple flow -->
-            <div class="mt-6 flex items-center justify-center gap-2 text-sm text-stone-500 flex-wrap">
-                <span class="bg-white border border-stone-200 px-3 py-1 rounded">Code</span>
-                <span>→</span>
-                <span class="bg-white border border-stone-200 px-3 py-1 rounded">Ollama (embed)</span>
-                <span>→</span>
-                <span class="bg-white border border-stone-200 px-3 py-1 rounded">ChromaDB</span>
-                <span>→</span>
-                <span class="bg-white border border-stone-200 px-3 py-1 rounded">Ollama (LLM)</span>
-                <span>→</span>
-                <span class="bg-white border border-stone-200 px-3 py-1 rounded">Answer</span>
+            <div class="bg-white border border-stone-200 rounded-lg p-4">
+                <div class="text-sm font-medium text-stone-800 mb-3">The RAG Pipeline in This App:</div>
+                <div class="flex items-center gap-2 text-xs text-stone-500 flex-wrap">
+                    <span class="bg-stone-100 px-2 py-1 rounded">📁 Your Code</span>
+                    <span>→</span>
+                    <span class="bg-stone-100 px-2 py-1 rounded">✂️ Chunking</span>
+                    <span>→</span>
+                    <span class="bg-orange-100 text-orange-700 px-2 py-1 rounded">🦙 Ollama Embed</span>
+                    <span>→</span>
+                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded">🗄️ ChromaDB</span>
+                    <span>→</span>
+                    <span class="bg-stone-100 px-2 py-1 rounded">🔍 Query</span>
+                    <span>→</span>
+                    <span class="bg-orange-100 text-orange-700 px-2 py-1 rounded">🦙 Ollama LLM</span>
+                    <span>→</span>
+                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded">💬 Answer</span>
+                </div>
             </div>
         </section>
 
-        <!-- Section 3 -->
+        <!-- Section 2: Ollama Deep Dive -->
+        <section id="ollama" class="mb-12">
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">2. Understanding Ollama</h2>
+            
+            <div class="bg-white border border-stone-200 rounded-lg p-5 mb-4">
+                <h3 class="font-medium text-stone-900 mb-2">🦙 What is Ollama?</h3>
+                <p class="text-stone-600 mb-4">Ollama is an open-source tool that lets you <strong>run Large Language Models locally</strong> on your own machine. Think of it as "Docker for LLMs" — it handles downloading, running, and serving AI models through a simple API.</p>
+                
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-stone-50 p-3 rounded">
+                        <div class="font-medium text-stone-800 mb-1">Key Benefits</div>
+                        <ul class="text-stone-600 space-y-1">
+                            <li>• Runs 100% locally (no cloud costs)</li>
+                            <li>• Privacy — your code never leaves your machine</li>
+                            <li>• Simple REST API on port 11434</li>
+                            <li>• Easy model management</li>
+                        </ul>
+                    </div>
+                    <div class="bg-stone-50 p-3 rounded">
+                        <div class="font-medium text-stone-800 mb-1">How It Works</div>
+                        <ul class="text-stone-600 space-y-1">
+                            <li>• Downloads models on first use</li>
+                            <li>• Serves models via HTTP API</li>
+                            <li>• Handles GPU/CPU optimization</li>
+                            <li>• Manages model memory</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-stone-200 rounded-lg p-5 mb-4">
+                <h3 class="font-medium text-stone-900 mb-3">Two Roles in This App</h3>
+                
+                <div class="space-y-4">
+                    <div class="border-l-4 border-orange-400 pl-4">
+                        <div class="font-medium text-stone-800">1. Embedding Model: <code class="bg-orange-100 text-orange-700 px-1 rounded text-sm">nomic-embed-text</code></div>
+                        <p class="text-sm text-stone-600 mt-1">Converts text into numerical vectors (embeddings). These vectors capture the <em>semantic meaning</em> of code, so similar code produces similar vectors.</p>
+                        <div class="text-xs text-stone-500 mt-2 bg-stone-50 p-2 rounded font-mono">
+                            "def calculate_sum()" → [0.12, -0.45, 0.78, ...] (768 dimensions)
+                        </div>
+                    </div>
+                    
+                    <div class="border-l-4 border-purple-400 pl-4">
+                        <div class="font-medium text-stone-800">2. Generation Model: <code class="bg-purple-100 text-purple-700 px-1 rounded text-sm">mistral</code></div>
+                        <p class="text-sm text-stone-600 mt-1">A 7B parameter LLM that reads the retrieved code context and generates human-readable answers. It's the "brain" that synthesizes information.</p>
+                        <div class="text-xs text-stone-500 mt-2 bg-stone-50 p-2 rounded font-mono">
+                            Context + Question → "The S3 bucket 'my-app-data' is defined in main.tf..."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-stone-200 rounded-lg p-5">
+                <h3 class="font-medium text-stone-900 mb-3">Ollama API Examples</h3>
+                <pre class="bg-stone-800 text-stone-100 p-3 rounded text-sm overflow-x-auto mb-3"><code><span class="text-stone-400"># Generate embeddings</span>
+curl http://localhost:11434/api/embeddings -d '{
+  "model": "nomic-embed-text",
+  "prompt": "def hello_world():"
+}'
+
+<span class="text-stone-400"># Generate text</span>
+curl http://localhost:11434/api/generate -d '{
+  "model": "mistral",
+  "prompt": "Explain this code: def hello():"
+}'</code></pre>
+                <p class="text-xs text-stone-500">The Python <code>ollama</code> library wraps these API calls into simple function calls.</p>
+            </div>
+        </section>
+
+        <!-- Section 3: ChromaDB Deep Dive -->
+        <section id="chromadb" class="mb-12">
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">3. Understanding ChromaDB</h2>
+            
+            <div class="bg-white border border-stone-200 rounded-lg p-5 mb-4">
+                <h3 class="font-medium text-stone-900 mb-2">🗄️ What is ChromaDB?</h3>
+                <p class="text-stone-600 mb-4">ChromaDB is an open-source <strong>vector database</strong> designed specifically for AI applications. Unlike traditional databases that search by exact matches, ChromaDB finds data by <em>similarity</em>.</p>
+                
+                <div class="bg-amber-50 border border-amber-200 rounded p-3 text-sm mb-4">
+                    <strong class="text-amber-800">Traditional DB:</strong> <span class="text-amber-700">"Find rows where name = 'John'"</span><br>
+                    <strong class="text-amber-800">Vector DB:</strong> <span class="text-amber-700">"Find items most similar to this vector [0.1, 0.5, ...]"</span>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div class="bg-stone-50 p-3 rounded">
+                        <div class="font-medium text-stone-800 mb-1">What It Stores</div>
+                        <ul class="text-stone-600 space-y-1">
+                            <li>• <strong>Embeddings</strong> — The vector numbers</li>
+                            <li>• <strong>Documents</strong> — Original text (code)</li>
+                            <li>• <strong>Metadata</strong> — Source file, type, etc.</li>
+                            <li>• <strong>IDs</strong> — Unique identifiers</li>
+                        </ul>
+                    </div>
+                    <div class="bg-stone-50 p-3 rounded">
+                        <div class="font-medium text-stone-800 mb-1">Key Features</div>
+                        <ul class="text-stone-600 space-y-1">
+                            <li>• Fast similarity search</li>
+                            <li>• Persistent storage option</li>
+                            <li>• HTTP API (client/server mode)</li>
+                            <li>• Metadata filtering</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-stone-200 rounded-lg p-5 mb-4">
+                <h3 class="font-medium text-stone-900 mb-3">How Similarity Search Works</h3>
+                <p class="text-sm text-stone-600 mb-3">When you query "What S3 bucket is defined?", ChromaDB:</p>
+                
+                <ol class="text-sm space-y-3">
+                    <li class="flex gap-3">
+                        <span class="w-6 h-6 bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">1</span>
+                        <div>
+                            <strong class="text-stone-800">Converts your question to a vector</strong>
+                            <div class="text-stone-500 text-xs mt-1">"What S3 bucket..." → [0.23, -0.11, 0.89, ...]</div>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-6 h-6 bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">2</span>
+                        <div>
+                            <strong class="text-stone-800">Calculates distance to all stored vectors</strong>
+                            <div class="text-stone-500 text-xs mt-1">Uses cosine similarity or Euclidean distance</div>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="w-6 h-6 bg-yellow-100 text-yellow-700 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0">3</span>
+                        <div>
+                            <strong class="text-stone-800">Returns the N closest matches</strong>
+                            <div class="text-stone-500 text-xs mt-1">In this app, we retrieve the top 3 most similar code chunks</div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="bg-white border border-stone-200 rounded-lg p-5">
+                <h3 class="font-medium text-stone-900 mb-3">ChromaDB in This App</h3>
+                <pre class="bg-stone-800 text-stone-100 p-3 rounded text-sm overflow-x-auto"><code><span class="text-stone-400"># Connect to ChromaDB server</span>
+client = chromadb.HttpClient(host="chromadb", port=8000)
+
+<span class="text-stone-400"># Create or get a collection (like a table)</span>
+collection = client.get_or_create_collection(name="multi_lang_codebase")
+
+<span class="text-stone-400"># Add data</span>
+collection.add(
+    ids=["file1_chunk_0"],           <span class="text-stone-400"># Unique ID</span>
+    embeddings=[[0.1, 0.2, ...]],    <span class="text-stone-400"># Vector from Ollama</span>
+    documents=["def hello():..."],   <span class="text-stone-400"># Original code</span>
+    metadatas=[{"source": "app.py"}] <span class="text-stone-400"># Extra info</span>
+)
+
+<span class="text-stone-400"># Query for similar items</span>
+results = collection.query(
+    query_embeddings=[[0.15, 0.25, ...]],  <span class="text-stone-400"># Question vector</span>
+    n_results=3                             <span class="text-stone-400"># Return top 3</span>
+)</code></pre>
+            </div>
+        </section>
+
+        <!-- Section 4: Python Libraries -->
+        <section id="python-libs" class="mb-12">
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">4. Python Libraries Explained</h2>
+            <p class="text-stone-600 mb-4">The <code class="bg-stone-100 px-1 rounded">requirements.txt</code> contains five packages. Here's what each does:</p>
+
+            <pre class="bg-stone-800 text-stone-100 p-4 rounded-lg text-sm mb-6"><code>chromadb
+ollama
+requests
+httpx
+httpcore</code></pre>
+
+            <!-- chromadb -->
+            <div class="bg-white border border-stone-200 rounded-lg p-5 mb-4">
+                <div class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-yellow-100 text-yellow-700 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-stone-900"><code class="text-yellow-600">chromadb</code></h3>
+                        <p class="text-sm text-stone-600 mt-1 mb-3">The official Python client for ChromaDB. Provides a high-level API to interact with the vector database.</p>
+                        
+                        <div class="text-xs bg-stone-50 rounded p-3">
+                            <div class="font-medium text-stone-700 mb-2">Functions used in this app:</div>
+                            <table class="w-full">
+                                <tr class="border-b border-stone-200">
+                                    <td class="py-1 font-mono text-stone-600">HttpClient()</td>
+                                    <td class="py-1 text-stone-500">Connect to remote ChromaDB server</td>
+                                </tr>
+                                <tr class="border-b border-stone-200">
+                                    <td class="py-1 font-mono text-stone-600">get_or_create_collection()</td>
+                                    <td class="py-1 text-stone-500">Create/access a named collection</td>
+                                </tr>
+                                <tr class="border-b border-stone-200">
+                                    <td class="py-1 font-mono text-stone-600">collection.add()</td>
+                                    <td class="py-1 text-stone-500">Store embeddings + documents</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 font-mono text-stone-600">collection.query()</td>
+                                    <td class="py-1 text-stone-500">Search for similar vectors</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ollama -->
+            <div class="bg-white border border-stone-200 rounded-lg p-5 mb-4">
+                <div class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-orange-100 text-orange-700 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-stone-900"><code class="text-orange-600">ollama</code></h3>
+                        <p class="text-sm text-stone-600 mt-1 mb-3">Official Python SDK for Ollama. Simplifies communication with the Ollama server for embeddings and text generation.</p>
+                        
+                        <div class="text-xs bg-stone-50 rounded p-3">
+                            <div class="font-medium text-stone-700 mb-2">Functions used in this app:</div>
+                            <table class="w-full">
+                                <tr class="border-b border-stone-200">
+                                    <td class="py-1 font-mono text-stone-600">ollama.embeddings()</td>
+                                    <td class="py-1 text-stone-500">Convert text → vector (768 floats)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-1 font-mono text-stone-600">ollama.generate()</td>
+                                    <td class="py-1 text-stone-500">Generate text response from LLM</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="mt-3 text-xs">
+                            <div class="font-medium text-stone-700 mb-1">Example usage:</div>
+                            <pre class="bg-stone-800 text-stone-100 p-2 rounded overflow-x-auto"><code><span class="text-stone-400"># Get embedding</span>
+response = ollama.embeddings(model="nomic-embed-text", prompt="code here")
+vector = response["embedding"]  <span class="text-stone-400"># List of 768 floats</span>
+
+<span class="text-stone-400"># Generate answer</span>
+response = ollama.generate(model="mistral", prompt="Explain...")
+answer = response["response"]   <span class="text-stone-400"># String</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- requests -->
+            <div class="bg-white border border-stone-200 rounded-lg p-5 mb-4">
+                <div class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-green-100 text-green-700 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-stone-900"><code class="text-green-600">requests</code></h3>
+                        <p class="text-sm text-stone-600 mt-1">The classic Python HTTP library. Used internally by ChromaDB to communicate with the server. You don't call it directly in this app, but it's a required dependency.</p>
+                        <div class="text-xs text-stone-500 mt-2">
+                            <strong>Why included:</strong> ChromaDB's HttpClient uses requests for HTTP calls.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- httpx + httpcore -->
+            <div class="bg-white border border-stone-200 rounded-lg p-5">
+                <div class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-blue-100 text-blue-700 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                    <div class="flex-1">
+                        <h3 class="font-medium text-stone-900"><code class="text-blue-600">httpx</code> + <code class="text-cyan-600">httpcore</code></h3>
+                        <p class="text-sm text-stone-600 mt-1 mb-3">Modern async-capable HTTP client libraries. The <code>ollama</code> Python package uses these under the hood.</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-3 text-xs">
+                            <div class="bg-stone-50 p-2 rounded">
+                                <strong class="text-stone-700">httpx</strong>
+                                <p class="text-stone-500 mt-1">High-level HTTP client (like requests but with async support)</p>
+                            </div>
+                            <div class="bg-stone-50 p-2 rounded">
+                                <strong class="text-stone-700">httpcore</strong>
+                                <p class="text-stone-500 mt-1">Low-level HTTP transport that httpx builds on</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-xs text-stone-500 mt-3">
+                            <strong>Why included:</strong> The ollama library requires these for communicating with the Ollama API server.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dependency diagram -->
+            <div class="mt-6 bg-white border border-stone-200 rounded-lg p-5">
+                <h3 class="font-medium text-stone-900 mb-3">Dependency Relationships</h3>
+                <div class="text-sm font-mono text-center space-y-2">
+                    <div class="flex items-center justify-center gap-2 flex-wrap">
+                        <span class="bg-stone-800 text-stone-100 px-3 py-1 rounded">one.py</span>
+                    </div>
+                    <div class="text-stone-400">↓ imports ↓</div>
+                    <div class="flex items-center justify-center gap-4 flex-wrap">
+                        <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded">chromadb</span>
+                        <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded">ollama</span>
+                    </div>
+                    <div class="text-stone-400">↓ uses internally ↓</div>
+                    <div class="flex items-center justify-center gap-4 flex-wrap">
+                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded">requests</span>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded">httpx</span>
+                        <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded">httpcore</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Docker -->
         <section id="docker" class="mb-12">
-            <h2 class="text-xl font-semibold text-stone-900 mb-4">3. Docker Setup</h2>
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">5. Docker Setup</h2>
             <p class="mb-4 text-stone-600">The <code class="bg-stone-100 px-1 rounded">docker-compose.yml</code> defines three services:</p>
             
             <pre class="bg-stone-800 text-stone-100 p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>services:
@@ -138,9 +439,9 @@ volumes:
             </div>
         </section>
 
-        <!-- Section 4 -->
+        <!-- Section 6: Code -->
         <section id="code" class="mb-12">
-            <h2 class="text-xl font-semibold text-stone-900 mb-4">4. Application Code</h2>
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">6. Application Code</h2>
             <p class="mb-4 text-stone-600">The <code class="bg-stone-100 px-1 rounded">one.py</code> script has two main functions:</p>
 
             <h3 class="font-medium text-stone-800 mt-6 mb-2">Configuration</h3>
@@ -183,43 +484,9 @@ CHUNK_SIZE = 1500                  <span class="text-stone-500"># Chars per chun
     return ollama.generate(model=LLM_MODEL, prompt=prompt)</code></pre>
         </section>
 
-        <!-- Section 5 -->
-        <section id="deps" class="mb-12">
-            <h2 class="text-xl font-semibold text-stone-900 mb-4">5. Dependencies</h2>
-            
-            <pre class="bg-stone-800 text-stone-100 p-4 rounded-lg text-sm mb-4"><code>chromadb    <span class="text-stone-500"># Vector DB client</span>
-ollama      <span class="text-stone-500"># Ollama Python SDK</span>
-requests    <span class="text-stone-500"># HTTP library</span>
-httpx       <span class="text-stone-500"># Async HTTP (used by ollama)</span>
-httpcore    <span class="text-stone-500"># HTTP transport</span></code></pre>
-
-            <table class="w-full text-sm border border-stone-200 rounded-lg overflow-hidden">
-                <thead class="bg-stone-100">
-                    <tr>
-                        <th class="text-left p-3 font-medium text-stone-800">Package</th>
-                        <th class="text-left p-3 font-medium text-stone-800">Purpose</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-                    <tr class="border-t border-stone-100">
-                        <td class="p-3"><code>chromadb</code></td>
-                        <td class="p-3 text-stone-600">Create collections, add/query vectors</td>
-                    </tr>
-                    <tr class="border-t border-stone-100">
-                        <td class="p-3"><code>ollama</code></td>
-                        <td class="p-3 text-stone-600">Generate embeddings and LLM responses</td>
-                    </tr>
-                    <tr class="border-t border-stone-100">
-                        <td class="p-3"><code>httpx/httpcore</code></td>
-                        <td class="p-3 text-stone-600">HTTP communication with Ollama server</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-        <!-- Section 6 -->
+        <!-- Section 7: Running -->
         <section id="run" class="mb-12">
-            <h2 class="text-xl font-semibold text-stone-900 mb-4">6. Running It</h2>
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">7. Running It</h2>
             
             <div class="space-y-4">
                 <div class="flex gap-3">
@@ -257,9 +524,29 @@ httpcore    <span class="text-stone-500"># HTTP transport</span></code></pre>
 
         <!-- Summary -->
         <section class="bg-white border border-stone-200 rounded-lg p-6">
-            <h2 class="font-semibold text-stone-900 mb-2">Summary</h2>
-            <p class="text-stone-600 text-sm">Code → Chunks → Embeddings (Ollama) → Vector Store (ChromaDB) → Query → Context + LLM → Answer</p>
-            <div class="mt-4 flex gap-3 text-sm">
+            <h2 class="font-semibold text-stone-900 mb-3">Summary</h2>
+            <p class="text-stone-600 text-sm mb-4">This RAG application combines three key technologies:</p>
+            
+            <div class="grid md:grid-cols-3 gap-3 text-sm mb-4">
+                <div class="bg-orange-50 border border-orange-200 p-3 rounded">
+                    <div class="font-medium text-orange-800">🦙 Ollama</div>
+                    <div class="text-orange-600 text-xs mt-1">Local LLM for embeddings + generation</div>
+                </div>
+                <div class="bg-yellow-50 border border-yellow-200 p-3 rounded">
+                    <div class="font-medium text-yellow-800">🗄️ ChromaDB</div>
+                    <div class="text-yellow-600 text-xs mt-1">Vector database for similarity search</div>
+                </div>
+                <div class="bg-blue-50 border border-blue-200 p-3 rounded">
+                    <div class="font-medium text-blue-800">🐳 Docker</div>
+                    <div class="text-blue-600 text-xs mt-1">Orchestration + persistence</div>
+                </div>
+            </div>
+
+            <div class="text-xs text-stone-500 bg-stone-50 p-3 rounded mb-4">
+                <strong>Flow:</strong> Code → Chunks → Embeddings (Ollama) → Vector Store (ChromaDB) → Query → Context + LLM → Answer
+            </div>
+
+            <div class="flex gap-3 text-sm">
                 <a href="https://github.com/zachclarity/ollamatut101" class="text-blue-600 hover:underline">GitHub ↗</a>
                 <a href="https://ollama.ai" class="text-blue-600 hover:underline">Ollama ↗</a>
                 <a href="https://docs.trychroma.com" class="text-blue-600 hover:underline">ChromaDB ↗</a>
