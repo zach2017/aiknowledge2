@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Demo Tutorial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'IBM Plex Sans', sans-serif; }
+        code, pre { font-family: 'IBM Plex Mono', monospace; }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-700">
+
+    <!-- Header -->
+    <header class="border-b border-stone-200 bg-white sticky top-0 z-10">
+        <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+            <span class="font-semibold text-stone-900">RAG Tutorial</span>
+            <a href="https://github.com/zachclarity/ollamatut101" target="_blank" class="text-sm text-stone-500 hover:text-stone-900">GitHub ↗</a>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-6 py-12">
+
+        <!-- Intro -->
+        <div class="mb-12">
+            <h1 class="text-3xl font-semibold text-stone-900 mb-3">Build a RAG Code Assistant</h1>
+            <p class="text-lg text-stone-600">A simple guide to combining Ollama, ChromaDB, and Docker for intelligent code search.</p>
+        </div>
+
+        <!-- TOC -->
+        <nav class="mb-12 p-4 bg-white border border-stone-200 rounded-lg">
+            <h2 class="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-3">Contents</h2>
+            <ol class="space-y-1 text-sm">
+                <li><a href="#rag" class="text-stone-600 hover:text-stone-900">1. What is RAG?</a></li>
+                <li><a href="#components" class="text-stone-600 hover:text-stone-900">2. Core Components</a></li>
+                <li><a href="#docker" class="text-stone-600 hover:text-stone-900">3. Docker Setup</a></li>
+                <li><a href="#code" class="text-stone-600 hover:text-stone-900">4. Application Code</a></li>
+                <li><a href="#deps" class="text-stone-600 hover:text-stone-900">5. Dependencies</a></li>
+                <li><a href="#run" class="text-stone-600 hover:text-stone-900">6. Running It</a></li>
+            </ol>
+        </nav>
+
+        <!-- Section 1 -->
+        <section id="rag" class="mb-12">
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">1. What is RAG?</h2>
+            <p class="mb-4"><strong>RAG (Retrieval-Augmented Generation)</strong> enhances LLMs by giving them access to your data. The process:</p>
+            <ol class="list-decimal list-inside space-y-2 mb-4 text-stone-600">
+                <li><strong class="text-stone-800">Retrieve</strong> — Find relevant code chunks from your codebase</li>
+                <li><strong class="text-stone-800">Augment</strong> — Add that context to your question</li>
+                <li><strong class="text-stone-800">Generate</strong> — LLM answers using the context</li>
+            </ol>
+            <div class="bg-blue-50 border-l-4 border-blue-400 p-4 text-sm text-blue-800">
+                <strong>Why?</strong> LLMs don't know your codebase. RAG lets you ask "What S3 bucket is defined?" and get answers from YOUR code.
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="components" class="mb-12">
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">2. Core Components</h2>
+            
+            <div class="space-y-4">
+                <div class="bg-white border border-stone-200 rounded-lg p-4">
+                    <h3 class="font-medium text-stone-900">🦙 Ollama</h3>
+                    <p class="text-sm text-stone-600 mt-1">Runs LLMs locally. Provides embeddings (<code class="bg-stone-100 px-1 rounded">nomic-embed-text</code>) and generation (<code class="bg-stone-100 px-1 rounded">mistral</code>).</p>
+                </div>
+                
+                <div class="bg-white border border-stone-200 rounded-lg p-4">
+                    <h3 class="font-medium text-stone-900">🗄️ ChromaDB</h3>
+                    <p class="text-sm text-stone-600 mt-1">Vector database that stores embeddings and enables similarity search. The "memory" of the system.</p>
+                </div>
+                
+                <div class="bg-white border border-stone-200 rounded-lg p-4">
+                    <h3 class="font-medium text-stone-900">🐳 Docker Compose</h3>
+                    <p class="text-sm text-stone-600 mt-1">Orchestrates all services so they can communicate and persist data.</p>
+                </div>
+            </div>
+
+            <!-- Simple flow -->
+            <div class="mt-6 flex items-center justify-center gap-2 text-sm text-stone-500 flex-wrap">
+                <span class="bg-white border border-stone-200 px-3 py-1 rounded">Code</span>
+                <span>→</span>
+                <span class="bg-white border border-stone-200 px-3 py-1 rounded">Ollama (embed)</span>
+                <span>→</span>
+                <span class="bg-white border border-stone-200 px-3 py-1 rounded">ChromaDB</span>
+                <span>→</span>
+                <span class="bg-white border border-stone-200 px-3 py-1 rounded">Ollama (LLM)</span>
+                <span>→</span>
+                <span class="bg-white border border-stone-200 px-3 py-1 rounded">Answer</span>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="docker" class="mb-12">
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">3. Docker Setup</h2>
+            <p class="mb-4 text-stone-600">The <code class="bg-stone-100 px-1 rounded">docker-compose.yml</code> defines three services:</p>
+            
+            <pre class="bg-stone-800 text-stone-100 p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>services:
+  ollama:                        <span class="text-stone-500"># LLM server</span>
+    image: ollama/ollama:latest
+    ports: ["11434:11434"]
+    volumes:
+      - ollama_storage:/root/.ollama
+
+  chromadb:                      <span class="text-stone-500"># Vector DB</span>
+    image: chromadb/chroma:latest
+    ports: ["8000:8000"]
+    environment:
+      - IS_PERSISTENT=TRUE
+
+  backend:                       <span class="text-stone-500"># Your app</span>
+    build: ./onedemo
+    ports: ["8787:8080"]
+    environment:
+      - CHROMA_HOST=chromadb    <span class="text-stone-500"># Service name as host</span>
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on: [ollama, chromadb]
+
+volumes:
+  ollama_storage:
+  chroma_data:</code></pre>
+
+            <div class="grid grid-cols-3 gap-3 text-xs">
+                <div class="bg-white border border-stone-200 p-3 rounded">
+                    <div class="font-medium text-stone-800">Ports</div>
+                    <div class="text-stone-500">11434, 8000, 8787</div>
+                </div>
+                <div class="bg-white border border-stone-200 p-3 rounded">
+                    <div class="font-medium text-stone-800">Volumes</div>
+                    <div class="text-stone-500">Persist models & vectors</div>
+                </div>
+                <div class="bg-white border border-stone-200 p-3 rounded">
+                    <div class="font-medium text-stone-800">Network</div>
+                    <div class="text-stone-500">Services by name</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="code" class="mb-12">
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">4. Application Code</h2>
+            <p class="mb-4 text-stone-600">The <code class="bg-stone-100 px-1 rounded">one.py</code> script has two main functions:</p>
+
+            <h3 class="font-medium text-stone-800 mt-6 mb-2">Configuration</h3>
+            <pre class="bg-stone-800 text-stone-100 p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>CHROMA_HOST = os.getenv("CHROMA_HOST", "chromadb")
+COLLECTION_NAME = "multi_lang_codebase"
+EMBED_MODEL = "nomic-embed-text"   <span class="text-stone-500"># For embeddings</span>
+LLM_MODEL = "mistral"              <span class="text-stone-500"># For generation</span>
+CHUNK_SIZE = 1500                  <span class="text-stone-500"># Chars per chunk</span></code></pre>
+
+            <h3 class="font-medium text-stone-800 mt-6 mb-2">Indexing (store code)</h3>
+            <pre class="bg-stone-800 text-stone-100 p-4 rounded-lg text-sm overflow-x-auto mb-4"><code>def index_code(path):
+    for file in supported_files:
+        content = read_file(file)
+        chunks = split_into_chunks(content, CHUNK_SIZE)
+        
+        for chunk in chunks:
+            <span class="text-stone-500"># Convert to vector</span>
+            embedding = ollama.embeddings(model=EMBED_MODEL, prompt=chunk)
+            
+            <span class="text-stone-500"># Store in ChromaDB</span>
+            collection.add(
+                ids=[chunk_id],
+                embeddings=[embedding],
+                documents=[chunk],
+                metadatas=[{"source": file_path}]
+            )</code></pre>
+
+            <h3 class="font-medium text-stone-800 mt-6 mb-2">Querying (search & answer)</h3>
+            <pre class="bg-stone-800 text-stone-100 p-4 rounded-lg text-sm overflow-x-auto"><code>def query_code(question):
+    <span class="text-stone-500"># 1. Embed the question</span>
+    query_embed = ollama.embeddings(model=EMBED_MODEL, prompt=question)
+    
+    <span class="text-stone-500"># 2. Find similar chunks</span>
+    results = collection.query(query_embeddings=[query_embed], n_results=3)
+    
+    <span class="text-stone-500"># 3. Generate answer with context</span>
+    context = "\n".join(results["documents"][0])
+    prompt = f"Answer using this code:\n{context}\n\nQuestion: {question}"
+    
+    return ollama.generate(model=LLM_MODEL, prompt=prompt)</code></pre>
+        </section>
+
+        <!-- Section 5 -->
+        <section id="deps" class="mb-12">
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">5. Dependencies</h2>
+            
+            <pre class="bg-stone-800 text-stone-100 p-4 rounded-lg text-sm mb-4"><code>chromadb    <span class="text-stone-500"># Vector DB client</span>
+ollama      <span class="text-stone-500"># Ollama Python SDK</span>
+requests    <span class="text-stone-500"># HTTP library</span>
+httpx       <span class="text-stone-500"># Async HTTP (used by ollama)</span>
+httpcore    <span class="text-stone-500"># HTTP transport</span></code></pre>
+
+            <table class="w-full text-sm border border-stone-200 rounded-lg overflow-hidden">
+                <thead class="bg-stone-100">
+                    <tr>
+                        <th class="text-left p-3 font-medium text-stone-800">Package</th>
+                        <th class="text-left p-3 font-medium text-stone-800">Purpose</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <tr class="border-t border-stone-100">
+                        <td class="p-3"><code>chromadb</code></td>
+                        <td class="p-3 text-stone-600">Create collections, add/query vectors</td>
+                    </tr>
+                    <tr class="border-t border-stone-100">
+                        <td class="p-3"><code>ollama</code></td>
+                        <td class="p-3 text-stone-600">Generate embeddings and LLM responses</td>
+                    </tr>
+                    <tr class="border-t border-stone-100">
+                        <td class="p-3"><code>httpx/httpcore</code></td>
+                        <td class="p-3 text-stone-600">HTTP communication with Ollama server</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 6 -->
+        <section id="run" class="mb-12">
+            <h2 class="text-xl font-semibold text-stone-900 mb-4">6. Running It</h2>
+            
+            <div class="space-y-4">
+                <div class="flex gap-3">
+                    <span class="w-6 h-6 bg-stone-200 rounded-full flex items-center justify-center text-xs font-medium text-stone-700">1</span>
+                    <div>
+                        <div class="font-medium text-stone-800">Start services</div>
+                        <code class="text-sm text-stone-600 bg-stone-100 px-2 py-1 rounded block mt-1">docker-compose up -d</code>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <span class="w-6 h-6 bg-stone-200 rounded-full flex items-center justify-center text-xs font-medium text-stone-700">2</span>
+                    <div>
+                        <div class="font-medium text-stone-800">Index your code</div>
+                        <code class="text-sm text-stone-600 bg-stone-100 px-2 py-1 rounded block mt-1">python one.py ./your/code/path</code>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <span class="w-6 h-6 bg-stone-200 rounded-full flex items-center justify-center text-xs font-medium text-stone-700">3</span>
+                    <div>
+                        <div class="font-medium text-stone-800">Run queries</div>
+                        <code class="text-sm text-stone-600 bg-stone-100 px-2 py-1 rounded block mt-1">python one.py</code>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-stone-100 p-4 rounded-lg">
+                <div class="text-sm font-medium text-stone-800 mb-2">Example queries:</div>
+                <ul class="text-sm text-stone-600 space-y-1">
+                    <li>• "What S3 bucket is defined?"</li>
+                    <li>• "What happens in the test stage?"</li>
+                    <li>• "How is docker composed structured?"</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="bg-white border border-stone-200 rounded-lg p-6">
+            <h2 class="font-semibold text-stone-900 mb-2">Summary</h2>
+            <p class="text-stone-600 text-sm">Code → Chunks → Embeddings (Ollama) → Vector Store (ChromaDB) → Query → Context + LLM → Answer</p>
+            <div class="mt-4 flex gap-3 text-sm">
+                <a href="https://github.com/zachclarity/ollamatut101" class="text-blue-600 hover:underline">GitHub ↗</a>
+                <a href="https://ollama.ai" class="text-blue-600 hover:underline">Ollama ↗</a>
+                <a href="https://docs.trychroma.com" class="text-blue-600 hover:underline">ChromaDB ↗</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-stone-200 py-6 text-center text-sm text-stone-400">
+        RAG Tutorial — Based on ollamatut101
+    </footer>
+
+</body>
+</html>
