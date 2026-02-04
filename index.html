@@ -418,6 +418,110 @@
                             and risks you need to know: <strong>OWASP LLM Top 10</strong>, <strong>MITRE ATLAS</strong>, and <strong>LLM Hallucinations</strong>.
                         </p>
 
+                        <!-- CIA Triad Section -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
+                                <span class="bg-slate-800 text-white px-3 py-1 rounded-full text-sm">Foundation</span>
+                                The C.I.A. Triad in AI Security
+                            </h3>
+                            <p class="text-gray-600 text-sm mb-4">The fundamental principles of information security apply to AI systems with unique considerations for machine learning and LLMs.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <!-- Confidentiality -->
+                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border-2 border-blue-300 shadow-md">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl">🔒</div>
+                                        <div>
+                                            <div class="font-bold text-blue-800 text-lg">Confidentiality</div>
+                                            <div class="text-xs text-blue-600">Protecting sensitive information</div>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-700 mb-3">
+                                        Ensuring that AI systems do not expose sensitive data from training sets, user inputs, or system prompts.
+                                    </p>
+                                    <div class="bg-white rounded-lg p-3">
+                                        <div class="text-xs font-semibold text-blue-800 mb-2">AI-Specific Concerns:</div>
+                                        <ul class="text-xs text-gray-600 space-y-1">
+                                            <li>• Training data leakage (PII, secrets)</li>
+                                            <li>• System prompt extraction attacks</li>
+                                            <li>• Model inversion & membership inference</li>
+                                            <li>• Unintended disclosure in responses</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-3 text-xs">
+                                        <span class="bg-blue-200 text-blue-800 px-2 py-1 rounded">OWASP: LLM02, LLM07</span>
+                                    </div>
+                                </div>
+
+                                <!-- Integrity -->
+                                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border-2 border-green-300 shadow-md">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl">✓</div>
+                                        <div>
+                                            <div class="font-bold text-green-800 text-lg">Integrity</div>
+                                            <div class="text-xs text-green-600">Ensuring accuracy & trustworthiness</div>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-700 mb-3">
+                                        Maintaining the accuracy and reliability of AI models, training data, and outputs against tampering or corruption.
+                                    </p>
+                                    <div class="bg-white rounded-lg p-3">
+                                        <div class="text-xs font-semibold text-green-800 mb-2">AI-Specific Concerns:</div>
+                                        <ul class="text-xs text-gray-600 space-y-1">
+                                            <li>• Data & model poisoning attacks</li>
+                                            <li>• Prompt injection manipulation</li>
+                                            <li>• Hallucinations & misinformation</li>
+                                            <li>• Supply chain tampering</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-3 text-xs">
+                                        <span class="bg-green-200 text-green-800 px-2 py-1 rounded">OWASP: LLM01, LLM03, LLM04, LLM09</span>
+                                    </div>
+                                </div>
+
+                                <!-- Availability -->
+                                <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 border-2 border-orange-300 shadow-md">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="bg-orange-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl">⚡</div>
+                                        <div>
+                                            <div class="font-bold text-orange-800 text-lg">Availability</div>
+                                            <div class="text-xs text-orange-600">Ensuring reliable access</div>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-700 mb-3">
+                                        Ensuring AI services remain accessible and performant, protected from denial of service and resource exhaustion.
+                                    </p>
+                                    <div class="bg-white rounded-lg p-3">
+                                        <div class="text-xs font-semibold text-orange-800 mb-2">AI-Specific Concerns:</div>
+                                        <ul class="text-xs text-gray-600 space-y-1">
+                                            <li>• Unbounded consumption (DoS)</li>
+                                            <li>• Denial of Wallet attacks</li>
+                                            <li>• Resource exhaustion via complex queries</li>
+                                            <li>• Model degradation over time</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-3 text-xs">
+                                        <span class="bg-orange-200 text-orange-800 px-2 py-1 rounded">OWASP: LLM10</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CIA Triad Summary -->
+                            <div class="mt-6 p-4 bg-gradient-to-r from-slate-100 to-gray-100 rounded-lg border border-slate-300">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-2xl">💡</span>
+                                    <div>
+                                        <div class="font-bold text-slate-800 mb-1">Why CIA Matters for AI</div>
+                                        <p class="text-sm text-gray-700">
+                                            AI systems introduce unique challenges to the CIA triad. Unlike traditional systems, LLMs can <strong>memorize and leak training data</strong> (Confidentiality), 
+                                            <strong>generate convincing but false information</strong> (Integrity), and <strong>consume massive computational resources</strong> (Availability). 
+                                            Every OWASP LLM vulnerability maps back to one or more of these fundamental principles.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- OWASP LLM Top 10 Section -->
                         <div class="mb-8">
                             <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
@@ -3421,8 +3525,8 @@ jobs:
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <a href="https://www.gartner.com/en/chief-information-officer/research/ai-maturity-model-toolkit" target="_blank" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm">
-                            📊 Gartner AI Maturity
+                        <a href="https://www.gartner.com/en/articles/what-s-new-in-artificial-intelligence-from-the-2023-gartner-hype-cycle" target="_blank" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm">
+                            📊 Gartner AI Hype Cycle
                         </a>
                     </div>
                 </div>
