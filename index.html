@@ -157,6 +157,7 @@
                     <nav class="space-y-2">
                         <a href="#intro" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm">Introduction</a>
                         <a href="#meetup-minutes" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">📅 Meetup Minutes</a>
+                        <a href="#llm-security" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🛡️ LLM Security</a>
                         <a href="#cloud-infra" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">☁️ Cloud & Kubernetes</a>
                         <a href="#coding" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">💻 AI-Assisted Coding</a>
                         <a href="#agents" class="block py-2 px-3 rounded hover:bg-indigo-50 transition text-sm font-semibold">🤖 AI Agents</a>
@@ -251,6 +252,328 @@
                                 <strong>📢 Next Meetup:</strong> February 4, 2026 - "Security - Using AI securely for development" 
                                
                             </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- LLM Security Section -->
+                <section id="llm-security" class="mb-12 fade-in">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h2 class="text-3xl font-bold mb-6 text-indigo-600">🛡️ AI & LLM Security</h2>
+                        <p class="text-gray-700 mb-6">
+                            Understanding AI security is critical for safely deploying LLM applications. This section covers the major security frameworks 
+                            and risks you need to know: <strong>OWASP LLM Top 10</strong>, <strong>MITRE ATLAS</strong>, and <strong>LLM Hallucinations</strong>.
+                        </p>
+
+                        <!-- OWASP LLM Top 10 Section -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">OWASP</span>
+                                LLM Top 10 (2025)
+                            </h3>
+                            <p class="text-gray-600 text-sm mb-4">The most common vulnerabilities in LLM applications - essential knowledge for developers and security engineers.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                                <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-500">
+                                    <div class="font-bold text-red-800 text-sm">LLM01</div>
+                                    <div class="text-xs text-gray-700 font-semibold">Prompt Injection</div>
+                                    <div class="text-xs text-gray-500 mt-1">Manipulating LLM via malicious inputs</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4 border-l-4 border-orange-500">
+                                    <div class="font-bold text-orange-800 text-sm">LLM02</div>
+                                    <div class="text-xs text-gray-700 font-semibold">Sensitive Info Disclosure</div>
+                                    <div class="text-xs text-gray-500 mt-1">Leaking PII, credentials, or secrets</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-4 border-l-4 border-yellow-500">
+                                    <div class="font-bold text-yellow-800 text-sm">LLM03</div>
+                                    <div class="text-xs text-gray-700 font-semibold">Supply Chain</div>
+                                    <div class="text-xs text-gray-500 mt-1">Vulnerable models & components</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-lime-50 to-lime-100 rounded-lg p-4 border-l-4 border-lime-500">
+                                    <div class="font-bold text-lime-800 text-sm">LLM04</div>
+                                    <div class="text-xs text-gray-700 font-semibold">Data & Model Poisoning</div>
+                                    <div class="text-xs text-gray-500 mt-1">Corrupted training data</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 border-l-4 border-green-500">
+                                    <div class="font-bold text-green-800 text-sm">LLM05</div>
+                                    <div class="text-xs text-gray-700 font-semibold">Improper Output Handling</div>
+                                    <div class="text-xs text-gray-500 mt-1">XSS, code injection from output</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg p-4 border-l-4 border-teal-500">
+                                    <div class="font-bold text-teal-800 text-sm">LLM06</div>
+                                    <div class="text-xs text-gray-700 font-semibold">Excessive Agency</div>
+                                    <div class="text-xs text-gray-500 mt-1">Too much autonomy for AI agents</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg p-4 border-l-4 border-cyan-500">
+                                    <div class="font-bold text-cyan-800 text-sm">LLM07 <span class="badge badge-new text-xs ml-1">New</span></div>
+                                    <div class="text-xs text-gray-700 font-semibold">System Prompt Leakage</div>
+                                    <div class="text-xs text-gray-500 mt-1">Exposing internal prompts</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-500">
+                                    <div class="font-bold text-blue-800 text-sm">LLM08 <span class="badge badge-new text-xs ml-1">New</span></div>
+                                    <div class="text-xs text-gray-700 font-semibold">Vector & Embedding Weaknesses</div>
+                                    <div class="text-xs text-gray-500 mt-1">RAG & vector DB vulnerabilities</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-4 border-l-4 border-indigo-500">
+                                    <div class="font-bold text-indigo-800 text-sm">LLM09</div>
+                                    <div class="text-xs text-gray-700 font-semibold">Misinformation</div>
+                                    <div class="text-xs text-gray-500 mt-1">Hallucinations & false content</div>
+                                </div>
+                                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4 border-l-4 border-purple-500">
+                                    <div class="font-bold text-purple-800 text-sm">LLM10</div>
+                                    <div class="text-xs text-gray-700 font-semibold">Unbounded Consumption</div>
+                                    <div class="text-xs text-gray-500 mt-1">DoS & resource exhaustion</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MITRE ATLAS Section -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">MITRE</span>
+                                ATLAS Framework
+                            </h3>
+                            <p class="text-gray-600 text-sm mb-4">Adversarial Threat Landscape for AI Systems - 15 tactics & 66+ techniques for threat modeling AI systems.</p>
+                            
+                            <div class="bg-gradient-to-r from-slate-50 to-blue-50 rounded-lg p-5 border border-blue-200">
+                                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 text-xs">
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">🔍</div>
+                                        <div class="font-semibold">Reconnaissance</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">🛠️</div>
+                                        <div class="font-semibold">Resource Dev</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">🚪</div>
+                                        <div class="font-semibold">Initial Access</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">🤖</div>
+                                        <div class="font-semibold">ML Model Access</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">⚡</div>
+                                        <div class="font-semibold">Execution</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">📌</div>
+                                        <div class="font-semibold">Persistence</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">🛡️</div>
+                                        <div class="font-semibold">Defense Evasion</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">🔎</div>
+                                        <div class="font-semibold">Discovery</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">📦</div>
+                                        <div class="font-semibold">Collection</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">🎯</div>
+                                        <div class="font-semibold">ML Attack Staging</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">📤</div>
+                                        <div class="font-semibold">Exfiltration</div>
+                                    </div>
+                                    <div class="bg-white rounded p-2 shadow-sm text-center">
+                                        <div class="text-blue-600 font-bold">💥</div>
+                                        <div class="font-semibold">Impact</div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 flex flex-wrap gap-4 text-xs text-gray-600">
+                                    <span class="flex items-center gap-1"><span class="font-bold text-blue-700">15</span> Tactics</span>
+                                    <span class="flex items-center gap-1"><span class="font-bold text-blue-700">66</span> Techniques</span>
+                                    <span class="flex items-center gap-1"><span class="font-bold text-blue-700">46</span> Sub-techniques</span>
+                                    <span class="flex items-center gap-1"><span class="font-bold text-blue-700">33</span> Case Studies</span>
+                                    <span class="flex items-center gap-1"><span class="font-bold text-green-700">+14</span> New Agentic AI techniques (Oct 2025)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Checklist Summary -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Checklist</span>
+                                LLM Security Assessment
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div class="bg-red-50 rounded-lg p-4 border border-red-200">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="bg-red-500 text-white text-xs px-2 py-1 rounded font-bold">CRITICAL</span>
+                                    </div>
+                                    <ul class="text-xs space-y-1 text-gray-700">
+                                        <li>☐ Prompt injection prevention</li>
+                                        <li>☐ Input validation & sanitization</li>
+                                        <li>☐ Output encoding</li>
+                                        <li>☐ Secrets management</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-orange-50 rounded-lg p-4 border border-orange-200">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="bg-orange-500 text-white text-xs px-2 py-1 rounded font-bold">HIGH</span>
+                                    </div>
+                                    <ul class="text-xs space-y-1 text-gray-700">
+                                        <li>☐ Rate limiting & throttling</li>
+                                        <li>☐ Model access controls</li>
+                                        <li>☐ Data classification</li>
+                                        <li>☐ Audit logging</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-yellow-50 rounded-lg p-4 border border-yellow-200">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="bg-yellow-500 text-white text-xs px-2 py-1 rounded font-bold">MEDIUM</span>
+                                    </div>
+                                    <ul class="text-xs space-y-1 text-gray-700">
+                                        <li>☐ Supply chain verification</li>
+                                        <li>☐ Model integrity checks</li>
+                                        <li>☐ Vector DB security</li>
+                                        <li>☐ Agent permissions</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="bg-blue-500 text-white text-xs px-2 py-1 rounded font-bold">LOW</span>
+                                    </div>
+                                    <ul class="text-xs space-y-1 text-gray-700">
+                                        <li>☐ Usage monitoring</li>
+                                        <li>☐ Cost controls</li>
+                                        <li>☐ Documentation</li>
+                                        <li>☐ Incident response plan</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hallucinations Subsection -->
+                        <div class="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border-2 border-purple-200">
+                            <h3 class="text-xl font-bold mb-4 text-purple-800 flex items-center gap-2">
+                                🎭 LLM Hallucinations (Misinformation)
+                                <span class="text-xs bg-purple-200 text-purple-800 px-2 py-1 rounded">OWASP LLM09</span>
+                            </h3>
+                            
+                            <div class="mb-6">
+                                <p class="text-gray-700 mb-4">
+                                    <strong>LLM hallucinations</strong> occur when AI models generate factually incorrect, fabricated, or inconsistent information. 
+                                    OWASP 2025 emphasizes this as a <strong>security risk</strong>, not just a quality issue—when users trust false information, 
+                                    consequences range from embarrassing mistakes to harmful disasters.
+                                </p>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                                        <div class="text-2xl mb-2">🎭</div>
+                                        <div class="font-semibold text-purple-700">Fabricated Facts</div>
+                                        <div class="text-xs text-gray-600">Invented citations, statistics, events, or people that never existed</div>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                                        <div class="text-2xl mb-2">🔀</div>
+                                        <div class="font-semibold text-pink-700">Inconsistent Output</div>
+                                        <div class="text-xs text-gray-600">Contradicts source documents or provided context in RAG systems</div>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-4 shadow-sm">
+                                        <div class="text-2xl mb-2">⚠️</div>
+                                        <div class="font-semibold text-orange-700">Confident Errors</div>
+                                        <div class="text-xs text-gray-600">Wrong information delivered with high confidence scores</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hallucination Rate Chart -->
+                            <div class="mb-4">
+                                <h4 class="font-bold mb-3 text-gray-800">📊 Hallucination Rates by Model (2026 Leaderboard)</h4>
+                                <p class="text-gray-600 text-xs mb-3">Data from Vectara's HHEM Evaluation - Lower is better | Updated Feb 2026</p>
+                                
+                                <div class="bg-white rounded-lg p-4 shadow-sm">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-36 text-xs font-medium text-gray-700 truncate">Finix S1 32B</span>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-5 relative">
+                                                <div class="bg-gradient-to-r from-green-400 to-green-600 h-5 rounded-full flex items-center justify-end pr-2" style="width: 7.2%;">
+                                                    <span class="text-xs font-bold text-white">1.8%</span>
+                                                </div>
+                                            </div>
+                                            <span class="badge badge-new text-xs">Best</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-36 text-xs font-medium text-gray-700 truncate">Gemini 2.5 Flash</span>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-5">
+                                                <div class="bg-gradient-to-r from-green-400 to-green-500 h-5 rounded-full flex items-center justify-end pr-2" style="width: 13.2%;">
+                                                    <span class="text-xs font-bold text-white">3.3%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-36 text-xs font-medium text-gray-700 truncate">Llama 3.3 70B</span>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-5">
+                                                <div class="bg-gradient-to-r from-green-500 to-lime-500 h-5 rounded-full flex items-center justify-end pr-2" style="width: 16.4%;">
+                                                    <span class="text-xs font-bold text-white">4.1%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-36 text-xs font-medium text-gray-700 truncate">Mistral Large</span>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-5">
+                                                <div class="bg-gradient-to-r from-lime-400 to-lime-500 h-5 rounded-full flex items-center justify-end pr-2" style="width: 18%;">
+                                                    <span class="text-xs font-bold text-white">4.5%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-36 text-xs font-medium text-gray-700 truncate">GPT-4.1</span>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-5">
+                                                <div class="bg-gradient-to-r from-lime-500 to-yellow-400 h-5 rounded-full flex items-center justify-end pr-2" style="width: 22.4%;">
+                                                    <span class="text-xs font-bold text-white">5.6%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-36 text-xs font-medium text-gray-700 truncate">DeepSeek V3</span>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-5">
+                                                <div class="bg-gradient-to-r from-yellow-400 to-yellow-500 h-5 rounded-full flex items-center justify-end pr-2" style="width: 24.4%;">
+                                                    <span class="text-xs font-bold text-white">6.1%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-36 text-xs font-medium text-gray-700 truncate">Claude Haiku 4.5</span>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-5">
+                                                <div class="bg-gradient-to-r from-yellow-500 to-orange-400 h-5 rounded-full flex items-center justify-end pr-2" style="width: 39.2%;">
+                                                    <span class="text-xs font-bold text-white">9.8%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="w-36 text-xs font-medium text-gray-700 truncate">Claude Opus 4.5</span>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-5">
+                                                <div class="bg-gradient-to-r from-orange-400 to-orange-500 h-5 rounded-full flex items-center justify-end pr-2" style="width: 43.6%;">
+                                                    <span class="text-xs font-bold text-white">10.9%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-xl">📈</span>
+                                            <div class="text-sm">
+                                                <span class="font-bold text-green-800">Improving Trend:</span>
+                                                <span class="text-green-700">Top models now achieve under 2% hallucination rates, down from 3%+ in 2024.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- More Details Button -->
+                        <div class="text-center">
+                            <button onclick="showModal('llm-security-modal')" class="px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-lg hover:from-indigo-700 hover:to-purple-700 transition transform hover:scale-105 shadow-lg">
+                                🔍 More Details & Resources
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -2863,6 +3186,234 @@ jobs:
                         Tutorials
                     </a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LLM Security Modal -->
+    <div id="llm-security-modal" class="hidden fixed inset-0 bg-black/50 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b sticky top-0 bg-white z-10 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-indigo-600">🛡️ AI & LLM Security Resources</h3>
+                <button onclick="hideModal('llm-security-modal')" class="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+            </div>
+            
+            <div class="p-6 space-y-6">
+                <!-- OWASP LLM Top 10 Section -->
+                <div class="bg-red-50 rounded-lg p-5 border border-red-200">
+                    <h4 class="font-bold text-red-900 mb-3 flex items-center gap-2">
+                        <span class="bg-red-600 text-white px-2 py-1 rounded text-sm">OWASP</span>
+                        LLM Top 10 for 2025
+                    </h4>
+                    <p class="text-sm text-gray-700 mb-4">
+                        The definitive list of the most critical security risks in LLM applications. Updated for 2025 with new categories 
+                        for system prompt leakage, vector/embedding weaknesses, and expanded coverage of agentic AI risks.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 text-sm">
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM01:</span> Prompt Injection - #1 critical risk
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM02:</span> Sensitive Information Disclosure
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM03:</span> Supply Chain Vulnerabilities
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM04:</span> Data and Model Poisoning
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM05:</span> Improper Output Handling
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM06:</span> Excessive Agency (Agentic AI)
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM07:</span> System Prompt Leakage <span class="text-xs bg-red-200 px-1 rounded">NEW</span>
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM08:</span> Vector & Embedding Weaknesses <span class="text-xs bg-red-200 px-1 rounded">NEW</span>
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM09:</span> Misinformation (Hallucinations)
+                        </div>
+                        <div class="bg-white p-3 rounded">
+                            <span class="font-bold text-red-700">LLM10:</span> Unbounded Consumption (DoS)
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/" target="_blank" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition text-sm">
+                            📖 Official Guide
+                        </a>
+                        <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/assets/PDF/OWASP-Top-10-for-LLMs-v2025.pdf" target="_blank" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition text-sm">
+                            📄 Download PDF
+                        </a>
+                        <a href="https://genai.owasp.org/llm-top-10/" target="_blank" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition text-sm">
+                            📚 All Risk Details
+                        </a>
+                    </div>
+                </div>
+
+                <!-- MITRE ATLAS Section -->
+                <div class="bg-blue-50 rounded-lg p-5 border border-blue-200">
+                    <h4 class="font-bold text-blue-900 mb-3 flex items-center gap-2">
+                        <span class="bg-blue-600 text-white px-2 py-1 rounded text-sm">MITRE</span>
+                        ATLAS Framework
+                    </h4>
+                    <p class="text-sm text-gray-700 mb-4">
+                        Adversarial Threat Landscape for AI Systems - the de facto standard for threat modeling AI systems. 
+                        Contains 15 tactics, 66 techniques, 46 sub-techniques, and 33 real-world case studies. Updated October 2025 with 14 new agentic AI techniques.
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4 text-xs">
+                        <div class="bg-white p-2 rounded text-center">
+                            <div class="font-bold text-blue-700 text-lg">15</div>
+                            <div>Tactics</div>
+                        </div>
+                        <div class="bg-white p-2 rounded text-center">
+                            <div class="font-bold text-blue-700 text-lg">66</div>
+                            <div>Techniques</div>
+                        </div>
+                        <div class="bg-white p-2 rounded text-center">
+                            <div class="font-bold text-blue-700 text-lg">46</div>
+                            <div>Sub-techniques</div>
+                        </div>
+                        <div class="bg-white p-2 rounded text-center">
+                            <div class="font-bold text-blue-700 text-lg">33</div>
+                            <div>Case Studies</div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-3 rounded mb-4 text-sm">
+                        <strong>Key Tactics:</strong> Reconnaissance → Resource Development → Initial Access → ML Model Access → 
+                        Execution → Persistence → Defense Evasion → Discovery → Collection → ML Attack Staging → Exfiltration → Impact
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="https://atlas.mitre.org/" target="_blank" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm">
+                            🌐 ATLAS Portal
+                        </a>
+                        <a href="https://atlas.mitre.org/matrices/ATLAS" target="_blank" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm">
+                            📊 Full Matrix
+                        </a>
+                        <a href="https://atlas.mitre.org/pdf-files/MITRE_ATLAS_Fact_Sheet.pdf" target="_blank" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition text-sm">
+                            📄 Fact Sheet
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Security Checklist -->
+                <div class="bg-green-50 rounded-lg p-5 border border-green-200">
+                    <h4 class="font-bold text-green-900 mb-3 flex items-center gap-2">
+                        <span class="bg-green-600 text-white px-2 py-1 rounded text-sm">Checklist</span>
+                        LLM Security Assessment Tool
+                    </h4>
+                    <p class="text-sm text-gray-700 mb-4">
+                        Interactive security checklist combining MITRE ATLAS and OWASP LLM Top 10. Track your security posture 
+                        across Critical, High, Medium, and Low priority items. Export reports and share progress.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="https://llm-security-nine.vercel.app/" target="_blank" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition text-sm">
+                            ✅ Interactive Checklist
+                        </a>
+                        <a href="https://llm-security-nine.vercel.app/aiguide.html" target="_blank" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition text-sm">
+                            📖 Quick Guide
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hallucination Leaderboard -->
+                <div class="bg-purple-50 rounded-lg p-5 border border-purple-200">
+                    <h4 class="font-bold text-purple-900 mb-3">📊 Vectara Hallucination Leaderboard</h4>
+                    <p class="text-sm text-gray-700 mb-4">
+                        The most comprehensive benchmark for measuring LLM hallucination rates during summarization tasks. 
+                        Updated regularly with 75+ models tested using the HHEM-2.3 evaluation model.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="https://github.com/vectara/hallucination-leaderboard" target="_blank" class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition text-sm">
+                            📂 GitHub Repository
+                        </a>
+                        <a href="https://huggingface.co/spaces/vectara/leaderboard" target="_blank" class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition text-sm">
+                            🤗 Interactive Leaderboard
+                        </a>
+                        <a href="https://huggingface.co/vectara/hallucination_evaluation_model" target="_blank" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition text-sm">
+                            🧠 HHEM Model
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mitigation Strategies -->
+                <div class="bg-yellow-50 rounded-lg p-5 border border-yellow-200">
+                    <h4 class="font-bold text-yellow-900 mb-3">✅ Key Mitigation Strategies</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="font-semibold text-yellow-700 mb-1">🔒 Input Validation</div>
+                            <p class="text-gray-600 text-xs">Sanitize all inputs, implement strict allow-lists, use parameterized prompts</p>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="font-semibold text-yellow-700 mb-1">📤 Output Encoding</div>
+                            <p class="text-gray-600 text-xs">Never trust LLM output directly, sanitize before rendering or executing</p>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="font-semibold text-yellow-700 mb-1">🔍 RAG Grounding</div>
+                            <p class="text-gray-600 text-xs">Ground responses in verified documents to reduce hallucinations</p>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="font-semibold text-yellow-700 mb-1">⚡ Rate Limiting</div>
+                            <p class="text-gray-600 text-xs">Implement request limits, timeouts, and cost controls</p>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="font-semibold text-yellow-700 mb-1">🔐 Least Privilege</div>
+                            <p class="text-gray-600 text-xs">Minimize agent permissions, require human approval for sensitive actions</p>
+                        </div>
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="font-semibold text-yellow-700 mb-1">📋 Audit Logging</div>
+                            <p class="text-gray-600 text-xs">Log all prompts, responses, and model interactions for review</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Resources -->
+                <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+                    <h4 class="font-bold text-gray-900 mb-3">📚 Additional Resources</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <a href="https://github.com/EdinburghNLP/awesome-hallucination-detection" target="_blank" class="bg-white p-3 rounded shadow-sm hover:shadow-md transition block">
+                            <div class="font-semibold text-indigo-700">Awesome Hallucination Detection</div>
+                            <div class="text-xs text-gray-600">Comprehensive list of papers and resources</div>
+                        </a>
+                        <a href="https://vectara.com/blog/cut-the-bull-detecting-hallucinations-in-large-language-models/" target="_blank" class="bg-white p-3 rounded shadow-sm hover:shadow-md transition block">
+                            <div class="font-semibold text-indigo-700">Vectara: Detecting Hallucinations</div>
+                            <div class="text-xs text-gray-600">Technical deep-dive on HHEM methodology</div>
+                        </a>
+                        <a href="https://www.giskard.ai/knowledge/owasp-top-10-for-llm-2025-understanding-the-risks-of-large-language-models" target="_blank" class="bg-white p-3 rounded shadow-sm hover:shadow-md transition block">
+                            <div class="font-semibold text-indigo-700">OWASP 2025 Deep Dive</div>
+                            <div class="text-xs text-gray-600">What changed from 2023 and why</div>
+                        </a>
+                        <a href="https://www.confident-ai.com/blog/owasp-top-10-2025-for-llm-applications-risks-and-mitigation-techniques" target="_blank" class="bg-white p-3 rounded shadow-sm hover:shadow-md transition block">
+                            <div class="font-semibold text-indigo-700">Mitigation Techniques Guide</div>
+                            <div class="text-xs text-gray-600">Practical examples and code patterns</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Best Practices -->
+                <div class="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg p-5 border-2 border-indigo-300">
+                    <h4 class="font-bold text-indigo-900 mb-3">💡 Best Practices for Secure AI Development</h4>
+                    <ol class="space-y-2 text-sm text-gray-700 list-decimal list-inside">
+                        <li><strong>Use OWASP + ATLAS together:</strong> OWASP for vulnerability awareness, ATLAS for threat modeling</li>
+                        <li><strong>Implement defense in depth:</strong> Multiple layers of validation, encoding, and access control</li>
+                        <li><strong>Choose models wisely:</strong> Consider hallucination rates and security track record</li>
+                        <li><strong>Monitor continuously:</strong> Track prompts, outputs, costs, and anomalies in production</li>
+                        <li><strong>Test systematically:</strong> Red team your LLM applications using framework-based testing</li>
+                        <li><strong>Stay current:</strong> Both OWASP and ATLAS update regularly - subscribe to changes</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="p-6 border-t bg-gray-50 flex gap-2">
+                <a href="https://llm-security-nine.vercel.app/" target="_blank" class="flex-1 px-4 py-2 bg-indigo-600 text-white text-center rounded hover:bg-indigo-700 transition">
+                    Open Security Checklist
+                </a>
+                <button onclick="hideModal('llm-security-modal')" class="flex-1 px-4 py-2 bg-gray-200 text-gray-700 text-center rounded hover:bg-gray-300 transition">
+                    Close
+                </button>
             </div>
         </div>
     </div>
